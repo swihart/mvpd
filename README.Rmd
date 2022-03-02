@@ -38,11 +38,6 @@ with alpha=1.71 and plot.
 library(mvpd)
 ## basic example code
 biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
-biv
-```
-
-```{r pressure, echo = FALSE}
+head(biv)
 plot(biv); abline(h=0,v=0)
 ```
-
-
