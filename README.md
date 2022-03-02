@@ -1,12 +1,18 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mvpd
+# mvpd: An R Package for Multivariate Product Distributions
+
+-   `[dpr]mvss`: mutivariate subgaussian stable distributions
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of mvpd is to …
+The goal of `mvpd` is to use product distribution theory to allow the
+numerical calculations of specific scale mixtures of the multivariate
+normal distribution. The multivariate subgaussian stable distribution is
+the product of the square root of a positive stable distribution and the
+multivariate normal distribution (see Nolan (2013)).
 
 ## Installation
 
@@ -25,21 +31,16 @@ distribution with alpha=1.71 and plot.
 
 ``` r
 library(mvpd)
-#> Loading required package: mvtnorm
-#> Loading required package: stabledist
-#> Loading required package: libstableR
-#> Loading required package: cubature
-#> Loading required package: matrixStats
 ## basic example code
 biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
 head(biv)
-#>            [,1]      [,2]
-#> [1,]  2.8007853  1.551301
-#> [2,]  7.3093794  6.471486
-#> [3,] -0.8767313  1.430939
-#> [4,] -2.6736874 -4.013020
-#> [5,]  3.1114680  4.558173
-#> [6,]  8.4333645  5.855828
+#>            [,1]       [,2]
+#> [1,] -3.5516219 -8.3073533
+#> [2,] -0.0552984  0.7180206
+#> [3,] -4.2691520 -0.2179971
+#> [4,] -2.6043523 -7.8604687
+#> [5,] -3.0880095 -6.1439921
+#> [6,]  1.9981770  2.6650392
 plot(biv); abline(h=0,v=0)
 ```
 
