@@ -31,13 +31,13 @@ devtools::install_github("swihart/mvpd")
 
 ## Example
 
-Generate 10 draws from a random bivariate subgaussian stable distribution
+Generate 1000 draws from a random bivariate subgaussian stable distribution
 with alpha=1.71 and plot.
 
 ```{r example}
 library(mvpd)
 ## basic example code
-biv <- rmvss(n=10, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
+biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
 biv
 ```
 
