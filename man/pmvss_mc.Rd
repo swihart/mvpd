@@ -31,10 +31,13 @@ stable and multivariate normal.}
 
 \item{n}{number of random vectors to be drawn for Monte Carlo calculation.}
 }
+\value{
+a number between 0 and 1, the estimated probability via Monte Carlo
+}
 \description{
 Computes probabilities of the multivariate subgaussian stable
-distribution for arbitrary limits, alpha, and shape matrices
-via Monte Carlo (thus the suffix \verb{_mc}).
+distribution for arbitrary limits, alpha, shape matrices, and
+location vectors via Monte Carlo (thus the suffix \verb{_mc}).
 }
 \examples{
 

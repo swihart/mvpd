@@ -2,7 +2,8 @@
 #'
 #'
 #' Computes random vectors of the multivariate subgaussian stable
-#' distribution for arbitrary shape matrices. See Nolan (2013).
+#' distribution for arbitrary alpha, shape matrices, and 
+#' location vectors. See Nolan (2013).
 #'
 #'
 #' @param n number of observations
@@ -12,7 +13,8 @@
 #' @param which.stable defaults to "libstableR", other option is "stabledist".  Indicates which package
 #' should provide the univariate stable distribution in this production distribution form of a univariate
 #' stable and multivariate normal.
-#'
+#' @return Returns the \code{n} by \code{d} matrix containing multivariate subgaussian stable 
+#' random variates where \code{d=nrow(Q)}.
 #' @references
 #' Nolan JP (2013), \emph{Multivariate elliptically contoured stable distributions:
 #' theory and estimation}. Comput Stat (2013) 28:2067–2089

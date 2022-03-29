@@ -1,7 +1,8 @@
 #' Fit a Multivariate Subgaussian Distribution
 #' 
 #' 
-#' Estimates the parameters (namely, alpha and shape matrix Q) of the multivariate subgaussian
+#' Estimates the parameters (namely, alpha, shape matrix Q, and location vector) 
+#' of the multivariate subgaussian
 #' distribution for an input matrix X.
 #' 
 #' 

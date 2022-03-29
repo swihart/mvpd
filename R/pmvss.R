@@ -2,7 +2,8 @@
 #' 
 #' 
 #' Computes the probabilities for the multivariate subgaussian stable
-#' distribution for arbitrary limits, alpha, and shape matrices.
+#' distribution for arbitrary limits, alpha, shape matrices, and 
+#' location vectors.
 #' See Nolan (2013).
 #' 
 #' @param lower the vector of lower limits of length n.
@@ -51,7 +52,18 @@
 #' @param which.stable defaults to "libstableR", other option is "stabledist".  Indicates which package 
 #' should provide the univariate stable distribution in this production distribution form of a univariate
 #' stable and multivariate normal.
-#' @return See stats::integrate, cubature::adaptIntegrate
+#' @return The object returned depends on what is selected for \code{outermost.int}.  In the case of the default, 
+#' \code{stats::integrate}, the value is a list of class "integrate" with components:
+#' \itemize{
+#' \item{\code{value}}{ the final estimate of the integral.}
+#' \item{\code{abs.error}}{ estimate of the modulus of the absolute error.}
+#' \item{\code{subdivisions}}{ the number of subintervals produced in the subdivision process.}
+#' \item{\code{message}}{ "OK" or a character string giving the error message.}
+#' \item{\code{call}}{ the matched call.}
+#' }
+#' Note: The reported \code{abs.error} is likely an under-estimate as \code{integrate}
+#' assumes the integrand was without error, 
+#' which is not the case in this application.  
 #' @references
 #' Nolan JP (2013), \emph{Multivariate elliptically contoured stable distributions:
 #' theory and estimation}. Comput Stat (2013) 28:2067–2089

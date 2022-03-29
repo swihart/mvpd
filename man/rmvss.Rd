@@ -25,9 +25,14 @@ rmvss(
 should provide the univariate stable distribution in this production distribution form of a univariate
 stable and multivariate normal.}
 }
+\value{
+Returns the \code{n} by \code{d} matrix containing multivariate subgaussian stable
+random variates where \code{d=nrow(Q)}.
+}
 \description{
 Computes random vectors of the multivariate subgaussian stable
-distribution for arbitrary shape matrices. See Nolan (2013).
+distribution for arbitrary alpha, shape matrices, and
+location vectors. See Nolan (2013).
 }
 \examples{
 

@@ -15,15 +15,12 @@ the product of the square root of a univariate positive stable
 distribution and the multivariate normal distribution (see Nolan
 (2013)).
 
-## Installation
-
-You can install the development version of mvpd from
-[GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("swihart/mvpd")
-```
+<!-- ## Installation -->
+<!-- You can install the development version of mvpd from [GitHub](https://github.com/) with: -->
+<!-- ``` r -->
+<!-- # install.packages("devtools") -->
+<!-- devtools::install_github("swihart/mvpd") -->
+<!-- ``` -->
 
 ## Example
 
@@ -32,16 +29,17 @@ distribution with alpha=1.71 and plot.
 
 ``` r
 library(mvpd)
+set.seed(10)
 ## basic example code
 biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
 head(biv)
-#>             [,1]       [,2]
-#> [1,]   0.3074873   1.058549
-#> [2,]   0.5291253   3.329567
-#> [3,] -10.2487185 -16.424006
-#> [4,]  13.9380862  20.285716
-#> [5,]   5.2389706   5.971667
-#> [6,]  -2.3023545  -3.261889
+#>            [,1]       [,2]
+#> [1,] -0.2260798 -0.6168492
+#> [2,] -6.1460819 -4.5603538
+#> [3,]  1.4592466  1.6213040
+#> [4,] -4.4159078 -2.9252448
+#> [5,] -6.7106973 -3.8158068
+#> [6,]  5.9107788  5.1332625
 plot(biv); abline(h=0,v=0)
 ```
 

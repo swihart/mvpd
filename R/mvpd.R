@@ -19,7 +19,9 @@
 #' @section Multivariate subgaussian stable distributions:
 #'
 #' \code{\link{dmvss}} -- multivariate subgaussian stable distribution density
+#' 
 #' \code{\link{pmvss}} -- multivariate subgaussian stable distribution probabilities
+#' 
 #' \code{\link{rmvss}} -- multivariate subgaussian stable distribution random variates
 #'
 #' \code{\link{pmvss_mc}} -- Monte Carlo version of probabilities, using \code{rmvss}

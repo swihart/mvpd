@@ -2,8 +2,8 @@
 #' 
 #' 
 #' Computes probabilities of the multivariate subgaussian stable
-#' distribution for arbitrary limits, alpha, and shape matrices
-#' via Monte Carlo (thus the suffix `_mc`).
+#' distribution for arbitrary limits, alpha, shape matrices, and
+#' location vectors via Monte Carlo (thus the suffix `_mc`).
 #' 
 #' @param lower the vector of lower limits of length n.
 #' @param upper the vector of upper limits of length n.
@@ -14,6 +14,7 @@
 #' should provide the univariate stable distribution in this production distribution form of a univariate
 #' stable and multivariate normal.
 #' @param n number of random vectors to be drawn for Monte Carlo calculation.
+#' @return a number between 0 and 1, the estimated probability via Monte Carlo
 #' @references
 #' Nolan JP (2013), \emph{Multivariate elliptically contoured stable distributions:
 #' theory and estimation}. Comput Stat (2013) 28:2067–2089

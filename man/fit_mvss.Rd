@@ -24,7 +24,8 @@ the multivariate alpha and shape matrix estimates (the univ_deltas are the mult_
 }
 }
 \description{
-Estimates the parameters (namely, alpha and shape matrix Q) of the multivariate subgaussian
+Estimates the parameters (namely, alpha, shape matrix Q, and location vector)
+of the multivariate subgaussian
 distribution for an input matrix X.
 }
 \details{
