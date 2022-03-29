@@ -11,8 +11,9 @@
 The goal of `mvpd` is to use product distribution theory to allow the
 numerical calculations of specific scale mixtures of the multivariate
 normal distribution. The multivariate subgaussian stable distribution is
-the product of the square root of a positive stable distribution and the
-multivariate normal distribution (see Nolan (2013)).
+the product of the square root of a univariate positive stable
+distribution and the multivariate normal distribution (see Nolan
+(2013)).
 
 ## Installation
 
@@ -34,13 +35,13 @@ library(mvpd)
 ## basic example code
 biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
 head(biv)
-#>            [,1]       [,2]
-#> [1,] -3.5516219 -8.3073533
-#> [2,] -0.0552984  0.7180206
-#> [3,] -4.2691520 -0.2179971
-#> [4,] -2.6043523 -7.8604687
-#> [5,] -3.0880095 -6.1439921
-#> [6,]  1.9981770  2.6650392
+#>             [,1]       [,2]
+#> [1,]   0.3074873   1.058549
+#> [2,]   0.5291253   3.329567
+#> [3,] -10.2487185 -16.424006
+#> [4,]  13.9380862  20.285716
+#> [5,]   5.2389706   5.971667
+#> [6,]  -2.3023545  -3.261889
 plot(biv); abline(h=0,v=0)
 ```
 

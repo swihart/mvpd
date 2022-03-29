@@ -25,10 +25,10 @@
 #' @examples
 #'
 #' rmvss(n=10, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
-#' \dontrun{
+#' 
 #' Q <- matrix(c(10,7.5,7.5,7.5,10,7.5,7.5,7.5,10),3)
 #' rmvss(n=10, alpha=1.71, Q=Q)
-#' }
+#' 
 #'
 #' @export
 rmvss <- function(n, alpha=1, Q = NULL, delta=rep(0,d),

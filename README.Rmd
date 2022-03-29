@@ -23,8 +23,8 @@ knitr::opts_chunk$set(
 The goal of `mvpd` is to use product distribution theory to allow the 
 numerical calculations of specific scale mixtures of the multivariate normal
 distribution.  The multivariate subgaussian stable distribution is the product
-of the square root of a positive stable distribution and the multivariate normal 
-distribution (see Nolan (2013)).
+of the square root of a univariate positive stable distribution and the 
+multivariate normal distribution (see Nolan (2013)).
 
 ## Installation
 

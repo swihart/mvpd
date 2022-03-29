@@ -1,28 +1,35 @@
 Package: mvpd
-Title: Multivariate Product Distributions for Elliptically Contoured Subgaussian Stable Distributions
-Version: 0.0.0.9000
+Title: Multivariate Product Distributions for Elliptically Contoured Distributions
+Version: 0.0.2
 Authors@R: 
-    c(person("J.P.", "Nolan", role = "aut"),
+    c(
              person("Bruce", "Swihart", 
              role = c("aut", "cre"), 
              email="bruce.swihart@gmail.com",
              comment = c(ORCID = "0000-0002-4216-9942")
              ))
-Description: This package estimates multivariate subgaussian stable densities 
+Description: Estimates multivariate subgaussian stable densities 
     and probabilities as well as generates random variates using product 
     distribution theory.  A function for estimating the parameters from 
-    data to fit a distribution to data is also provided, using the Nolan (2013)
-    method.
-Depends: R (>= 3.4.0),
-  mvtnorm,
-  stabledist,
-  libstableR,
-  cubature,
-  matrixStats
+    data to fit a distribution to data is also provided, using the 
+    method from Nolan (2013) <DOI:10.1007/s00180-013-0396-7>.
+Imports: 
+    invgamma, 
+    matrixStats,
+    stabledist,
+    libstableR,
+    mvtnorm,
+    stats,
+    cubature,
+    Matrix
+Depends: R (>= 3.4.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+VignetteBuilder: knitr
 Suggests: 
+    rmarkdown,
+    knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
