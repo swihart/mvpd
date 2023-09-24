@@ -1,3 +1,7 @@
+# mvpd 0.0.5
+
+* add dmvss_mat(). this function may be faster than dmvss() and can handle matrix inputs
+
 # mvpd 0.0.4
 
 * fixed roxygen token

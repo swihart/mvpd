@@ -2,6 +2,7 @@
 
 export(adaptIntegrate_inf_limPD)
 export(dmvss)
+export(dmvss_mat)
 export(fit_mvss)
 export(pmvss)
 export(pmvss_mc)
