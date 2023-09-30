@@ -1,6 +1,7 @@
 # mvpd 0.0.5
 
 * add dmvss_mat(). this function may be faster than dmvss() and can handle matrix inputs
+* add dmvt_mat(). this is a developmental multivariate t distribution
 
 # mvpd 0.0.4
 
