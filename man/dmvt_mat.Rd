@@ -20,8 +20,7 @@ dmvt_mat(
   fDim.ai = NULL,
   maxEval.ai = 0,
   absError.ai = 0,
-  doChecking.ai = FALSE,
-  which.stable = c("libstable4u", "stabledist")[1]
+  doChecking.ai = FALSE
 )
 }
 \arguments{
@@ -81,10 +80,6 @@ gain in our experiments. Your mileage will of course vary. Default
 value is FALSE.
 The suffix \code{.ai} indicates a \code{cubature::adaptIntegrate} type
 option for the outermost semi-infinite integral in the product distribution formulation.}
-
-\item{which.stable}{defaults to "libstable4u", other option is "stabledist".  Indicates which package
-should provide the univariate stable distribution in this production distribution form of a univariate
-stable and multivariate normal.}
 }
 \value{
 The object returned depends on what is selected for \code{outermost.int}.  In the case of the default,

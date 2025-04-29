@@ -47,9 +47,6 @@
 #' value is FALSE.
 #' The suffix \code{.ai} indicates a \code{cubature::adaptIntegrate} type 
 #' option for the outermost semi-infinite integral in the product distribution formulation.
-#' @param which.stable defaults to "libstable4u", other option is "stabledist".  Indicates which package 
-#' should provide the univariate stable distribution in this production distribution form of a univariate
-#' stable and multivariate normal.
 #' @return The object returned depends on what is selected for \code{outermost.int}.  In the case of the default, 
 #' \code{stats::integrate}, the value is a list of class "integrate" with components:
 #' \itemize{
@@ -171,50 +168,28 @@ dmvt_mat <- function(x, df=1, Q = NULL, delta=rep(0,d),
                       fDim.ai = NULL,
                       maxEval.ai = 0,
                       absError.ai=0,
-                      doChecking.ai=FALSE,
-                      
-                      which.stable=c("libstable4u", "stabledist")[1]
+                      doChecking.ai=FALSE
                       
 ){
   alpha <- df ## legacy.
-  f_A <- switch(which.stable,
-                "libstable4u" =
+  f_A <- 
                     function(x, alpha){ 
                       nu <- alpha
                       a.ig <- b.ig <- nu/2
                       
                       b.ig^a.ig / gamma(a.ig) * x^{-a.ig-1} * exp(-b.ig/x)
                       
-                    },
-                "stabledist"=
-                  function(x, alpha) 
-                    stabledist::dstable(x,
-                                        alpha = alpha/2,
-                                        beta = 1,
-                                        gamma = 2*cos(pi*alpha/4)^(2/alpha),
-                                        delta = 0,
-                                        pm = 1)
-  )
+                    }
   
   
   
   
-  f_B <- switch(which.stable,
-                "libstable4u" = 
+  f_B <- 
                   function(x, alpha){ 
                     nu = alpha
                     2*x*f_A(x^2, nu)
-                  },
-                "stabledist" = 
-                  function(x, alpha)
-                    2*x*
-                  stabledist::dstable(x^2,
-                                      alpha = alpha/2,
-                                      beta = 1,
-                                      gamma = 2*cos(pi*alpha/4)^(2/alpha),
-                                      delta = 0,
-                                      pm = 1)
-  )  
+                  }
+  
   d <- NCOL(x) ## length(x)
   x <- t(apply(x, 1, function(W) W - delta)) ##x - delta
   ifelse(!spherical,
