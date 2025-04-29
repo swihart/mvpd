@@ -33,38 +33,72 @@ chisq_draw <- rchisq(nsim, df=d)
 # chisq_draw <- rbeta(nsim,20,20)
 # chisq_draw <- rgamma(nsim, 1,.1)
 #chi_sq_draw <- rcauchy(nsim,0,10)^2 ## see connection to betaprime
+```
+
+Take the draw from above.
 
 
+Apply it to the uniform on the sphere (for d=2 this is a circle).
+
+```{r}
 unif_draw <- uniformly::runif_on_sphere(nsim,d)
+```
 
+Get a nice rotation going with chol.
+
+```{r}
 spread <- 1
 rho <- -0.80
 SIGMA <- spread*diag(d) + rho - diag(d)*rho
 SIGMA
 chol(SIGMA)
+```
 
+Out of all the stuff generated, find the max so we can standardize the axes.
+
+```{r}
 maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
                                           unif_draw %*% chol(SIGMA)
                   )
 )
+
+
+```
+
+This is the uniform circle.
+
+```{r}
 par(pty='s')
-
-
 plot( unif_draw, 
       xlim=maxrange*c(-1,1),
       ylim=maxrange*c(-1,1))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+```
 
+This is the uniform circle transformed into an ellipse by chol(SIGMA).
+
+```{r}
+par(pty='s')
 plot( unif_draw %*% chol(SIGMA), 
       xlim=maxrange*c(-1,1),
       ylim=maxrange*c(-1,1))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+```
 
+This is the ellipse above, where each point is multiplied by a random draw from the mixing distribution.
+
+```{r}
+par(pty='s')
 plot(sign(chisq_draw)*sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA), 
      xlim=maxrange*c(-1,1),
      ylim=maxrange*c(-1,1))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+```
 
+And a MVN(0, Sigma) draw for comparison:
+
+```{r}
+par(pty='s')
 plot(mvtnorm::rmvnorm(nsim, sigma=SIGMA),
      xlim=maxrange*c(-1,1),
      ylim=maxrange*c(-1,1))
