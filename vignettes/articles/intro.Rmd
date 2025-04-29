@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
 
 ## https://stackoverflow.com/questions/66011929/package-rgl-in-r-not-loading-in-mac-os/66127391#66127391
 options(rgl.useNULL = TRUE)
-#library(rgl)
+library(rgl)
 
 ```
 
@@ -35,7 +35,7 @@ chisq_draw <- rchisq(nsim, df=d)
 #chi_sq_draw <- rcauchy(nsim,0,10)^2 ## see connection to betaprime
 
 
-unif_draw <- runif_on_sphere(nsim,d)
+unif_draw <- uniformly::runif_on_sphere(nsim,d)
 
 spread <- 1
 rho <- -0.80
