@@ -1,0 +1,75 @@
+---
+title: "Introduction and Primer"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+## https://stackoverflow.com/questions/66011929/package-rgl-in-r-not-loading-in-mac-os/66127391#66127391
+options(rgl.useNULL = TRUE)
+library(rgl)
+
+```
+
+```{r setup}
+library(uniformly)
+
+## creator view
+nsim <- 1e3
+d <- 2
+chisq_draw <- rchisq(nsim, df=d)
+#chisq_draw <- rexp(nsim, rate=1)
+# chisq_draw <- 4
+# chisq_draw <- sample(c(4,1,0), nsim, TRUE)
+# chisq_draw <- runif(nsim, 0, 4)
+# chisq_draw <- -1
+# chisq_draw <- rbinom(nsim,1,prob=0.5 )
+# chisq_draw <- rpois(nsim,1)
+# chisq_draw <- rbeta(nsim,.20,.20)
+# chisq_draw <- rbeta(nsim,2.0,2.0)
+# chisq_draw <- rbeta(nsim,20,20)
+# chisq_draw <- rgamma(nsim, 1,.1)
+#chi_sq_draw <- rcauchy(nsim,0,10)^2 ## see connection to betaprime
+
+
+unif_draw <- runif_on_sphere(nsim,d)
+
+spread <- 1
+rho <- -0.80
+SIGMA <- spread*diag(d) + rho - diag(d)*rho
+SIGMA
+chol(SIGMA)
+
+maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
+                                          unif_draw %*% chol(SIGMA)
+                  )
+)
+par(pty='s')
+
+
+plot( unif_draw, 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+plot( unif_draw %*% chol(SIGMA), 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+plot(sign(chisq_draw)*sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA), 
+     xlim=maxrange*c(-1,1),
+     ylim=maxrange*c(-1,1))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+plot(mvtnorm::rmvnorm(nsim, sigma=SIGMA),
+     xlim=maxrange*c(-1,1),
+     ylim=maxrange*c(-1,1))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+
+
+```
