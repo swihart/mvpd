@@ -31,5 +31,6 @@ Suggests:
     knitr,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://github.com/swihart/mvpd
+URL: https://github.com/swihart/mvpd,
+    https://swihart.github.io/mvpd/
 BugReports: https://github.com/swihart/mvpd/issues
