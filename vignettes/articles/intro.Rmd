@@ -68,42 +68,49 @@ maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
 This is the uniform circle.
 
 ```{r}
-par(pty='s')
+par(pty='s', mfrow=c(1,4), bty="n", oma=rep(.1,4))
 plot( unif_draw, 
       xlim=maxrange*c(-1,1),
-      ylim=maxrange*c(-1,1))
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      main=expression(paste("U")))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
-```
 
-This is the uniform circle transformed into an ellipse by chol(SIGMA).
-
-```{r}
 par(pty='s')
 plot( unif_draw %*% chol(SIGMA), 
       xlim=maxrange*c(-1,1),
-      ylim=maxrange*c(-1,1))
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      main=expression(paste("U", Sigma^{1/2})))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
-```
 
-This is the ellipse above, where each point is multiplied by a random draw from the mixing distribution.
-
-```{r}
 par(pty='s')
 plot(sign(chisq_draw)*sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA), 
      xlim=maxrange*c(-1,1),
-     ylim=maxrange*c(-1,1))
+     ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      main=expression(paste(A^{1/2},"U", Sigma^{1/2})))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
-```
 
-And a MVN(0, Sigma) draw for comparison:
 
-```{r}
 par(pty='s')
 plot(mvtnorm::rmvnorm(nsim, sigma=SIGMA),
      xlim=maxrange*c(-1,1),
-     ylim=maxrange*c(-1,1))
+     ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      main="rnorm(nsim, 0, SIGMA)")
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 
 
 ```
+
+$U$ is the uniform circle transformed into an ellipse $U \Sigma^{1/2}$, where $\Sigma^{1/2}$ = (R-code: `chol(SIGMA)`).
+
+Then each point of the ellipse is multiplied by the square root of the random draw from the mixing distribution $A$.
+
+And a MVN(0, Sigma) draw for comparison, as procured by `rnorm(nsim,0,SIGMA)`.
