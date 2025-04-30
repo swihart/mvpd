@@ -83,7 +83,7 @@ plot( unif_draw %*% chol(SIGMA),
       ylim=maxrange*c(-1,1),
       xlab="",
       ylab="",
-      main=expression(paste("U", Sigma^{1/2})))
+      main=expression(paste("U", Sigma^{~1/2})))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 par(pty='s')
@@ -92,7 +92,7 @@ plot(sign(chisq_draw)*sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
      ylim=maxrange*c(-1,1),
       xlab="",
       ylab="",
-      main=expression(paste(A^{1/2},"U", Sigma^{1/2})))
+      main=expression(paste(A^{1/2},"U", Sigma^{~1/2})))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 
