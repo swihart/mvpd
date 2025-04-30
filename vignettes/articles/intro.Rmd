@@ -16,7 +16,7 @@ library(rgl)
 
 ```{r setup}
 library(uniformly)
-
+set.seed(6789)
 ## creator view
 nsim <- 1e3
 d <- 2
@@ -67,8 +67,8 @@ maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
 
 This is the uniform circle.
 
-```{r,fig.show="hold", out.width="25%"}
-par(pty='s', mfrow=c(1,1), bty="n")
+```{r}
+par(pty='s', mfrow=c(2,2), bty="n", oma=rep(0,4), mai=c(0.3,0,0.3,0))
 plot( unif_draw, 
       xlim=maxrange*c(-1,1),
       ylim=maxrange*c(-1,1),
