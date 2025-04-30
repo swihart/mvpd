@@ -67,8 +67,8 @@ maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
 
 This is the uniform circle.
 
-```{r}
-par(pty='s', mfrow=c(1,4), bty="n", oma=rep(.1,4))
+```{r,fig.show="hold", out.width="25%"}
+par(pty='s', mfrow=c(1,1), bty="n")
 plot( unif_draw, 
       xlim=maxrange*c(-1,1),
       ylim=maxrange*c(-1,1),
