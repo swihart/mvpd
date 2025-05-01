@@ -65,16 +65,17 @@ maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
 
 ```
 
-This is the uniform circle.
 
-```{r}
+
+```{r,echo=FALSE, fig.width=8, fig.height=8}
 par(pty='s', mfrow=c(2,2), bty="n", oma=rep(0,4), mai=c(0.3,0,0.3,0))
 plot( unif_draw, 
       xlim=maxrange*c(-1,1),
       ylim=maxrange*c(-1,1),
       xlab="",
       ylab="",
-      main=expression(paste(U[d])))
+      ##main=expression(paste(U[d])))
+      main=expression(paste(U)))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 par(pty='s')
@@ -83,7 +84,8 @@ plot( unif_draw %*% chol(SIGMA),
       ylim=maxrange*c(-1,1),
       xlab="",
       ylab="",
-      main=expression(paste(U[d], Sigma^{~~1/2})))
+      ##main=expression(paste(U[d], Sigma^{~~1/2})))
+      main=expression(paste(U, R)))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 par(pty='s')
@@ -92,7 +94,10 @@ plot(sign(chisq_draw)*sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
      ylim=maxrange*c(-1,1),
       xlab="",
       ylab="",
-      main=expression(paste(A^{1/2}, U[d], Sigma^{~~1/2})))
+      ##main=expression(paste(A^{1/2}, U[d], Sigma^{~~1/2})))
+     ##main=expression(paste(B[1], U[d], R[d])))
+     main=expression(paste(B, U, R)))
+      # main="BUR")
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 
@@ -102,15 +107,24 @@ plot(mvtnorm::rmvnorm(nsim, sigma=SIGMA),
      ylim=maxrange*c(-1,1),
       xlab="",
       ylab="",
-      main="rnorm(nsim, 0, SIGMA)")
+      main="rnorm(nsim, 0, Q)")
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 
+# 
+# `r expression(paste(U))` is the uniform circle transformed into an ellipse `r expression(paste(U,R))`, where `r expression(R)`=$\Sigma^{1/2}$ = (R-code: `chol(SIGMA)`).
+# 
+# Then each point of the ellipse is multiplied by `r expression(paste(B))`= `r expression(paste(A^{1/2}))`, the square root of the random draw from distribution `r expression(paste(A))`.
+# 
+# And a MVN(0, Sigma) draw for comparison, as procured by `rnorm(nsim,0,SIGMA)`.
 
 ```
 
-$U$ is the uniform circle transformed into an ellipse $U \Sigma^{1/2}$, where $\Sigma^{1/2}$ = (R-code: `chol(SIGMA)`).
 
-Then each point of the ellipse is multiplied by the square root of the random draw from the mixing distribution $A$.
-
-And a MVN(0, Sigma) draw for comparison, as procured by `rnorm(nsim,0,SIGMA)`.
+  * `r expression(U)` is a nx2 matrix containing n random draws from the uniform circle.
+  * `r expression(UR)` is the result of the matrix multiplication between nx2 `r expression(U)` and 2x2 `r expression(R)`, the Cholesky decomposition of a 2x2 matrix `r expression(Q)`.
+    * R makes a circle (`r expression(U)`) into an ellipse (`r expression(UR)`)
+    * R can be thought of as a "square root" of a matrix. `r expression(R)`'`r expression(R)` = `r expression(Q)`.
+  * B = sqrt(A), where is A is a nx1 matrix containing n *i.i.d* draws from its univariate distribution
+  * When A $\sim \chi^2$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q). Equivalently,
+  * When B $\sim \chi$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q)
