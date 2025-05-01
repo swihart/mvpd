@@ -1,5 +1,6 @@
 ---
 title: "Introduction and Primer"
+subtitle: Start with a unit circle.  End with a Bivariate Normal.
 ---
 
 ```{r, include = FALSE}
@@ -14,7 +15,7 @@ library(rgl)
 
 ```
 
-```{r setup}
+```{r setup, include=FALSE}
 library(uniformly)
 set.seed(6789)
 ## creator view
@@ -35,18 +36,11 @@ chisq_draw <- rchisq(nsim, df=d)
 #chi_sq_draw <- rcauchy(nsim,0,10)^2 ## see connection to betaprime
 ```
 
-Take the draw from above.
 
-
-Apply it to the uniform on the sphere (for d=2 this is a circle).
-
-```{r}
+```{r, include=FALSE}
+## Apply it to the uniform on the sphere (for d=2 this is a circle).
 unif_draw <- uniformly::runif_on_sphere(nsim,d)
-```
-
-Get a nice rotation going with chol.
-
-```{r}
+## Get a nice rotation going with chol.
 spread <- 1
 rho <- -0.80
 SIGMA <- spread*diag(d) + rho - diag(d)*rho
@@ -54,9 +48,11 @@ SIGMA
 chol(SIGMA)
 ```
 
-Out of all the stuff generated, find the max so we can standardize the axes.
 
-```{r}
+```{r, include=FALSE}
+## Out of all the stuff generated, find the max so we can standardize the axes.
+
+
 maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
                                           unif_draw %*% chol(SIGMA)
                   )
