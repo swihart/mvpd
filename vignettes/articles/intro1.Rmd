@@ -1,0 +1,174 @@
+---
+title: "Introduction and Primer II"
+subtitle: Start with a unit circle.  End with a Bivariate Normal.
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+## https://stackoverflow.com/questions/66011929/package-rgl-in-r-not-loading-in-mac-os/66127391#66127391
+options(rgl.useNULL = TRUE)
+library(rgl)
+
+```
+
+```{r setup, include=FALSE}
+library(uniformly)
+set.seed(6789)
+## creator view
+nsim <- 1e3
+d <- 2
+#chisq_draw <- rchisq(nsim, df=d)
+#chisq_draw <- rexp(nsim, rate=1)
+# chisq_draw <- 4
+# chisq_draw <- sample(c(4,1,0), nsim, TRUE)
+# chisq_draw <- runif(nsim, 0, 4)
+# chisq_draw <- -1
+# chisq_draw <- rbinom(nsim,1,prob=0.5 )
+# chisq_draw <- rpois(nsim,1)
+# chisq_draw <- rbeta(nsim,.20,.20)
+# chisq_draw <- rbeta(nsim,2.0,2.0)
+# chisq_draw <- rbeta(nsim,20,20)
+# chisq_draw <- rgamma(nsim, 1,.1)
+#chi_sq_draw <- rcauchy(nsim,0,10)^2 ## see connection to betaprime
+
+# chisq_draw <- runif(nsim, 0.6, 10)
+# chisq_draw <- sample(c(0.6,10), nsim, TRUE)
+
+alpha <- 1.50
+# chisq_draw <- libstable4u::stable_rnd(nsim,
+#                                        pars=c(
+#                                          alpha = alpha/2,
+#                                          beta = 1,
+#                                          sigma = 2*cos(pi*alpha/4)^(2/alpha),
+#                                          mu = 0),
+#                                        parametrization = 1L)
+# 
+# 
+# chisq_draw <- libstable4u::stable_rnd(nsim,
+#                                        pars=c(
+#                                          alpha = alpha/2,
+#                                          beta = 1,
+#                                          sigma = 2*cos(pi*alpha/4)^(2/alpha),
+#                                          mu = 0),
+#                                        parametrization = 1L) *
+#               rchisq(nsim, df=d)
+# 
+# 
+# 
+
+chisq_draw <- stabledist::rstable(nsim,
+                                         alpha = alpha/2,
+                                         beta = 1,
+                                         gamma = 2*cos(pi*alpha/4)^(2/alpha),
+                                         delta = 0,
+                                       pm = 1L)
+# chisq_draw <- stabledist::rstable(nsim,
+# 
+#                                          alpha = alpha/2,
+#                                          beta = 1,
+#                                          gamma = 2*cos(pi*alpha/4)^(2/alpha),
+#                                          delta = 0,
+#                                        pm = 1L)*
+#   rchisq(nsim, df=d)
+
+# 
+
+
+```
+
+
+```{r, include=FALSE}
+## Apply it to the uniform on the sphere (for d=2 this is a circle).
+##set.seed(6789)
+unif_draw <- uniformly::runif_on_sphere(nsim,d)
+## Get a nice rotation going with chol.
+spread <- 1
+rho <- -0.80
+SIGMA <- spread*diag(d) + rho - diag(d)*rho
+SIGMA
+chol(SIGMA)
+```
+
+
+```{r, include=FALSE}
+## Out of all the stuff generated, find the max so we can standardize the axes.
+
+simmed_mvnorm <- mvtnorm::rmvnorm(nsim, sigma=SIGMA)
+simmed_mvnorm <- mvpd::rmvss(nsim, Q=SIGMA, alpha=alpha)
+maxrange <- max(abs(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
+                                          unif_draw %*% chol(SIGMA),
+                  c(simmed_mvnorm)
+                  ))
+)
+
+maxrange <- c(5)
+```
+
+
+
+```{r,echo=FALSE, fig.width=8, fig.height=8}
+par(pty='s', mfrow=c(2,2), bty="n", oma=rep(0,4), mai=c(0.3,0,0.3,0))
+plot( unif_draw, 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      ##main=expression(paste(U[d])))
+      main=expression(paste(U)))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+par(pty='s')
+plot( sign(chisq_draw)*sqrt(abs(chisq_draw)) *unif_draw, 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      ##main=expression(paste(U[d], Sigma^{~~1/2})))
+      main=expression(paste(B, U)))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+par(pty='s')
+plot( sign(chisq_draw)*sqrt(abs(chisq_draw)) *unif_draw %*% chol(SIGMA), 
+     xlim=maxrange*c(-1,1),
+     ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      ##main=expression(paste(A^{1/2}, U[d], Sigma^{~~1/2})))
+     ##main=expression(paste(B[1], U[d], R[d])))
+     main=expression(paste(B, U, R)))
+      # main="BUR")
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+
+par(pty='s')
+plot(simmed_mvnorm,
+     xlim=maxrange*c(-1,1),
+     ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      main="rnorm(nsim, 0, Q)")
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+
+# 
+# `r expression(paste(U))` is the uniform circle transformed into an ellipse `r expression(paste(U,R))`, where `r expression(R)`=$\Sigma^{1/2}$ = (R-code: `chol(SIGMA)`).
+# 
+# Then each point of the ellipse is multiplied by `r expression(paste(B))`= `r expression(paste(A^{1/2}))`, the square root of the random draw from distribution `r expression(paste(A))`.
+# 
+# And a MVN(0, Sigma) draw for comparison, as procured by `rnorm(nsim,0,SIGMA)`.
+
+```
+
+
+  * `r expression(U)` is a nx2 matrix containing n random draws from the uniform circle.
+  * B = sqrt(A), where A is a nx1 matrix containing n *i.i.d* draws from its univariate distribution.
+  * `r expression(BU)` can be thought of as the distribution of radii
+  * `r expression(BUR)` is the result of the matrix multiplication between nx2 `r expression(BU)` and 2x2 `r expression(R)`, the Cholesky decomposition of a 2x2 matrix `r expression(Q)`.
+    * R makes a circular (`r expression(BU)`) into an elliptical (`r expression(BUR)`)
+    * R can be thought of as a "square root" of a matrix. `r expression(R)`'`r expression(R)` = `r expression(Q)`.
+  * When A $\sim \chi^2$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q). Equivalently,
+  * When B $\sim \chi$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q)

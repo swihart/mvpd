@@ -3,7 +3,8 @@
 
 # mvpd: An R Package for Multivariate Product Distributions
 
--   `[dpr]mvss`: mutivariate subgaussian stable distributions
+- `[dpr]mvss`: multivariate subgaussian stable distributions
+- `[pr]mvlogis`: multivariate logistic distributions
 
 <!-- badges: start -->
 <!-- badges: end -->
@@ -33,13 +34,13 @@ set.seed(10)
 ## basic example code
 biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
 head(biv)
-#>            [,1]       [,2]
-#> [1,] -0.2260798 -0.6168492
-#> [2,] -6.1460819 -4.5603538
-#> [3,]  1.4592466  1.6213040
-#> [4,] -4.4159078 -2.9252448
-#> [5,] -6.7106973 -3.8158068
-#> [6,]  5.9107788  5.1332625
+#>            [,1]      [,2]
+#> [1,]  4.1376829 2.6671467
+#> [2,]  2.3077184 3.5237490
+#> [3,] -0.2878765 0.5820986
+#> [4,]  0.4463762 2.9209163
+#> [5,] -2.8267571 1.9511542
+#> [6,]  0.8814666 2.8394863
 plot(biv); abline(h=0,v=0)
 ```
 

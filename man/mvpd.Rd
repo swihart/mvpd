@@ -39,6 +39,7 @@ distribution theory is applied for implementing their computation.
 Useful links:
 \itemize{
   \item \url{https://github.com/swihart/mvpd}
+  \item \url{https://swihart.github.io/mvpd/}
   \item Report bugs at \url{https://github.com/swihart/mvpd/issues}
 }
 

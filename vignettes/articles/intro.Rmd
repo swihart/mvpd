@@ -39,6 +39,7 @@ chisq_draw <- rchisq(nsim, df=d)
 
 ```{r, include=FALSE}
 ## Apply it to the uniform on the sphere (for d=2 this is a circle).
+##set.seed(1)
 unif_draw <- uniformly::runif_on_sphere(nsim,d)
 ## Get a nice rotation going with chol.
 spread <- 1
@@ -53,10 +54,13 @@ chol(SIGMA)
 ## Out of all the stuff generated, find the max so we can standardize the axes.
 
 
+simmed_mvnorm <- mvtnorm::rmvnorm(nsim, sigma=SIGMA)
 maxrange <- max(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
-                                          unif_draw %*% chol(SIGMA)
+                                          unif_draw %*% chol(SIGMA),
+                  c(simmed_mvnorm)
                   )
 )
+
 
 
 ```
@@ -81,7 +85,7 @@ plot( unif_draw %*% chol(SIGMA),
       xlab="",
       ylab="",
       ##main=expression(paste(U[d], Sigma^{~~1/2})))
-      main=expression(paste(U, R)))
+      main=expression(paste(U, A)))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 par(pty='s')
@@ -92,13 +96,13 @@ plot(sign(chisq_draw)*sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
       ylab="",
       ##main=expression(paste(A^{1/2}, U[d], Sigma^{~~1/2})))
      ##main=expression(paste(B[1], U[d], R[d])))
-     main=expression(paste(B, U, R)))
+     main=expression(paste(R, U, A)))
       # main="BUR")
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 
 par(pty='s')
-plot(mvtnorm::rmvnorm(nsim, sigma=SIGMA),
+plot(simmed_mvnorm,
      xlim=maxrange*c(-1,1),
      ylim=maxrange*c(-1,1),
       xlab="",
@@ -113,14 +117,48 @@ abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 # Then each point of the ellipse is multiplied by `r expression(paste(B))`= `r expression(paste(A^{1/2}))`, the square root of the random draw from distribution `r expression(paste(A))`.
 # 
 # And a MVN(0, Sigma) draw for comparison, as procured by `rnorm(nsim,0,SIGMA)`.
+```
+```{r,eval=FALSE,include=FALSE}
+mean(simmed_mvnorm[,1] < 1 & 
+     simmed_mvnorm[,1] > -1 & 
+     simmed_mvnorm[,2] < 1 & 
+     simmed_mvnorm[,2] > -1
+)
+
+BUR <- sqrt(chisq_draw) * unif_draw %*% chol(SIGMA)
+
+mean(BUR[,1] < 1 & 
+     BUR[,1] > -1 & 
+     BUR[,2] < 1 & 
+     BUR[,2] > -1
+)
+
+verify_pmvnorm <- mvtnorm::pmvnorm(lower=c(-1,-1), upper=c(1,1), sigma=SIGMA)
+verify_pmvnorm
+
+mean(simmed_mvnorm[,1] < Inf & 
+     simmed_mvnorm[,1] > 1 & 
+     simmed_mvnorm[,2] < 1 & 
+     simmed_mvnorm[,2] > -1
+)
+
+BUR <- sqrt(chisq_draw) * unif_draw %*% chol(SIGMA)
+
+mean(BUR[,1] < Inf & 
+     BUR[,1] > 1 & 
+     BUR[,2] < 1 & 
+     BUR[,2] > -1
+)
+
+verify_pmvnorm <- mvtnorm::pmvnorm(lower=c(1,-1), upper=c(Inf,1), sigma=SIGMA)
+verify_pmvnorm
 
 ```
 
 
-  * `r expression(U)` is a nx2 matrix containing n random draws from the uniform circle.
-  * `r expression(UR)` is the result of the matrix multiplication between nx2 `r expression(U)` and 2x2 `r expression(R)`, the Cholesky decomposition of a 2x2 matrix `r expression(Q)`.
-    * R makes a circle (`r expression(U)`) into an ellipse (`r expression(UR)`)
-    * R can be thought of as a "square root" of a matrix. `r expression(R)`'`r expression(R)` = `r expression(Q)`.
-  * B = sqrt(A), where is A is a nx1 matrix containing n *i.i.d* draws from its univariate distribution
-  * When A $\sim \chi^2$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q). Equivalently,
-  * When B $\sim \chi$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q)
+  * `r expression(U)` is a `n x 2` matrix containing n random draws from the uniform circle.
+  * `r expression(UA)` is the result of the matrix multiplication between `n x 2` `r expression(U)` and `2 x 2` `r expression(A)`, the Cholesky decomposition of a `2x2` matrix `r expression(Q)`.
+    * A makes a circle (`r expression(U)`) into an ellipse (`r expression(UA)`)
+    * A can be thought of as a "square root" of a matrix. `r expression(A)`'`r expression(A)` = `r expression(Q)`.
+  * When R $\sim \chi$(df=2) distribution, RUA is the bivariate normal distribution G(0,Q), Equivalently
+    * `mvpd` uses G for Gaussian

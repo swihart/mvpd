@@ -128,7 +128,8 @@
 #'   Q = Sigma,
 #'   delta=mu)$int
 #' 
-#' df0.0001 <- mvtnorm::dmvt(x, delta = mu, sigma = Sigma, df =  0.0001, log=FALSE) # default log = TRUE!
+#' df0.0001 <- mvtnorm::dmvt(x, delta = mu, sigma = Sigma, df =  0.0001, 
+#'                           log=FALSE) # default log = TRUE!
 #' df0.0001
 #' 
 #' dmvt_mat(
