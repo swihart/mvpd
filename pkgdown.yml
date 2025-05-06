@@ -3,7 +3,8 @@ pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
   articles/intro: intro.html
-last_built: 2025-05-01T16:08Z
+  articles/intro1: intro1.html
+last_built: 2025-05-06T17:41Z
 urls:
   reference: https://swihart.github.io/mvpd/reference
   article: https://swihart.github.io/mvpd/articles

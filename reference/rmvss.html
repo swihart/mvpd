@@ -23,6 +23,7 @@ location vectors. See Nolan (2013)."></head><body>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
+    <li><a class="dropdown-item" href="../articles/intro1.html">Introduction and Primer II</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -100,32 +101,32 @@ DOI 10.1007/s00180-013-0396-7</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## generate 10 random variates of a bivariate mvss</span></span></span>
 <span class="r-in"><span><span class="fu">rmvss</span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span>, alpha<span class="op">=</span><span class="fl">1.71</span>, Q<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">7.5</span>,<span class="fl">7.5</span>,<span class="fl">10</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             [,1]      [,2]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]   6.817562  5.226880</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  11.261375  9.085359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]   7.970680  4.607602</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]   5.933928  5.220424</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]   6.088821  1.242325</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]   2.500701  4.695405</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]   4.923821  2.583773</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]   1.613233 -4.920122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] -15.290380 -3.543715</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]  -2.606356 -2.805697</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             [,1]       [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] -2.2880532 -1.1896076</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  3.8428529  3.6829008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  4.7515197 -8.5706983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]  8.6469782 11.2498795</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]  0.1134101 -2.2581910</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]  3.0736881  4.1978192</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]  0.5205306  0.9126913</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  4.4697822  4.0377127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] -3.3006974  3.5956781</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] -5.2123886 -0.0154644</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## generate 10 random variates of a trivariate mvss</span></span></span>
 <span class="r-in"><span><span class="va">Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">7.5</span>,<span class="fl">7.5</span>,<span class="fl">7.5</span>,<span class="fl">10</span>,<span class="fl">7.5</span>,<span class="fl">7.5</span>,<span class="fl">7.5</span>,<span class="fl">10</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">rmvss</span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span>, alpha<span class="op">=</span><span class="fl">1.71</span>, Q<span class="op">=</span><span class="va">Q</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             [,1]      [,2]         [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] -4.6142817 -1.949101 -7.930291366</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  1.7505005  3.095034  2.178406189</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] -0.3907597 -2.812989 -2.699438585</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,] -3.2938889  2.255674 -0.008883112</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]  0.9845459  1.646429 -1.492460455</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,] -0.3475425 -2.807315 -2.847621079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]  6.8264215  5.225861  6.140413994</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  0.2714148 -1.086767 -0.270729960</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] -4.1951811 -1.856303 -4.018879427</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] -4.0844674 -6.458707 -5.308260915</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               [,1]          [,2]         [,3]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]   1.42608479    0.06029795   -1.4011923</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]   3.34653545    4.37694850    3.9521119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,]  -0.06039504   -2.13503949   -0.4941970</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]   1.32540052    0.40434259   -0.2968194</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,]  -6.17102647   -6.49241570  -10.5929414</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]   2.41988965   -1.28969300    2.7324429</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]  -1.50842255   -1.38584696   -3.0063357</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]   1.36508864    2.21965897   -1.9791640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  -6.20420733   -6.73638489   -0.8207061</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] -78.92899527 -247.92899227 -141.2987179</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

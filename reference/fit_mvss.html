@@ -23,6 +23,7 @@ distribution for an input matrix X."></head><body>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
+    <li><a class="dropdown-item" href="../articles/intro1.html">Introduction and Primer II</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -106,33 +107,33 @@ DOI 10.1007/s00180-013-0396-7</p>
 <span class="r-in"><span><span class="va">fmv</span> <span class="op">&lt;-</span> <span class="fu">mvpd</span><span class="fu">::</span><span class="fu">fit_mvss</span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fmv</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $univ_alphas</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.510294 1.517316 1.497068 1.494305</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.513308 1.537871 1.536045 1.518953</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $univ_betas</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.03231852 0.01290548 0.03108762 0.05986484</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1]  0.001161657  0.008100327 -0.025793228  0.004121532</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $univ_gammas</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.194440 2.614021 1.286477 1.008732</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.2004493 2.6457106 1.3009471 0.9991121</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $univ_deltas</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.980224 1.927714 3.063887 4.025451</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.9553778 1.9263515 2.9844314 3.9725634</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mult_alpha</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.504746</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.526544</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mult_Q_raw</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.4266874  2.6554608 -0.5354832  0.4651031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  2.6554608  6.8331072 -2.7385401 -0.4748252</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.5354832 -2.7385401  1.6550238  0.9352189</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.4651031 -0.4748252  0.9352189  1.0175398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.4410786  2.6832637 -0.5723522  0.4562007</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  2.6832637  6.9997844 -2.8527823 -0.5335773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.5723522 -2.8527823  1.6924633  0.9081656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.4562007 -0.5335773  0.9081656  0.9982249</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $mult_Q_posdef</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.4489583  2.6401048 -0.5521169  0.4631336</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  2.6401048  6.8436952 -2.7270711 -0.4734673</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.5521169 -2.7270711  1.6674471  0.9366899</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.4631336 -0.4734673  0.9366899  1.0177139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.4673593  2.6667974 -0.5869613  0.4490156</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  2.6667974  7.0101013 -2.8436289 -0.5290755</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.5869613 -2.8436289  1.7005843  0.9121597</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.4490156 -0.5290755  0.9121597  1.0001893</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">symMat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]      [,2]       [,3]       [,4]</span>
@@ -147,7 +148,7 @@ DOI 10.1007/s00180-013-0396-7</p>
 <span class="r-in"><span>            Q<span class="op">=</span><span class="va">fmv</span><span class="op">$</span><span class="va">mult_Q_posdef</span>,</span></span>
 <span class="r-in"><span>            delta<span class="op">=</span><span class="va">fmv</span><span class="op">$</span><span class="va">univ_deltas</span>,</span></span>
 <span class="r-in"><span>            maxpts.pmvnorm <span class="op">=</span> <span class="fl">25000</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3203018 with absolute error &lt; 6.7e-05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.3194962 with absolute error &lt; 9.9e-06</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

@@ -36,6 +36,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/intro.html">Introduction and Primer</a></li>
+    <li><a class="dropdown-item" href="articles/intro1.html">Introduction and Primer II</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -57,7 +58,9 @@
 </h1></div>
 <ul>
 <li>
-<code>[dpr]mvss</code>: mutivariate subgaussian stable distributions</li>
+<code>[dpr]mvss</code>: multivariate subgaussian stable distributions</li>
+<li>
+<code>[pr]mvlogis</code>: multivariate logistic distributions</li>
 </ul>
 <!-- badges: start --><!-- badges: end --><p>The goal of <code>mvpd</code> is to use product distribution theory to allow the numerical calculations of specific scale mixtures of the multivariate normal distribution. The multivariate subgaussian stable distribution is the product of the square root of a univariate positive stable distribution and the multivariate normal distribution (see Nolan (2013)).</p>
 <!-- ## Installation -->
@@ -76,13 +79,13 @@
 <span><span class="co">## basic example code</span></span>
 <span><span class="va">biv</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rmvss.html">rmvss</a></span><span class="op">(</span>n<span class="op">=</span><span class="fl">1e3</span>, alpha<span class="op">=</span><span class="fl">1.71</span>, Q<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">7.5</span>,<span class="fl">7.5</span>,<span class="fl">10</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">biv</span><span class="op">)</span></span>
-<span><span class="co">#&gt;            [,1]       [,2]</span></span>
-<span><span class="co">#&gt; [1,] -0.2260798 -0.6168492</span></span>
-<span><span class="co">#&gt; [2,] -6.1460819 -4.5603538</span></span>
-<span><span class="co">#&gt; [3,]  1.4592466  1.6213040</span></span>
-<span><span class="co">#&gt; [4,] -4.4159078 -2.9252448</span></span>
-<span><span class="co">#&gt; [5,] -6.7106973 -3.8158068</span></span>
-<span><span class="co">#&gt; [6,]  5.9107788  5.1332625</span></span>
+<span><span class="co">#&gt;            [,1]      [,2]</span></span>
+<span><span class="co">#&gt; [1,]  4.1376829 2.6671467</span></span>
+<span><span class="co">#&gt; [2,]  2.3077184 3.5237490</span></span>
+<span><span class="co">#&gt; [3,] -0.2878765 0.5820986</span></span>
+<span><span class="co">#&gt; [4,]  0.4463762 2.9209163</span></span>
+<span><span class="co">#&gt; [5,] -2.8267571 1.9511542</span></span>
+<span><span class="co">#&gt; [6,]  0.8814666 2.8394863</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">biv</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">0</span>,v<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" width="100%"></p>
 </div>
