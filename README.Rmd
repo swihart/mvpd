@@ -43,7 +43,7 @@ with alpha=1.71 and plot.
 
 ```{r example, message=FALSE}
 library(mvpd)
-set.seed(10)
+set.seed(2)
 ## basic example code
 biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
 head(biv)
