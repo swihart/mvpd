@@ -22,7 +22,8 @@ Kolmogorov distribution – see references."></head><body>
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/deep_dive_kolm.html">Deeper Dive: Kolmogorov Distribution, Density, Random Variates</a></li>
+    <li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
     <li><a class="dropdown-item" href="../articles/intro1.html">Introduction and Primer II</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -87,16 +88,16 @@ Stable URL: http://www.jstor.org/stable/2984774</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">rmvlogis</span><span class="op">(</span><span class="fl">10</span>, Q<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             [,1]       [,2]       [,3]       [,4]        [,5]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  2.5890076 -2.2490857 -0.7472117  3.0222297 -2.07197993</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] -1.4574477 -1.5208663  0.3222531  0.4034215  2.37985890</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] -0.3356744  4.1591546 -1.3953634  2.1618945  1.10518635</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]  2.6008694  1.0353735 -1.5661405  0.9971147  0.54545779</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] -2.9056077 -2.8728200  3.4639660  1.1003938  0.87503101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]  0.8176184 -2.5421209 -0.8326681 -1.2896730  2.40667587</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] -1.9007258  0.6085258 -0.7593202  0.1130552  0.65678665</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  0.9265653  0.8998055  0.9115432 -1.1959522 -0.09550614</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  1.7208763 -1.4449115  1.2963924 -2.5018370 -3.01443119</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [10,] -0.1689555  0.1927892  0.2790179 -0.6932005  1.04779718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] -1.4554436 -0.5413883 -0.8667427 -0.5031270  1.36947506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] -0.8491013 -0.8416934  1.8264470  0.6601506  0.98888253</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3,] -2.8792461  1.0411447  1.8077202  1.6215116 -0.07824789</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4,]  0.8069226 -0.3484485 -0.4003437  1.2489126 -0.60357591</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5,] -1.5304412 -1.9614416  0.6800465 -2.5021227  2.64421762</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6,]  0.0658620  0.1420186  1.4567006  0.3147913  0.60365273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7,]  0.1771488 -0.2844730 -1.3069375 -1.0245978  0.42505409</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] -0.9856645 -0.7346512 -0.3280713  0.3037126  2.69082351</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  1.9138452 -0.8799090 -2.9995169 -2.9453641  2.68784938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10,]  2.0868364 -0.5954600  0.6351749 -0.6499376 -1.92336192</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">QMAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>,nrow<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
