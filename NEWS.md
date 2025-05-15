@@ -3,6 +3,7 @@
 * add dmvss_mat(). this function may be faster than dmvss() and can handle matrix inputs
 * add dmvt_mat(). this is a developmental multivariate t distribution
 * add [pr]mvlogis
+* add [dr]kolm
 
 # mvpd 0.0.4
 

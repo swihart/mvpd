@@ -1,0 +1,234 @@
+---
+title: "Deeper Dive: Kolmogorov Distribution, Density, Random Variates"
+author: by Bruce J. Swihart
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mvpd)
+```
+
+## Background
+
+What does the Kolmogorov distribution have to do with multivariate product distributions?  Turns out a distribution based on the Kolmogorov distribution -- which is most commonly known for its development for and application in goodness-of-fit tests -- is useful for making elliptically contoured multivariate logistic distributions.
+
+There are two (equivalent) ways to represent the Kolmogorov distribution, in what is sometimes called a "limiting form" - which here means it involves an infinite sum:
+
+### Cumulative Distribution Function
+
+Representation 1:
+
+ * $F_{K1}(x) = 1 - 2 \sum^{\infty}_{i=1} (-1)^{i-1} \exp{\left(-2 i^2 x^2\right)}$
+
+Representation 2:
+
+  * $F_{K2}(x) = \frac{\sqrt{2 \pi}}{x} \sum^{\infty}_{i=1} \exp{\left(-(2 i - 1)^2 \pi^2 / \left( 8 x^2\right)      \right)}$
+
+Representation 3:
+
+  * $F_{K3}(x)$ is
+    * $F_{K2}(x)~~\forall x \in [0,x_c)$
+    * $F_{K1}(x)~~\forall x \in [x_c,\infty)$
+  
+And taking the derivative with respect to $x$, we get the corresponding limiting forms of the density:
+
+### Density 
+
+Representation 1:
+
+ * $f_{K1}(x) = - 2 \sum^{\infty}_{i=1} (-1)^{i-1} 
+ \left(-4 i^2 x\right)
+ \exp{\left(-2 i^2 x^2\right)}$
+
+Representation 2:
+
+  * $f_{K2}(x) = \frac{\sqrt{2 \pi}}{4x^4} 
+  \sum^{\infty}_{i=1} \left((2 i - 1)^2 \pi^2 - 4x^2 \right)
+  \exp{\left(-(2 i - 1)^2 \pi^2 / \left( 8 x^2\right)      
+  \right)}$
+
+Representation 3:
+
+  * $f_{K3}(x)$ is
+    * $f_{K2}(x)~~\forall x \in [0,x_c)$
+    * $f_{K1}(x)~~\forall x \in [x_c,\infty)$
+
+```{r}
+dkolm(1,rep="K1")
+dkolm(1,rep="K2")
+dkolm(1,rep="K3")
+```
+
+Check expected value -- should be $\sqrt{\frac{\pi}{2}}\ln2 =$ `r  round(sqrt(pi/2)*log(2), 20)`.... One could do this with their own code, or they can use `mpvd::dkolm`:
+
+ * own code / base R:
+ 
+```{r}
+f <- function(x,nterms=1e5){ 
+  k=1:nterms; 
+  -2*sum( (-1)^(k-1) * -4*x*k^2 * exp(-2*k^2*x^2) )
+}
+f_vec <- Vectorize(f, "x")
+x_f_vec <- function(x) x*f_vec(x,nterms=1e5)
+integrate(x_f_vec,0,Inf)
+```
+
+  * Using `mvpd::dkolm`:
+
+```{r}  
+x_f_K1 <- function(x, nterms=1e5) x*dkolm(x,nterms,rep="K1")
+x_f_K2 <- function(x, nterms=1e5) x*dkolm(x,nterms,rep="K2")
+x_f_K3 <- function(x, nterms=1e5) x*dkolm(x,nterms,rep="K3")
+
+mom1_K1 <- integrate(x_f_K1, 0, Inf)[1]
+mom1_K2 <- integrate(x_f_K2, 0, Inf)[1]
+mom1_K3 <- integrate(x_f_K3, 0, Inf)[1]
+
+print(matrix(c(mom1_K1, mom1_K2, mom1_K3, sqrt(pi/2)*log(2)),ncol=1), digits=20)
+```
+
+The printout shows agreement out to the 11th digit.
+
+Next, we plot the densities and also print out some values.  
+
+The takeaways are:
+
+  * $K1$ representation stuggles with small $x$
+  * $K2$ representation struggles with larger $x$
+
+Yet,
+
+  * $K2$ representation is better with small $x$
+  * $K1$ representation is better with larger $x$
+
+And now we see the motivation for the construction of $K3$. Representation $K3$ uses $K1$ for larger $x$ values bigger than a cutpoint and $K2$ for $x$ values smaller than that cutpoint.  The default value for the cutpoint is `K3cutpt = 2`.  We pick `nterms=10` to demonstrate the problems - in practice we pick the number of terms to be much higher, say 1e5, which makes the violations less egregious for moderate values of $x$ but the violations can still persist for extremely small and large values of $x$.  Therefore, solely increasing `nterms` may not be a solution (depending on the application) for $K1$ or $K2$.  That's why `mvpd` uses the ''spliced" version $K3$ as well as a default of 100,000 terms.
+
+## Plot density
+
+* `nterms=10`
+
+```{r, fig.show="hold", out.width="33%"}
+xdom <- c(seq(0.0,1,0.01), seq(1.1,6,.1), 8,10,12)
+plot(xdom,dkolm(xdom,nterms=10,rep="K1"), main="K1 struggles with small x", ylab="", xlab="x")
+abline(h=0,col="blue")
+plot(xdom,dkolm(xdom,nterms=10,rep="K2"), main="K2 struggles with large x", ylab="", xlab="x")
+abline(h=0,col="blue")
+
+dkolm(12,rep="K2",nterms=10)
+#> [1] -0.005592438 from rep="K2"
+
+plot(xdom,dkolm(xdom,nterms=10,rep="K3"), main="K3: best of both worlds", ylab="", xlab="x")
+abline(h=0,col="blue")
+dkolm(12,rep="K3",nterms=10)
+#> [1] -0.005592438 from rep="K2"
+
+
+```
+
+Since $K1$ is an alternating sum, if the number of terms is odd, we'll see that $K1$ produces aberrant that are positive, instead of negative.  However $K2$ gets close to 0 for $x=12$ but is still negative.
+
+* `nterms=11`
+
+```{r, fig.show="hold", out.width="33%"}
+xdom <- c(seq(0.0,1,0.01), seq(1.1,6,.1), 8,10,12)
+plot(xdom,dkolm(xdom,nterms=11,rep="K1"), main="K1 struggles with small x", ylab="", xlab="x")
+abline(h=0,col="blue")
+plot(xdom,dkolm(xdom,nterms=11,rep="K2"), main="K2 struggles with large x", ylab="", xlab="x")
+abline(h=0,col="blue")
+
+dkolm(12,rep="K2",nterms=11)
+#> [1] -0.002983048 from rep="K2"
+
+plot(xdom,dkolm(xdom,nterms=11,rep="K3"), main="K3: best of both worlds", ylab="", xlab="x")
+abline(h=0,col="blue")
+
+dkolm(12,rep="K3",nterms=11)
+#> [1] -0.002983048 from rep="K2"
+
+
+```
+
+### Random Variates
+
+The most well-known formulation for random variates are from L(x/2) [...], because this formulation is the scale mixture for a normal distribution to become a logistic distribution. Using that formulation we can easily derive how to get random variates for L(x), the Kolmgorov distribution.  Turns out we just need to generate many i.i.d. exponential(rate=2) variables, sum them up with the squared integers in the denominators, and then take the square root of that sum.
+
+
+```{r, fig.show="hold", out.width="33%"}
+#par(mfrow=c(2,2))
+y_range_rv <- c(0,1.8)
+x_range_rv <- c(0,4)
+n <- 3e4; nterms <- 2000
+##rv <- rkolm(1e4,500)
+
+## this is from L(x/2)
+rv <- 2*matrix(stats::rexp(n*nterms, rate=1), n, nterms) %*%
+  matrix(1/c(1:nterms)^2,nrow=nterms)
+range_rv <- range(rv)
+x<-seq(range_rv[1],range_rv[2],0.01)
+hist(sqrt(rv),freq=FALSE,breaks=130, 
+     ylim=y_range_rv, xlim=x_range_rv, main="0.5*dkolm(x*0.5)", xlab="x")
+lines(x,0.5*dkolm(x*0.5), col="red",lty=2, lwd=4)
+
+## this is from L(x)
+rv <- 1*matrix(stats::rexp(n*nterms, rate=2), n, nterms) %*%
+  matrix(1/c(1:nterms)^2,nrow=nterms)
+range_rv <- range(rv)
+x<-seq(range_rv[1],range_rv[2],0.01)
+hist(sqrt(rv),freq=FALSE,breaks=130, 
+     ylim=y_range_rv, xlim=x_range_rv, main="dkolm(x)", xlab="x")
+lines(x, dkolm(x), col="cyan",lty=2,lwd=4)
+
+## equivalently, using rkolm()
+## rkolm does all the steps, including the final sqrt()
+hist(rkolm(n,nterms),freq=FALSE,breaks=130, 
+     ylim=y_range_rv, xlim=x_range_rv, main="dkolm(x)", xlab="x")
+lines(x, dkolm(x), col="orange",lty=2,lwd=4)
+
+
+# rv <- rnorm(1e4, sd=2)
+# range_rv <- range(rv)
+# x<-seq(range_rv[1],range_rv[2],0.01)
+# hist(rv,freq=FALSE,breaks=100)
+# lines(x,0.5*dnorm(0.5*x), col="red",lty=2, lwd=4)
+
+
+```
+
+Check expected value -- should be $\sqrt{\frac{\pi}{2}}\ln2 =$ `r  round(sqrt(pi/2)*log(2), 20)`.... One could do this with their own code, or they can use `mpvd:rkolm`:
+
+```{r}
+set.seed(102)
+
+beg <- Sys.time()
+rkdraw <- rkolm(5e4, nterms=5e2)
+end <- Sys.time()
+end-beg
+
+## Expected value
+print(matrix(c(
+  mean(rkdraw),
+  sqrt(pi/2)*log(2)),
+  ncol=1), 
+  digits=20)
+
+## Variance
+print(matrix(c(
+  var(rkdraw),
+  pi^2/12 - (sqrt(pi/2)*log(2))^2),
+  ncol=1), 
+  digits=20)
+
+## 2nd moment
+print(matrix(c(
+  mean(rkdraw^2),
+  pi^2/12),
+  ncol=1), 
+  digits=20)
+```
+
