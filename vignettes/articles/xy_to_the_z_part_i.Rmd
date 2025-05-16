@@ -39,7 +39,12 @@ This [response video by
 Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) has an explanation that is similar to the one on this page and connects it to Poisson processes and some other statistical results.  I focus more on visualizing the distributions and thinking of the result in terms of convolution and scale mixture, which should be no surprise given these are commonly used in the underlying theory of `mvpd`.  I also generalize the result, showing that the original problem is a specific instance of the more general result.
 
 
-## Restatement of the Result
+## Restatement of the Relations
+
+We generalize X, Y being iid Beta($\alpha$, 1) (which for $\alpha=1$ is U(0,1)) and restate the result for the quantity $(XY)^Z$.  We then consider a similar quantity $\left(\frac{1}{XY} \right)^Z$ as well.  For each quantity we build intuition by thinking through the distributions on the log-scale.
+
+
+---
 
 For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
 
@@ -53,6 +58,7 @@ For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
   * $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$)
     * Which implies $Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right) \sim$ Exp($\alpha$)
 
+---
 
 Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
 
@@ -277,9 +283,9 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 Quick observations --
 
-  * log(X): is a reflected Exponential, as is log(Y)
-  * log(X) + log(Y): the convolution (i.e., sum) of two reflected Exponentials is more disperse and squattier. We know this because think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
-  * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, we need to "tighten" or "gather" or "concentrate" the distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
+  * log(X): is a Reflected Exponential with rate $\alpha$, as is log(Y) *and* Z(log(X)+log(Y))!
+  * log(X) + log(Y): the convolution (i.e., sum) of two Reflected Exponentials is more disperse and squattier than just one Reflected Exponential. We know this already -- think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
+  * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, log(X), we need to "tighten" or "gather" or "concentrate" the log(X)+log(Y) distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
 See for other values for alpha:
 
@@ -650,9 +656,9 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 Quick observations --
 
-  * log(X): is a reflected Exponential, as is log(Y)
-  * log(X) + log(Y): the convolution (i.e., sum) of two reflected Exponentials is more disperse and squattier. We know this because think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
-  * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, we need to "tighten" or "gather" or "concentrate" the distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
+  * log(X): is an Exponential($\alpha$), as is log(Y) *and* Z(log(X)+log(Y))!
+  * log(X) + log(Y): the convolution (i.e., sum) of two Exponentials is more disperse and squattier. We know this already -- think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
+  * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, log(X), we need to "tighten" or "gather" or "concentrate" the log(X)+log(Y) distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
 See for other values for alpha:
 
@@ -794,12 +800,13 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
-So far we have considered cases where the alpha for X and Y are the same and how multiplying (log(X)+log(Y)) by Z allows one to recover the original distribution of log(X) (equivalently, log(Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying by a uniform would not recover either distribution, it would be a distribution "in-between" those two distributions.  We consider this as bonus case below.
+
+So far we have considered cases where the alpha for X and Y are the same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the original distribution of log(1/X) (equivalently, log(1/Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the distribution for either log(1/X) or log(1/Y) -- it would be a distribution "in-between" those two distributions -- but not an Exponential with an alpha between $\alpha_x$ and $\alpha_y$.  We consider this "unequal alpha" as a bonus case below.
 
 
-## Bonus: $\alpha_x \neq \alpha_y$
+## Bonus: Unequal alpha cases
 
-Firstly, one may want to consult wikipedia.
+Firstly, one may want to consult Wikipedia.
 
   * [Wikipedia Sum of Two Independent Exponential Random Variables](https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables)
   
@@ -810,17 +817,224 @@ There's no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so try
 
   * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html).
   * page 80 green notebook
-  
-### $Z \sim$ Gamma
 
-  * page 82 green notebook
+```{r, results='hide', echo=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## Z is uniform
+nsims <- 1e5
+aa_x <- 4
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim
+s.xlim
+
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="blue"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      col="blue"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      col="darkorange"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+fw_dens <- function(w, m, n){
+  
+  num = m*n*(expint::gammainc(0,m*w) - expint::gammainc(0, n*w))
+  den = m-n
+  
+  -num/den
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      fw_dens(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      col="magenta"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+```
+
+
+### $Z \sim$ Inverse-Gamma($\alpha_z$, $\beta_z$)
+
+  * page 83 green notebook
+  * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar 
+  
+```{r, results='hide', echo=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## and z ~ IG(a_z, b_z)
+
+nsims <- 1e6
+aa_x <- 4
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+aa_z <- 25
+bb_z <- 25
+
+x <- rbeta (nsims, aa_x, bb_x)
+y <- rbeta (nsims, aa_y, bb_y)
+z <- invgamma::rinvgamma(nsims, shape=aa_z, rate=bb_z)
+
+
+s.xlim <- c(0,4)
+#   range(c(log(1/x),
+#                   log(1/y),
+#                   z,
+#                   log(1/x * 1/y),
+#                   z*log(1/x*1/y)
+# )) 
+#c(-10,0)
+#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim
+s.xlim
+
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="blue"
+)
+
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      col="blue"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,4), 
+     main="Z", xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      col="darkorange"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+fw_dens_ig <- function(w, m, n, o, p){
+  
+  fac1 <- (m*n) / (n-m)
+  fac2 <- p^o * gamma(o+1) / gamma(o)
+  fac3 <- (1/(m*w+p)^(o+1) - 1/(n*w+p)^(o+1))
+  
+  fac1*fac2*fac3
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      fw_dens_ig(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y,
+              aa_z,
+              bb_z),
+      col="magenta"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+```
+  
+  
   
 ### $Z \sim$ Pareto  
 
   * TBD. don't have R code yet.  see page 81 green notebook
   
   
-#### Miscellany
+#### Miscellany / Notes to self / Stubs for future ideas
 
   *   [Proof of -ln(X) being an Exponential](https://math.stackexchange.com/a/3173387/180716)
 
