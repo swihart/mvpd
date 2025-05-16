@@ -22,7 +22,7 @@ ___
 ---
 
 I'm about 8 months late to the party, but a challenge problem from 3blue1brown
-caught my attention, as well as a call for intuitive approaches.
+caught my attention, as well as a call for intuitive approaches to explaining the result.
 
 > Here's the challenge mode for all you math whizzes. Sample three numbers x, y, z uniformly at random in [0, 1], and compute (xy)^z. What distribution describes this result?
 >
@@ -35,6 +35,21 @@ caught my attention, as well as a call for intuitive approaches.
 
 The result and good explanations of the result have been around for a while, as shown in this [Math SE post from 2012](https://math.stackexchange.com/q/261783/180716).  
 
+This [response video by 
+Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) has an explanation that is similar to the one on this page and connects it to Poisson processes and some other statistical results.  I focus more on visualizing the distributions and thinking of the result in terms of convolution and scale mixture, which should be no surprise given these are commonly used in the underlying theory of `mvpd`.  I also generalize the result, showing that the original problem is a specific instance of the more general result.
+
+
+## Restatement of the Result
+
+For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
+
+  * $(XY)^Z  \sim$ Beta($\alpha$, 1)
+    * Which implies $Z \left( \log X + \log Y \right) \sim$ ReflectedExp($\alpha$)
+  * $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$)
+    * Which implies $Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right) \sim$ Exp($\alpha$)
+
+
+Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ Beta(1, 1) which is U(0,1).
 
 
 ## Bonus: $\alpha_x \neq \alpha_y$
