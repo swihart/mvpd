@@ -43,8 +43,13 @@ Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) has an explan
 
 For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
 
+**Result 1**:
+
   * $(XY)^Z  \sim$ Beta($\alpha$, 1)
     * Which implies $Z \left( \log X + \log Y \right) \sim$ ReflectedExp($\alpha$)
+
+**Result 2**:    
+
   * $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$)
     * Which implies $Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right) \sim$ Exp($\alpha$)
 
@@ -55,13 +60,16 @@ Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because B
 
 ###  Sanity check: Result 1
 
-Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  We'll plot the theoretical result in purple on top of the histogram.
+Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  We'll plot the theoretical result in purple on top of the histogram.  First for $\alpha=1$, the special uniform instance (because that is what started it all!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
+
+
+#### alpha = 1
 
 ```{r, fig.show="hold", out.width="50%"}
 set.seed(1)
 nsims <- 1e4
-aa_x <- 4
-aa_y <- 4
+aa_x <- 1
+aa_y <- 1
 
 x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
 y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
@@ -99,11 +107,167 @@ var(x) + mean(x)^2
 
 ```
 
-#### tab 7
+#### alpha = 4.318
+
+```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 4.318
+aa_y <- 4.318
+
+x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
+y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
+z <- runif(nsims,0,1)
+
 
   
-#### tab 8 
+hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
 
+lines(               seq(0,1,0.01),
+                     dbeta(seq(0,1,0.01),aa_x,1),
+                     type="l",
+                     col="purple"
+)
+
+hist(x, freq=FALSE, breaks=50, xlim=c(0,1))
+lines(               seq(0,1,0.01),
+                     dbeta(seq(0,1,0.01),aa_x,1),
+                     type="l",
+                     col="purple"
+)
+
+## compare mean, variance, and 2nd moment
+prod <- (x*y)^z
+mean(prod)
+var(prod)
+var(prod) + mean(prod)^2
+
+
+mean(x)
+var(x)
+var(x) + mean(x)^2
+
+
+
+```
+
+#### alpha = 0.633
+
+```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 0.633
+aa_y <- 0.633
+
+x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
+y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
+z <- runif(nsims,0,1)
+
+
+  
+hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
+
+lines(               seq(0,1,0.01),
+                     dbeta(seq(0,1,0.01),aa_x,1),
+                     type="l",
+                     col="purple"
+)
+
+hist(x, freq=FALSE, breaks=50, xlim=c(0,1))
+lines(               seq(0,1,0.01),
+                     dbeta(seq(0,1,0.01),aa_x,1),
+                     type="l",
+                     col="purple"
+)
+
+## compare mean, variance, and 2nd moment
+prod <- (x*y)^z
+mean(prod)
+var(prod)
+var(prod) + mean(prod)^2
+
+
+mean(x)
+var(x)
+var(x) + mean(x)^2
+
+
+
+```
+
+### Log-scale intuition building
+
+Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  Take a look at this:
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+## okay, just keep it to beta(a,1) with a uniform 
+
+nsims <- 1e7
+aa_x <- 1
+aa_y <- 1
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+s.xlim <- range(c(log(x),
+                  log(y),
+                  z,
+                  log(x*y),
+                  z*log(x*y)
+)
+) 
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+
+dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3))
+hist(log(x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_x,
+               bb_x),
+      col="red"
+)
+
+hist(log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_y,
+               bb_y),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1))
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(x)+log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(x)+log(y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+#                aa,
+#                bb),
+#       col="red"
+# )
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+
+  
 
 ### Sanity check: Result 2
 
@@ -145,7 +309,7 @@ var(prod) + mean(prod)^2
 
 mean(1/x)
 var(1/x)
-var(1/x) + mean(x)^2
+var(1/x) + mean(1/x)^2
 
 
 
