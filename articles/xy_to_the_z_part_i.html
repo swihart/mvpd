@@ -221,8 +221,31 @@ as an arbitrary value smaller than 1.</p>
 <p>Consider the log scale, which changes the relation from a product
 raised to a power into a sum multiplied by a number. In other words, a
 convolution (sum of two random variables) and a scale mixture (then
-multiplied by a random variable). Take a look at this:</p>
+multiplied by a random variable). Take a look at this for alpha=1:</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p>Quick observations –</p>
+<ul>
+<li>log(X): is a reflected Exponential, as is log(Y)</li>
+<li>log(X) + log(Y): the convolution (i.e., sum) of two reflected
+Exponentials is more disperse and squattier. We know this because think
+of adding two normals together and the resultant Normal have the sum of
+the variance.</li>
+<li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
+distribution before the convolution, we need to “tighten” or “gather” or
+“concentrate” the distribution. Multiplying it by a random number
+between 0 and 1 will do exactly that.</li>
+</ul>
+<p>See for other values for alpha:</p>
+<div class="section level4">
+<h4 id="alpha-4-318-1">alpha = 4.318<a class="anchor" aria-label="anchor" href="#alpha-4-318-1"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="alpha-0-633-1">alpha = 0.633<a class="anchor" aria-label="anchor" href="#alpha-0-633-1"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+</div>
 </div>
 <div class="section level3">
 <h3 id="sanity-check-result-2">Sanity check: Result 2<a class="anchor" aria-label="anchor" href="#sanity-check-result-2"></a>
@@ -276,7 +299,7 @@ We’ll plot the theoretical result in purple on top of the histogram.</p>
 <span><span class="co">#&gt; [1] 0.2108825</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
 <span><span class="co">#&gt; [1] 1.98879</span></span></code></pre></div>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-6-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-6-2.png" width="50%"></p>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-8-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-8-2.png" width="50%"></p>
 <div class="section level4">
 <h4 id="section"></h4>
 </div>
