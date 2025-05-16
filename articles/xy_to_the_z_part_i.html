@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Introduction and Primer II • mvpd</title>
+<title>(XY)^Z Part I • mvpd</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction and Primer II">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="(XY)^Z Part I">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -60,39 +60,49 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Introduction and Primer II</h1>
-            <h3 data-toc-skip class="subtitle">Start with a unit circle.
-End with a Bivariate Normal.</h3>
+      <h1>(XY)^Z Part I</h1>
+                        <h4 data-toc-skip class="author">Bruce J.
+Swihart</h4>
             
+            <h4 data-toc-skip class="date">2025-05-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/swihart/mvpd/blob/main/vignettes/articles/intro1.Rmd" class="external-link"><code>vignettes/articles/intro1.Rmd</code></a></small>
-      <div class="d-none name"><code>intro1.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/swihart/mvpd/blob/main/vignettes/articles/xy_to_the_z_part_i.Rmd" class="external-link"><code>vignettes/articles/xy_to_the_z_part_i.Rmd</code></a></small>
+      <div class="d-none name"><code>xy_to_the_z_part_i.Rmd</code></div>
     </div>
 
     
     
-<p><img src="intro1_files/figure-html/unnamed-chunk-4-1.png" width="768"></p>
+<hr>
+<p><strong>IN PROGRESS</strong></p>
+<hr>
+<p>I’m about 8 months late to the party, but a challenge problem from
+3blue1brown caught my attention, as well as a call for intuitive
+approaches.</p>
+<blockquote>
+<p>Here’s the challenge mode for all you math whizzes. Sample three
+numbers x, y, z uniformly at random in [0, 1], and compute (xy)^z. What
+distribution describes this result?</p>
+<p>Answer: It’s uniform!</p>
+<p>I know how to prove it, but haven’t yet found the “aha” style
+explanation where it feels expected or visualizable. If any of you have
+one, please send it my way and I’ll strongly consider making a video on
+it.</p>
+<p>– Grant Sanderson of 3blue1brown, 2024-09-10</p>
+</blockquote>
+<p>The result and good explanations of the result have been around for a
+while, as shown in this <a href="https://math.stackexchange.com/q/261783/180716" class="external-link">Math SE post from
+2012</a>.</p>
+<div class="section level2">
+<h2 id="bonus-alpha_x-neq-alpha_y">Bonus:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#bonus-alpha_x-neq-alpha_y"></a>
+</h2>
 <ul>
-<li>U is a nx2 matrix containing n random draws from the uniform
-circle.</li>
-<li>B = sqrt(A), where A is a nx1 matrix containing n <em>i.i.d</em>
-draws from its univariate distribution.</li>
-<li>BU can be thought of as the distribution of radii</li>
-<li>BUR is the result of the matrix multiplication between nx2 BU and
-2x2 R, the Cholesky decomposition of a 2x2 matrix Q.
-<ul>
-<li>R makes a circular (BU) into an elliptical (BUR)</li>
-<li>R can be thought of as a “square root” of a matrix. R’R = Q.</li>
+<li><a href="https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables" class="external-link">Wikipedia
+Sum of Two Independent Exponential Random Variables</a></li>
 </ul>
-</li>
-<li>When A
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><msup><mi>χ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\sim \chi^2</annotation></semantics></math>(df=2)
-distribution, BUR is the bivariate normal distribution G(0,Q).
-Equivalently,</li>
-<li>When B
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mi>χ</mi></mrow><annotation encoding="application/x-tex">\sim \chi</annotation></semantics></math>(df=2)
-distribution, BUR is the bivariate normal distribution G(0,Q)</li>
-</ul></main>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

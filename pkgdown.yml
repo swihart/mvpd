@@ -5,7 +5,9 @@ articles:
   articles/deep_dive_kolm: deep_dive_kolm.html
   articles/intro: intro.html
   articles/intro1: intro1.html
-last_built: 2025-05-16T11:01Z
+  articles/xy_to_the_z_part_i: xy_to_the_z_part_i.html
+  articles/xy_to_the_z_part_ii: xy_to_the_z_part_ii.html
+last_built: 2025-05-16T12:19Z
 urls:
   reference: https://swihart.github.io/mvpd/reference
   article: https://swihart.github.io/mvpd/articles

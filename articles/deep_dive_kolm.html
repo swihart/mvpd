@@ -36,6 +36,8 @@
 <li><a class="dropdown-item" href="../articles/deep_dive_kolm.html">Deeper Dive: Kolmogorov Distribution, Density, Random Variates</a></li>
     <li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
     <li><a class="dropdown-item" href="../articles/intro1.html">Introduction and Primer II</a></li>
+    <li><a class="dropdown-item" href="../articles/xy_to_the_z_part_i.html">(XY)^Z Part I</a></li>
+    <li><a class="dropdown-item" href="../articles/xy_to_the_z_part_ii.html">(XY)^Z Part II</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -81,7 +83,8 @@ application in goodness-of-fit tests – is useful for making elliptically
 contoured multivariate logistic distributions.</p>
 <p>There are two (equivalent) ways to represent the Kolmogorov
 distribution, in what is sometimes called a “limiting form” - which here
-means it involves an infinite sum:</p>
+means it involves an infinite sum. A third form is introduced, that
+“splices” the first two representations together:</p>
 <div class="section level3">
 <h3 id="cumulative-distribution-function">Cumulative Distribution Function<a class="anchor" aria-label="anchor" href="#cumulative-distribution-function"></a>
 </h3>
@@ -260,7 +263,7 @@ as well as a default of 100,000 terms.</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">K1</annotation></semantics></math>
 is an alternating sum, if the number of terms is odd, we’ll see that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">K1</annotation></semantics></math>
-produces aberrant that are positive, instead of negative. However
+produces aberrant values that are positive, instead of negative. However
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">K2</annotation></semantics></math>
 gets close to 0 for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">x=12</annotation></semantics></math>
@@ -347,7 +350,7 @@ the denominators, and then take the square root of that sum.</p>
 <span><span class="va">rkdraw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rkolm.html">rkolm</a></span><span class="op">(</span><span class="fl">5e4</span>, nterms<span class="op">=</span><span class="fl">5e2</span><span class="op">)</span></span>
 <span><span class="va">end</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">end</span><span class="op">-</span><span class="va">beg</span></span>
-<span><span class="co">#&gt; Time difference of 0.8819973 secs</span></span>
+<span><span class="co">#&gt; Time difference of 0.8852735 secs</span></span>
 <span></span>
 <span><span class="co">## Expected value</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
