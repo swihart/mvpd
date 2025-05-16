@@ -42,7 +42,14 @@ Browser tabs that were useful on the search:
 
   * [Math SE post from 2012](https://math.stackexchange.com/q/261783/180716).  
   
-  * 
+  * [product of two betas](https://math.stackexchange.com/q/1073364/180716)
+  
+  * [moment matching techinque (applied to product of betas)](https://math.stackexchange.com/a/2440749/180716)
+  
+  * [and using mathematica (check your files)](https://math.stackexchange.com/a/2441409/180716)
+    * which could lead to [mathstatica](http://www.mathstatica.com/) as reviewed [here](http://www.jstatsoft.org/v47/s01/paper)
+    * and/or [Rubi](https://rulebasedintegration.org/downloadRubi.html)
+    * which led to reading about [2F1()](https://en.wikipedia.org/wiki/Hypergeometric_function#Integral_formulas)
 
 ```{r, include=TRUE, evaluate=FALSE}
 

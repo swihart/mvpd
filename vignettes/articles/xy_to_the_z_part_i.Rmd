@@ -49,9 +49,35 @@ For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
     * Which implies $Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right) \sim$ Exp($\alpha$)
 
 
-Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ Beta(1, 1) which is U(0,1).
+Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
+
+  [Proof of -ln(X) being an Exponential](https://math.stackexchange.com/a/3173387/180716)
 
 
 ## Bonus: $\alpha_x \neq \alpha_y$
 
   * [Wikipedia Sum of Two Independent Exponential Random Variables](https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables)
+  
+
+There's no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so trying different distributions for $Z$ leads to different blends of  the X,Y distributions:
+
+### $Z \sim$ U(0,1)
+
+  * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html).
+  * page 80 green notebook
+  
+### $Z \sim$ Gamma
+
+  * page 82 green notebook
+  
+### $Z \sim$ Pareto  
+
+  * TBD. don't have R code yet.  see page 81 green notebook
+  
+  
+#### Miscellany
+
+  * [Is this transformation of beta relevant for a=0, b=1?](https://math.stackexchange.com/a/4039033/180716)
+  
+  * [Keep in back pocket for generalizing Uniform...U(-1,1)](https://stats.stackexchange.com/a/461337/35034)
+
