@@ -572,9 +572,234 @@ var(1/x) + mean(1/x)^2
 
 ```
 
+### Log-scale for intuition building
+
+Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  
+
+We will visualize this using 5 plots arranged in a 3x3 grid.  The left column will show the distributions of each of the 3 components of consideration (log(X), log(Y), and Z), the middle column will just show the convolution of log(X) and log(Y), that is to say log(X)+log(Y), and the third one will show the scale mixture applied to the convolution.
+
+Take a look at this for alpha=1:
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+## sum of two indep exponentials aa_x = aa_y
+
+nsims <- 1e7
+aa_x <- 1
+aa_y <- 1
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+Quick observations --
+
+  * log(X): is a reflected Exponential, as is log(Y)
+  * log(X) + log(Y): the convolution (i.e., sum) of two reflected Exponentials is more disperse and squattier. We know this because think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
+  * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, we need to "tighten" or "gather" or "concentrate" the distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
+  
+See for other values for alpha:
+
+#### alpha = 4.318
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 1e3
+aa_x <- 4.318
+aa_y <- 4.318
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+#### alpha = 0.633
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.1)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+So far we have considered cases where the alpha for X and Y are the same and how multiplying (log(X)+log(Y)) by Z allows one to recover the original distribution of log(X) (equivalently, log(Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying by a uniform would not recover either distribution, it would be a distribution "in-between" those two distributions.  We consider this as bonus case below.
 
 
 ## Bonus: $\alpha_x \neq \alpha_y$
+
+Firstly, one may want to consult wikipedia.
 
   * [Wikipedia Sum of Two Independent Exponential Random Variables](https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables)
   
