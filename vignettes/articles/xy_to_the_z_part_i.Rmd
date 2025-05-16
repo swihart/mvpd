@@ -1,0 +1,33 @@
+---
+title: "(XY)^Z Part I"
+author: Bruce J. Swihart
+date: 2025-05-16
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(mvpd)
+```
+
+___ 
+
+**IN PROGRESS**
+
+---
+
+I'm about 8 months late to the party, but a challenge problem from 3blue1brown
+caught my attention, as well as a call for intuitive approaches.
+
+> Here's the challenge mode for all you math whizzes. Sample three numbers x, y, z uniformly at random in [0, 1], and compute (xy)^z. What distribution describes this result?
+>
+> Answer: It's uniform!
+>
+> I know how to prove it, but haven't yet found the "aha" style explanation where it feels expected or visualizable. If any of you have one, please send it my way and I'll strongly consider making a video on it.
+> `r tufte::quote_footer('Grant Sanderson of 3blue1brown, 2024-09-10')`
+

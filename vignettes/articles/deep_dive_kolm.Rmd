@@ -18,7 +18,8 @@ library(mvpd)
 
 What does the Kolmogorov distribution have to do with multivariate product distributions?  Turns out a distribution based on the Kolmogorov distribution -- which is most commonly known for its development for and application in goodness-of-fit tests -- is useful for making elliptically contoured multivariate logistic distributions.
 
-There are two (equivalent) ways to represent the Kolmogorov distribution, in what is sometimes called a "limiting form" - which here means it involves an infinite sum:
+There are two (equivalent) ways to represent the Kolmogorov distribution, in what is sometimes called a "limiting form" - which here means it involves an infinite sum. A
+third form is introduced, that "splices" the first two representations together:
 
 ### Cumulative Distribution Function
 
@@ -131,7 +132,7 @@ dkolm(12,rep="K3",nterms=10)
 
 ```
 
-Since $K1$ is an alternating sum, if the number of terms is odd, we'll see that $K1$ produces aberrant that are positive, instead of negative.  However $K2$ gets close to 0 for $x=12$ but is still negative.
+Since $K1$ is an alternating sum, if the number of terms is odd, we'll see that $K1$ produces aberrant values that are positive, instead of negative.  However $K2$ gets close to 0 for $x=12$ but is still negative.
 
 * `nterms=11`
 
