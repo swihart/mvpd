@@ -197,11 +197,11 @@ var(x) + mean(x)^2
 
 ### Log-scale intuition building
 
-Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  Take a look at this:
+Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  Take a look at this for alpha=1:
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
-
+set.seed(1)
 nsims <- 1e7
 aa_x <- 1
 aa_y <- 1
@@ -225,8 +225,9 @@ s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
 
 dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
 
-par(mfcol=c(3,3))
-hist(log(x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(X)", xlab="",ylab="")
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
@@ -234,7 +235,8 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+hist(log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(Y)", xlab="",ylab="")
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_y,
@@ -242,23 +244,26 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1))
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
 
 
 
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
-hist(log(x)+log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+hist(log(x)+log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(X)+log(Y)", xlab="",ylab="")
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
-hist(z*(log(x)+log(y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
-# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
-#       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
-#                aa,
-#                bb),
-#       col="red"
-# )
+hist(z*(log(x)+log(y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(X)+log(Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_x,
+               bb_x),
+      col="red"
+)
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
@@ -266,8 +271,165 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
+Quick observations --
 
+  * log(X): is a reflected Exponential, as is log(Y)
+  * log(X) + log(Y): the convolution (i.e., sum) of two reflected Exponentials is more disperse and squattier. We know this because think of adding two normals together and the resultant Normal have the sum of the variance.
+  * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, we need to "tighten" or "gather" or "concentrate" the distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
+See for other values for alpha:
+
+#### alpha = 4.318
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+## okay, just keep it to beta(a,1) with a uniform 
+set.seed(1)
+nsims <- 1e7
+aa_x <- 4.318
+aa_y <- 4.318
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+s.xlim <- range(c(log(x),
+                  log(y),
+                  z,
+                  log(x*y),
+                  z*log(x*y)
+)
+) 
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+
+dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_x,
+               bb_x),
+      col="red"
+)
+
+hist(log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_y,
+               bb_y),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(x)+log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(X)+log(Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(x)+log(y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(X)+log(Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_x,
+               bb_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+#### alpha = 0.633
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+## okay, just keep it to beta(a,1) with a uniform 
+set.seed(1)
+nsims <- 1e7
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
+
+s.xlim <- range(c(log(x),
+                  log(y),
+                  z,
+                  log(x*y),
+                  z*log(x*y)
+)
+) 
+
+s.xlim <- c(-5.133322,0.9999)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim <- c(0,1.01)
+
+dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_x,
+               bb_x),
+      col="red"
+)
+
+hist(log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_y,
+               bb_y),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(x)+log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(X)+log(Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(x)+log(y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(X)+log(Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
+               aa_x,
+               bb_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
 
 ### Sanity check: Result 2
 
