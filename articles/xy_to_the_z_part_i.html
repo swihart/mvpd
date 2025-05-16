@@ -102,8 +102,19 @@ theory of <code>mvpd</code>. I also generalize the result, showing that
 the original problem is a specific instance of the more general
 result.</p>
 <div class="section level2">
-<h2 id="restatement-of-the-result">Restatement of the Result<a class="anchor" aria-label="anchor" href="#restatement-of-the-result"></a>
+<h2 id="restatement-of-the-relations">Restatement of the Relations<a class="anchor" aria-label="anchor" href="#restatement-of-the-relations"></a>
 </h2>
+<p>We generalize X, Y being iid
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1) (which for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>
+is U(0,1)) and restate the result for the quantity
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">(XY)^Z</annotation></semantics></math>.
+We then consider a similar quantity
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z</annotation></semantics></math>
+as well. For each quantity we build intuition by thinking through the
+distributions on the log-scale.</p>
+<hr>
 <p>For iid
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">X,Y \sim</annotation></semantics></math>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
@@ -135,6 +146,7 @@ Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 </ul>
 </li>
 </ul>
+<hr>
 <p>Special instance: For
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
@@ -232,15 +244,18 @@ convolution.</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Quick observations –</p>
 <ul>
-<li>log(X): is a reflected Exponential, as is log(Y)</li>
-<li>log(X) + log(Y): the convolution (i.e., sum) of two reflected
-Exponentials is more disperse and squattier. We know this because think
-of adding two normals together and the variance of the resultant Normal
-having the sum of the variances of the original normals.</li>
+<li>log(X): is a Reflected Exponential with rate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+as is log(Y) <em>and</em> Z(log(X)+log(Y))!</li>
+<li>log(X) + log(Y): the convolution (i.e., sum) of two Reflected
+Exponentials is more disperse and squattier than just one Reflected
+Exponential. We know this already – think of adding two normals together
+and the variance of the resultant Normal having the sum of the variances
+of the original normals.</li>
 <li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
-distribution before the convolution, we need to “tighten” or “gather” or
-“concentrate” the distribution. Multiplying it by a random number
-between 0 and 1 will do exactly that.</li>
+distribution before the convolution, log(X), we need to “tighten” or
+“gather” or “concentrate” the log(X)+log(Y) distribution. Multiplying it
+by a random number between 0 and 1 will do exactly that.</li>
 </ul>
 <p>See for other values for alpha:</p>
 <div class="section level4">
@@ -345,15 +360,17 @@ convolution.</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <p>Quick observations –</p>
 <ul>
-<li>log(X): is a reflected Exponential, as is log(Y)</li>
-<li>log(X) + log(Y): the convolution (i.e., sum) of two reflected
-Exponentials is more disperse and squattier. We know this because think
-of adding two normals together and the variance of the resultant Normal
-having the sum of the variances of the original normals.</li>
+<li>log(X): is an
+Exponential(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>),
+as is log(Y) <em>and</em> Z(log(X)+log(Y))!</li>
+<li>log(X) + log(Y): the convolution (i.e., sum) of two Exponentials is
+more disperse and squattier. We know this already – think of adding two
+normals together and the variance of the resultant Normal having the sum
+of the variances of the original normals.</li>
 <li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
-distribution before the convolution, we need to “tighten” or “gather” or
-“concentrate” the distribution. Multiplying it by a random number
-between 0 and 1 will do exactly that.</li>
+distribution before the convolution, log(X), we need to “tighten” or
+“gather” or “concentrate” the log(X)+log(Y) distribution. Multiplying it
+by a random number between 0 and 1 will do exactly that.</li>
 </ul>
 <p>See for other values for alpha:</p>
 <div class="section level4">
@@ -366,20 +383,25 @@ between 0 and 1 will do exactly that.</li>
 </h4>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
 <p>So far we have considered cases where the alpha for X and Y are the
-same and how multiplying (log(X)+log(Y)) by Z allows one to recover the
-original distribution of log(X) (equivalently, log(Y)). However, if
+same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover
+the original distribution of log(1/X) (equivalently, log(1/Y)). However,
+if
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math>,
-multiplying by a uniform would not recover either distribution, it would
-be a distribution “in-between” those two distributions. We consider this
-as bonus case below.</p>
+multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the
+distribution for either log(1/X) or log(1/Y) – it would be a
+distribution “in-between” those two distributions – but not an
+Exponential with an alpha between
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>.
+We consider this “unequal alpha” as a bonus case below.</p>
 </div>
 </div>
 </div>
 <div class="section level2">
-<h2 id="bonus-alpha_x-neq-alpha_y">Bonus:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#bonus-alpha_x-neq-alpha_y"></a>
+<h2 id="bonus-unequal-alpha-cases">Bonus: Unequal alpha cases<a class="anchor" aria-label="anchor" href="#bonus-unequal-alpha-cases"></a>
 </h2>
-<p>Firstly, one may want to consult wikipedia.</p>
+<p>Firstly, one may want to consult Wikipedia.</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables" class="external-link">Wikipedia
 Sum of Two Independent Exponential Random Variables</a></li>
@@ -399,15 +421,21 @@ U(0,1)<a class="anchor" aria-label="anchor" href="#z-sim-u01"></a>
 goulet made one for R</a>.</li>
 <li>page 80 green notebook</li>
 </ul>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
 <div class="section level3">
-<h3 id="z-sim-gamma">
+<h3 id="z-sim-inverse-gammaalpha_z-beta_z">
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
-Gamma<a class="anchor" aria-label="anchor" href="#z-sim-gamma"></a>
+Inverse-Gamma(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>z</mi></msub><annotation encoding="application/x-tex">\alpha_z</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>z</mi></msub><annotation encoding="application/x-tex">\beta_z</annotation></semantics></math>)<a class="anchor" aria-label="anchor" href="#z-sim-inverse-gammaalpha_z-beta_z"></a>
 </h3>
 <ul>
-<li>page 82 green notebook</li>
+<li>page 83 green notebook</li>
+<li>as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>z</mi></msub><mo>=</mo><msub><mi>β</mi><mi>z</mi></msub><mo>&gt;</mo><mo>&gt;</mo><mo>&gt;</mo><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha_z = \beta_z &gt;&gt;&gt;&gt; 1</annotation></semantics></math>
+Z converges on 1 and the distributions look more similar</li>
 </ul>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="z-sim-pareto">
@@ -418,7 +446,7 @@ Pareto<a class="anchor" aria-label="anchor" href="#z-sim-pareto"></a>
 <li>TBD. don’t have R code yet. see page 81 green notebook</li>
 </ul>
 <div class="section level4">
-<h4 id="miscellany">Miscellany<a class="anchor" aria-label="anchor" href="#miscellany"></a>
+<h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
 </h4>
 <ul>
 <li><p><a href="https://math.stackexchange.com/a/3173387/180716" class="external-link">Proof
