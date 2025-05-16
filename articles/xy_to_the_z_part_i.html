@@ -109,6 +109,7 @@ result.</p>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
 1) and independent
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo><mi>U</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Z \sim U(0,1)</annotation></semantics></math></p>
+<p><strong>Result 1</strong>:</p>
 <ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
@@ -120,6 +121,9 @@ Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantic
 ReflectedExp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
 </ul>
 </li>
+</ul>
+<p><strong>Result 2</strong>:</p>
+<ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z  \sim</annotation></semantics></math>
 Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_m=1</annotation></semantics></math>,
@@ -144,13 +148,22 @@ U(0,1) (because Beta(1, 1) is U(0,1)).</p>
 the theory in action for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
-1). We’ll plot the theoretical result in purple on top of the
-histogram.</p>
+1). We’ll plot the theoretical result in purple on top of the histogram.
+First for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>,
+the special uniform instance (because that is what started it all!) and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>4.318</mn></mrow><annotation encoding="application/x-tex">\alpha=4.318</annotation></semantics></math>
+as an arbitrary value bigger than 1 and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.633</mn></mrow><annotation encoding="application/x-tex">\alpha=0.633</annotation></semantics></math>
+as an arbitrary value smaller than 1.</p>
+<div class="section level4">
+<h4 id="alpha-1">alpha = 1<a class="anchor" aria-label="anchor" href="#alpha-1"></a>
+</h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
-<span><span class="va">aa_x</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
-<span><span class="va">aa_y</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span><span class="va">aa_x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="va">aa_y</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">rbeta</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="va">aa_x</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">##runif(nsims,0,1)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">rbeta</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="va">aa_y</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">##runif(nsims,0,1)</span></span>
@@ -176,28 +189,40 @@ histogram.</p>
 <span><span class="co">## compare mean, variance, and 2nd moment</span></span>
 <span><span class="va">prod</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.7990999</span></span>
+<span><span class="co">#&gt; [1] 0.5000949</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.02725164</span></span>
+<span><span class="co">#&gt; [1] 0.08372655</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 0.6658124</span></span>
+<span><span class="co">#&gt; [1] 0.3338215</span></span>
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.7991662</span></span>
+<span><span class="co">#&gt; [1] 0.501578</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.02665426</span></span>
+<span><span class="co">#&gt; [1] 0.0843729</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 0.6653209</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.3359534</span></span></code></pre></div>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-2-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-2-2.png" width="50%"></p>
-<div class="section level4">
-<h4 id="tab-7">tab 7<a class="anchor" aria-label="anchor" href="#tab-7"></a>
-</h4>
 </div>
 <div class="section level4">
-<h4 id="tab-8">tab 8<a class="anchor" aria-label="anchor" href="#tab-8"></a>
+<h4 id="alpha-4-318">alpha = 4.318<a class="anchor" aria-label="anchor" href="#alpha-4-318"></a>
 </h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-3-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-3-2.png" width="50%"></p>
 </div>
+<div class="section level4">
+<h4 id="alpha-0-633">alpha = 0.633<a class="anchor" aria-label="anchor" href="#alpha-0-633"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-4-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-4-2.png" width="50%"></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="log-scale-intuition-building">Log-scale intuition building<a class="anchor" aria-label="anchor" href="#log-scale-intuition-building"></a>
+</h3>
+<p>Consider the log scale, which changes the relation from a product
+raised to a power into a sum multiplied by a number. In other words, a
+convolution (sum of two random variables) and a scale mixture (then
+multiplied by a random variable). Take a look at this:</p>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="sanity-check-result-2">Sanity check: Result 2<a class="anchor" aria-label="anchor" href="#sanity-check-result-2"></a>
@@ -249,9 +274,9 @@ We’ll plot the theoretical result in purple on top of the histogram.</p>
 <span><span class="co">#&gt; [1] 1.333382</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.2108825</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 0.8495492</span></span></code></pre></div>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-3-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-3-2.png" width="50%"></p>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
+<span><span class="co">#&gt; [1] 1.98879</span></span></code></pre></div>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-6-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-6-2.png" width="50%"></p>
 <div class="section level4">
 <h4 id="section"></h4>
 </div>
