@@ -186,3 +186,28 @@ mean(z*(log(x)+log(y) - con2 ))
 
 var (z*(log(x)+log(y)+ (log(x)*log(y))  ) )
 ```
+
+
+## Normal Approximation
+
+  * So if we get a result generalizing to betas, interesting to note the [normal approximation for betas](https://en.wikipedia.org/wiki/Beta_distribution#Normal_approximation_to_the_Beta_distribution)
+
+
+```{r, include=TRUE, eval=TRUE}
+nsims <- 1e6
+## https://en.wikipedia.org/wiki/Beta_distribution#Normal_approximation_to_the_Beta_distribution
+aa<-bb<-5.5
+mu <- 0.5
+sig <- (1/(4*(2*aa+1)))
+x <- rnorm(nsims, mu, sig)
+y <- rnorm(nsims, mu, sig)
+z <- rnorm(nsims, mu, sig)
+
+par(mfrow=c(1,2))
+hist((x*y)^z, freq=FALSE, breaks=50)
+mean((x*y)^z)
+var((x*y)^z)
+hist(rnorm(nsims, mu,sig), freq=FALSE, breaks=50)
+mean(rnorm(nsims, mu,sig))
+var(rnorm(nsims, mu,sig))
+```
