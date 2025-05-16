@@ -1,12 +1,14 @@
-#' Kolmogorov Distribution Random Variates
+#' Random Variates for the Kolmogorov Distribution 
 #'
-#' @param n 
-#' @param nterms 
+#' @param n the number of random variate to simulate
+#' @param nterms the number of terms in the limiting sum. That is, turning
+#' infinity into a Big K on the top of the summation.
 #'
-#' @returns
+#' @returns n random variates
 #' @export
 #'
 #' @examples
+#' ## see https://swihart.github.io/mvpd/articles/deep_dive_kolm.html
 #' rkolm(10)
 rkolm <- function(n, nterms=500){
   #k <- 1:nterms

@@ -109,7 +109,7 @@ Yet,
 
 And now we see the motivation for the construction of $K3$. Representation $K3$ uses $K1$ for larger $x$ values bigger than a cutpoint and $K2$ for $x$ values smaller than that cutpoint.  The default value for the cutpoint is `K3cutpt = 2`.  We pick `nterms=10` to demonstrate the problems - in practice we pick the number of terms to be much higher, say 1e5, which makes the violations less egregious for moderate values of $x$ but the violations can still persist for extremely small and large values of $x$.  Therefore, solely increasing `nterms` may not be a solution (depending on the application) for $K1$ or $K2$.  That's why `mvpd` uses the ''spliced" version $K3$ as well as a default of 100,000 terms.
 
-## Plot density
+#### Plot density
 
 * `nterms=10`
 

@@ -2,18 +2,23 @@
 % Please edit documentation in R/rkolm.R
 \name{rkolm}
 \alias{rkolm}
-\title{Kolmogorov Distribution Random Variates}
+\title{Random Variates for the Kolmogorov Distribution}
 \usage{
 rkolm(n, nterms = 500)
 }
 \arguments{
-\item{n}{}
+\item{n}{the number of random variate to simulate}
 
-\item{nterms}{}
+\item{nterms}{the number of terms in the limiting sum. That is, turning
+infinity into a Big K on the top of the summation.}
+}
+\value{
+n random variates
 }
 \description{
-Kolmogorov Distribution Random Variates
+Random Variates for the Kolmogorov Distribution
 }
 \examples{
+## see https://swihart.github.io/mvpd/articles/deep_dive_kolm.html
 rkolm(10)
 }

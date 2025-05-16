@@ -2,19 +2,27 @@
 % Please edit documentation in R/dkolm.R
 \name{dkolm}
 \alias{dkolm}
-\title{Title}
+\title{Density for the Kolmogorov Distribution}
 \usage{
 dkolm(x, nterms = 500, rep = "K3", K3cutpt = 2)
 }
 \arguments{
-\item{x}{}
+\item{x}{domain value.}
 
-\item{nterms}{}
+\item{nterms}{the number of terms in the limiting form's sum.
+That is, changing the infinity on the top of the summation to a big K.}
 
-\item{rep}{}
+\item{rep}{the representation.  See article on webpage. Default is 'K3'.}
 
-\item{K3cutpt}{}
+\item{K3cutpt}{the cutpoint for rep='K3'. Seee article on webpage.}
+}
+\value{
+the value of the density at specified x
 }
 \description{
-Title
+Density for the Kolmogorov Distribution
+}
+\examples{
+## see https://swihart.github.io/mvpd/articles/deep_dive_kolm.html
+dkolm(1)
 }
