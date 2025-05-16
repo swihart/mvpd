@@ -328,11 +328,58 @@ as an arbitrary value smaller than 1.</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-10-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-10-2.png" width="50%"></p>
 </div>
 </div>
+<div class="section level3">
+<h3 id="log-scale-for-intuition-building-1">Log-scale for intuition building<a class="anchor" aria-label="anchor" href="#log-scale-for-intuition-building-1"></a>
+</h3>
+<p>Consider the log scale, which changes the relation from a product
+raised to a power into a sum multiplied by a number. In other words, a
+convolution (sum of two random variables) and a scale mixture (then
+multiplied by a random variable).</p>
+<p>We will visualize this using 5 plots arranged in a 3x3 grid. The left
+column will show the distributions of each of the 3 components of
+consideration (log(X), log(Y), and Z), the middle column will just show
+the convolution of log(X) and log(Y), that is to say log(X)+log(Y), and
+the third one will show the scale mixture applied to the
+convolution.</p>
+<p>Take a look at this for alpha=1:</p>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
+<p>Quick observations –</p>
+<ul>
+<li>log(X): is a reflected Exponential, as is log(Y)</li>
+<li>log(X) + log(Y): the convolution (i.e., sum) of two reflected
+Exponentials is more disperse and squattier. We know this because think
+of adding two normals together and the variance of the resultant Normal
+having the sum of the variances of the original normals.</li>
+<li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
+distribution before the convolution, we need to “tighten” or “gather” or
+“concentrate” the distribution. Multiplying it by a random number
+between 0 and 1 will do exactly that.</li>
+</ul>
+<p>See for other values for alpha:</p>
+<div class="section level4">
+<h4 id="alpha-4-318-3">alpha = 4.318<a class="anchor" aria-label="anchor" href="#alpha-4-318-3"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="alpha-0-633-3">alpha = 0.633<a class="anchor" aria-label="anchor" href="#alpha-0-633-3"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p>So far we have considered cases where the alpha for X and Y are the
+same and how multiplying (log(X)+log(Y)) by Z allows one to recover the
+original distribution of log(X) (equivalently, log(Y)). However, if
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math>,
+multiplying by a uniform would not recover either distribution, it would
+be a distribution “in-between” those two distributions. We consider this
+as bonus case below.</p>
+</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="bonus-alpha_x-neq-alpha_y">Bonus:
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#bonus-alpha_x-neq-alpha_y"></a>
 </h2>
+<p>Firstly, one may want to consult wikipedia.</p>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables" class="external-link">Wikipedia
 Sum of Two Independent Exponential Random Variables</a></li>
