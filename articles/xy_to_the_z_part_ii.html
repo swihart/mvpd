@@ -284,6 +284,39 @@ using mathematica (check your files)</a></p>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span> <span class="op">(</span><span class="va">z</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>  <span class="op">)</span> <span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.09247825</span></span></code></pre></div>
 </div>
+<div class="section level2">
+<h2 id="normal-approximation">Normal Approximation<a class="anchor" aria-label="anchor" href="#normal-approximation"></a>
+</h2>
+<ul>
+<li>So if we get a result generalizing to betas, interesting to note the
+<a href="https://en.wikipedia.org/wiki/Beta_distribution#Normal_approximation_to_the_Beta_distribution" class="external-link">normal
+approximation for betas</a>
+</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="fl">1e6</span></span>
+<span><span class="co">## https://en.wikipedia.org/wiki/Beta_distribution#Normal_approximation_to_the_Beta_distribution</span></span>
+<span><span class="va">aa</span><span class="op">&lt;-</span><span class="va">bb</span><span class="op">&lt;-</span><span class="fl">5.5</span></span>
+<span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
+<span><span class="va">sig</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="fl">4</span><span class="op">*</span><span class="op">(</span><span class="fl">2</span><span class="op">*</span><span class="va">aa</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nsims</span>, <span class="va">mu</span>, <span class="va">sig</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nsims</span>, <span class="va">mu</span>, <span class="va">sig</span><span class="op">)</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nsims</span>, <span class="va">mu</span>, <span class="va">sig</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, breaks<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.499977</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.0004259007</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nsims</span>, <span class="va">mu</span>,<span class="va">sig</span><span class="op">)</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, breaks<span class="op">=</span><span class="fl">50</span><span class="op">)</span></span></code></pre></div>
+<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nsims</span>, <span class="va">mu</span>,<span class="va">sig</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.5000213</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nsims</span>, <span class="va">mu</span>,<span class="va">sig</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.0004342748</span></span></code></pre></div>
+</div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
