@@ -216,20 +216,27 @@ as an arbitrary value smaller than 1.</p>
 </div>
 </div>
 <div class="section level3">
-<h3 id="log-scale-intuition-building">Log-scale intuition building<a class="anchor" aria-label="anchor" href="#log-scale-intuition-building"></a>
+<h3 id="log-scale-for-intuition-building">Log-scale for intuition building<a class="anchor" aria-label="anchor" href="#log-scale-for-intuition-building"></a>
 </h3>
 <p>Consider the log scale, which changes the relation from a product
 raised to a power into a sum multiplied by a number. In other words, a
 convolution (sum of two random variables) and a scale mixture (then
-multiplied by a random variable). Take a look at this for alpha=1:</p>
+multiplied by a random variable).</p>
+<p>We will visualize this using 5 plots arranged in a 3x3 grid. The left
+column will show the distributions of each of the 3 components of
+consideration (log(X), log(Y), and Z), the middle column will just show
+the convolution of log(X) and log(Y), that is to say log(X)+log(Y), and
+the third one will show the scale mixture applied to the
+convolution.</p>
+<p>Take a look at this for alpha=1:</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <p>Quick observations –</p>
 <ul>
 <li>log(X): is a reflected Exponential, as is log(Y)</li>
 <li>log(X) + log(Y): the convolution (i.e., sum) of two reflected
 Exponentials is more disperse and squattier. We know this because think
-of adding two normals together and the resultant Normal have the sum of
-the variance.</li>
+of adding two normals together and the variance of the resultant Normal
+having the sum of the variances of the original normals.</li>
 <li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
 distribution before the convolution, we need to “tighten” or “gather” or
 “concentrate” the distribution. Multiplying it by a random number
@@ -255,30 +262,39 @@ the theory in action for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z  \sim</annotation></semantics></math>
 Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_m=1</annotation></semantics></math>,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>m</mi></msub><mo>=</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha_m = \alpha</annotation></semantics></math>).
-We’ll plot the theoretical result in purple on top of the histogram.</p>
+We’ll plot the theoretical result in purple on top of the histogram.
+First for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>,
+the special uniform instance (because that is what started it all for
+Result 1!) and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>4.318</mn></mrow><annotation encoding="application/x-tex">\alpha=4.318</annotation></semantics></math>
+as an arbitrary value bigger than 1 and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>0.633</mn></mrow><annotation encoding="application/x-tex">\alpha=0.633</annotation></semantics></math>
+as an arbitrary value smaller than 1.</p>
+<div class="section level4">
+<h4 id="alpha-1-000">alpha = 1.000<a class="anchor" aria-label="anchor" href="#alpha-1-000"></a>
+</h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
-<span><span class="va">aa_x</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
-<span><span class="va">aa_y</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span><span class="va">aa_x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span><span class="va">aa_y</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">rbeta</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="va">aa_x</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">##runif(nsims,0,1)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">rbeta</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="va">aa_y</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">##runif(nsims,0,1)</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, breaks<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="fl">500</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span>  </span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, breaks<span class="op">=</span><span class="fl">50</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
-<span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, breaks<span class="op">=</span><span class="fl">50</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
-<span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, breaks<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="fl">3000</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
+<span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
@@ -286,28 +302,30 @@ We’ll plot the theoretical result in purple on top of the histogram.</p>
 <span><span class="co">## compare mean, variance, and 2nd moment</span></span>
 <span><span class="va">prod</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.337099</span></span>
+<span><span class="co">#&gt; [1] 8.878238</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.218648</span></span>
+<span><span class="co">#&gt; [1] 4277.258</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">prod</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 2.006483</span></span>
+<span><span class="co">#&gt; [1] 4356.082</span></span>
 <span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 1.333382</span></span>
+<span><span class="co">#&gt; [1] 10.28434</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.2108825</span></span>
+<span><span class="co">#&gt; [1] 32794.94</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">var</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
-<span><span class="co">#&gt; [1] 1.98879</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 32900.71</span></span></code></pre></div>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-8-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-8-2.png" width="50%"></p>
-<div class="section level4">
-<h4 id="section"></h4>
 </div>
 <div class="section level4">
-<h4 id="section-1"></h4>
+<h4 id="alpha-4-318-2">alpha = 4.318<a class="anchor" aria-label="anchor" href="#alpha-4-318-2"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-9-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-9-2.png" width="50%"></p>
 </div>
 <div class="section level4">
-<h4 id="section-2"></h4>
+<h4 id="alpha-0-633-2">alpha = 0.633<a class="anchor" aria-label="anchor" href="#alpha-0-633-2"></a>
+</h4>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-10-1.png" width="50%"><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-10-2.png" width="50%"></p>
 </div>
 </div>
 </div>
