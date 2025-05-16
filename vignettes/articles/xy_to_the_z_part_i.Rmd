@@ -195,9 +195,13 @@ var(x) + mean(x)^2
 
 ```
 
-### Log-scale intuition building
+### Log-scale for intuition building
 
-Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  Take a look at this for alpha=1:
+Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  
+
+We will visualize this using 5 plots arranged in a 3x3 grid.  The left column will show the distributions of each of the 3 components of consideration (log(X), log(Y), and Z), the middle column will just show the convolution of log(X) and log(Y), that is to say log(X)+log(Y), and the third one will show the scale mixture applied to the convolution.
+
+Take a look at this for alpha=1:
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
@@ -274,7 +278,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 Quick observations --
 
   * log(X): is a reflected Exponential, as is log(Y)
-  * log(X) + log(Y): the convolution (i.e., sum) of two reflected Exponentials is more disperse and squattier. We know this because think of adding two normals together and the resultant Normal have the sum of the variance.
+  * log(X) + log(Y): the convolution (i.e., sum) of two reflected Exponentials is more disperse and squattier. We know this because think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
   * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, we need to "tighten" or "gather" or "concentrate" the distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
 See for other values for alpha:
@@ -433,13 +437,59 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ### Sanity check: Result 2
 
-Lets do a number of simulations and then plot the quantities to see the theory in action for $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$).  We'll plot the theoretical result in purple on top of the histogram.
+Lets do a number of simulations and then plot the quantities to see the theory in action for $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$).  We'll plot the theoretical result in purple on top of the histogram. First for $\alpha=1$, the special uniform instance (because that is what started it all for Result 1!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
+
+
+#### alpha = 1.000
 
 ```{r, fig.show="hold", out.width="50%"}
 set.seed(1)
 nsims <- 1e4
-aa_x <- 4
-aa_y <- 4
+aa_x <- 1
+aa_y <- 1
+
+x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
+y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
+z <- runif(nsims,0,1)
+
+hist((1/x*1/y)^z, breaks=2*500, freq=FALSE, xlim=c(0,100), ylim=c(0,0.5))
+
+lines(               seq(0,100,0.01),
+                     LNPar::dpareto(seq(0,100,0.01),1,alpha=aa_x),
+                     type="l",
+                     col="purple"
+)
+
+hist(1/x, freq=FALSE, breaks=2*3000, xlim=c(0,100), ylim=c(0,0.5))
+lines(               seq(0,100,0.01),
+                     LNPar::dpareto(seq(0,100,0.01),1,alpha=aa_x),
+                     type="l",
+                     col="purple"
+)
+
+## compare mean, variance, and 2nd moment
+prod <- (1/x*1/y)^z
+mean(prod)
+var(prod)
+var(prod) + mean(prod)^2
+
+
+mean(1/x)
+var(1/x)
+var(1/x) + mean(1/x)^2
+
+
+```
+
+
+#### alpha = 4.318
+
+```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
+
+set.seed(1)
+nsims <- 1e4
+aa_x <- 4.318
+aa_y <- 4.318
 
 x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
 y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
@@ -447,7 +497,7 @@ z <- runif(nsims,0,1)
 
 
   
-hist((1/x*1/y)^z, breaks=50, freq=FALSE, xlim=c(0,10))
+hist((1/x*1/y)^z, breaks=30, freq=FALSE, xlim=c(0,10),ylim=c(0,3.0))
 
 lines(               seq(0,10,0.01),
                      LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
@@ -455,7 +505,7 @@ lines(               seq(0,10,0.01),
                      col="purple"
 )
 
-hist(1/x, freq=FALSE, breaks=50, xlim=c(0,10))
+hist(1/x, freq=FALSE, breaks=50, xlim=c(0,10),ylim=c(0,3.0))
 lines(               seq(0,10,0.01),
                      LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
                      type="l",
@@ -477,9 +527,52 @@ var(1/x) + mean(1/x)^2
 
 ```
 
-####
-####
-####
+#### alpha = 0.633
+
+```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
+
+set.seed(103)
+nsims <- 1e4
+aa_x <- 0.633
+aa_y <- 0.633
+
+x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
+y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
+z <- runif(nsims,0,1)
+
+
+  
+hist((1/x*1/y)^z, breaks=1e6, freq=FALSE, xlim=c(0,20), ylim=c(0,0.50))
+
+lines(               seq(0,20,0.01),
+                     LNPar::dpareto(seq(0,20,0.01),1,alpha=aa_x),
+                     type="l",
+                     col="purple"
+)
+
+hist(1/x, freq=FALSE, breaks=1e6, xlim=c(0,20), ylim=c(0,0.50))
+lines(               seq(0,20,0.01),
+                     LNPar::dpareto(seq(0,20,0.01),1,alpha=aa_x),
+                     type="l",
+                     col="purple"
+)
+
+## compare mean, variance, and 2nd moment
+prod <- (1/x*1/y)^z
+mean(prod)
+var(prod)
+var(prod) + mean(prod)^2
+
+
+mean(1/x)
+var(1/x)
+var(1/x) + mean(1/x)^2
+
+
+
+```
+
+
 
 ## Bonus: $\alpha_x \neq \alpha_y$
 
