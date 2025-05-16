@@ -233,11 +233,9 @@ or
 That’s why <code>mvpd</code> uses the ’’spliced” version
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">K3</annotation></semantics></math>
 as well as a default of 100,000 terms.</p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="plot-density">Plot density<a class="anchor" aria-label="anchor" href="#plot-density"></a>
-</h2>
+<div class="section level4">
+<h4 id="plot-density">Plot density<a class="anchor" aria-label="anchor" href="#plot-density"></a>
+</h4>
 <ul>
 <li><code>nterms=10</code></li>
 </ul>
@@ -288,6 +286,8 @@ but is still negative.</p>
 <span><span class="co">#&gt; [1] 8.043785e-124</span></span>
 <span><span class="co">#&gt; [1] -0.002983048 from rep="K2"</span></span></code></pre></div>
 <p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-1.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-2.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-3.png" width="33%"></p>
+</div>
+</div>
 <div class="section level3">
 <h3 id="random-variates">Random Variates<a class="anchor" aria-label="anchor" href="#random-variates"></a>
 </h3>
@@ -347,7 +347,7 @@ the denominators, and then take the square root of that sum.</p>
 <span><span class="va">rkdraw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rkolm.html">rkolm</a></span><span class="op">(</span><span class="fl">5e4</span>, nterms<span class="op">=</span><span class="fl">5e2</span><span class="op">)</span></span>
 <span><span class="va">end</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">end</span><span class="op">-</span><span class="va">beg</span></span>
-<span><span class="co">#&gt; Time difference of 0.8842232 secs</span></span>
+<span><span class="co">#&gt; Time difference of 0.8819973 secs</span></span>
 <span></span>
 <span><span class="co">## Expected value</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
