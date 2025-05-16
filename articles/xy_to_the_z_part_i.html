@@ -136,7 +136,9 @@ Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
-Beta(1, 1) which is U(0,1).</p>
+U(0,1) (because Beta(1, 1) is U(0,1)).</p>
+<p><a href="https://math.stackexchange.com/a/3173387/180716" class="external-link">Proof of
+-ln(X) being an Exponential</a></p>
 </div>
 <div class="section level2">
 <h2 id="bonus-alpha_x-neq-alpha_y">Bonus:
@@ -146,6 +148,50 @@ Beta(1, 1) which is U(0,1).</p>
 <li><a href="https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables" class="external-link">Wikipedia
 Sum of Two Independent Exponential Random Variables</a></li>
 </ul>
+<p>There’s no <em>one</em> distribution to recover since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math>,
+so trying different distributions for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+leads to different blends of the X,Y distributions:</p>
+<div class="section level3">
+<h3 id="z-sim-u01">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
+U(0,1)<a class="anchor" aria-label="anchor" href="#z-sim-u01"></a>
+</h3>
+<ul>
+<li>mathematica says I need incomplete gamma. luckily <a href="https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html" class="external-link">vincent
+goulet made one for R</a>.</li>
+<li>page 80 green notebook</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="z-sim-gamma">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
+Gamma<a class="anchor" aria-label="anchor" href="#z-sim-gamma"></a>
+</h3>
+<ul>
+<li>page 82 green notebook</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="z-sim-pareto">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
+Pareto<a class="anchor" aria-label="anchor" href="#z-sim-pareto"></a>
+</h3>
+<ul>
+<li>TBD. don’t have R code yet. see page 81 green notebook</li>
+</ul>
+<div class="section level4">
+<h4 id="miscellany">Miscellany<a class="anchor" aria-label="anchor" href="#miscellany"></a>
+</h4>
+<ul>
+<li><p><a href="https://math.stackexchange.com/a/4039033/180716" class="external-link">Is this
+transformation of beta relevant for a=0, b=1?</a></p></li>
+<li><p><a href="https://stats.stackexchange.com/a/461337/35034" class="external-link">Keep in
+back pocket for generalizing Uniform…U(-1,1)</a></p></li>
+</ul>
+</div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
