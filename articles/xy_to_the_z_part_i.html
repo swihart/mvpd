@@ -77,7 +77,7 @@ Swihart</h4>
 <hr>
 <p>I’m about 8 months late to the party, but a challenge problem from
 3blue1brown caught my attention, as well as a call for intuitive
-approaches.</p>
+approaches to explaining the result.</p>
 <blockquote>
 <p>Here’s the challenge mode for all you math whizzes. Sample three
 numbers x, y, z uniformly at random in [0, 1], and compute (xy)^z. What
@@ -92,6 +92,52 @@ it.</p>
 <p>The result and good explanations of the result have been around for a
 while, as shown in this <a href="https://math.stackexchange.com/q/261783/180716" class="external-link">Math SE post from
 2012</a>.</p>
+<p>This <a href="https://www.youtube.com/watch?v=qNXBwiAsvZM&amp;t=277s" class="external-link">response
+video by Dr Mihai Nica</a> has an explanation that is similar to the one
+on this page and connects it to Poisson processes and some other
+statistical results. I focus more on visualizing the distributions and
+thinking of the result in terms of convolution and scale mixture, which
+should be no surprise given these are commonly used in the underlying
+theory of <code>mvpd</code>. I also generalize the result, showing that
+the original problem is a specific instance of the more general
+result.</p>
+<div class="section level2">
+<h2 id="restatement-of-the-result">Restatement of the Result<a class="anchor" aria-label="anchor" href="#restatement-of-the-result"></a>
+</h2>
+<p>For iid
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">X,Y \sim</annotation></semantics></math>
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1) and independent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo><mi>U</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Z \sim U(0,1)</annotation></semantics></math></p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)
+<ul>
+<li>Which implies
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mi>X</mi><mo>+</mo><mo>log</mo><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \left( \log X + \log Y \right) \sim</annotation></semantics></math>
+ReflectedExp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z  \sim</annotation></semantics></math>
+Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_m=1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>m</mi></msub><mo>=</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha_m = \alpha</annotation></semantics></math>)
+<ul>
+<li>Which implies
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo>+</mo><mo>log</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right) \sim</annotation></semantics></math>
+Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+</li>
+</ul>
+<p>Special instance: For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
+Beta(1, 1) which is U(0,1).</p>
+</div>
 <div class="section level2">
 <h2 id="bonus-alpha_x-neq-alpha_y">Bonus:
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math><a class="anchor" aria-label="anchor" href="#bonus-alpha_x-neq-alpha_y"></a>
