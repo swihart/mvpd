@@ -51,8 +51,109 @@ For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
 
 Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
 
-  [Proof of -ln(X) being an Exponential](https://math.stackexchange.com/a/3173387/180716)
 
+
+###  Sanity check: Result 1
+
+Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  We'll plot the theoretical result in purple on top of the histogram.
+
+```{r, fig.show="hold", out.width="50%"}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 4
+aa_y <- 4
+
+x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
+y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
+z <- runif(nsims,0,1)
+
+
+  
+hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
+
+lines(               seq(0,1,0.01),
+                     dbeta(seq(0,1,0.01),aa_x,1),
+                     type="l",
+                     col="purple"
+)
+
+hist(x, freq=FALSE, breaks=50, xlim=c(0,1))
+lines(               seq(0,1,0.01),
+                     dbeta(seq(0,1,0.01),aa_x,1),
+                     type="l",
+                     col="purple"
+)
+
+## compare mean, variance, and 2nd moment
+prod <- (x*y)^z
+mean(prod)
+var(prod)
+var(prod) + mean(prod)^2
+
+
+mean(x)
+var(x)
+var(x) + mean(x)^2
+
+
+
+```
+
+#### tab 7
+
+  
+#### tab 8 
+
+
+### Sanity check: Result 2
+
+Lets do a number of simulations and then plot the quantities to see the theory in action for $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$).  We'll plot the theoretical result in purple on top of the histogram.
+
+```{r, fig.show="hold", out.width="50%"}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 4
+aa_y <- 4
+
+x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
+y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
+z <- runif(nsims,0,1)
+
+
+  
+hist((1/x*1/y)^z, breaks=50, freq=FALSE, xlim=c(0,10))
+
+lines(               seq(0,10,0.01),
+                     LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
+                     type="l",
+                     col="purple"
+)
+
+hist(1/x, freq=FALSE, breaks=50, xlim=c(0,10))
+lines(               seq(0,10,0.01),
+                     LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
+                     type="l",
+                     col="purple"
+)
+
+## compare mean, variance, and 2nd moment
+prod <- (1/x*1/y)^z
+mean(prod)
+var(prod)
+var(prod) + mean(prod)^2
+
+
+mean(1/x)
+var(1/x)
+var(1/x) + mean(x)^2
+
+
+
+```
+
+####
+####
+####
 
 ## Bonus: $\alpha_x \neq \alpha_y$
 
@@ -76,6 +177,8 @@ There's no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so try
   
   
 #### Miscellany
+
+  *   [Proof of -ln(X) being an Exponential](https://math.stackexchange.com/a/3173387/180716)
 
   * [Is this transformation of beta relevant for a=0, b=1?](https://math.stackexchange.com/a/4039033/180716)
   
