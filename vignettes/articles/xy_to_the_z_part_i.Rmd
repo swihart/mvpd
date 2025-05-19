@@ -800,6 +800,173 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
+### Follow-up questions
+
+Follow up questions means we can explore more.  This was a top comment on the response video linked in the intro:
+
+>
+>@JobBouwman
+>8 months ago
+>Adding two exponentials will double the outcome. Then multiplying this with a random uniform scalar between 0 and 1 will on average half the result. 
+>
+>
+
+This comment in addition to the video helped inspire this document.  The comment in particular inspired two questions of mine.
+
+
+  * Q: Why "1/2 on average" and not just "1/2 all the time" no variation?
+
+Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like if we replaced `z<-runif(nsims, 0, 1)` with `z <- rep(1/2, nsims)` in the code. We will see it "concentrates" too much and doesn't recover the distribution of log(1/X).
+
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- rep(1/2, nsims) ##runif(nsims, 0, 1)
+#mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.1)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+# hist(    z , freq=FALSE, breaks=11, ylim=s.ylim, xlim=c(0,1), 
+#      main="Z", xlab="",ylab="")
+# 
+plot(1/2,1, xlim=c(0,1), 
+     main="Z", xlab="",ylab="", pch=16)
+segments(x0=1/2,x1=1/2, y0=0, y1=1)
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+
+  * Q: Ok, so Z has to be random.  But can it be 1/2 but with bounds bigger than 0,1 ?
+
+Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like if we replaced `z<-runif(nsims, 0, 1)` with `z<-runif(nsims, -1, 2)` in the code. The mean of Z is 1/2.  However, Z is not bounded between 0 and 1.
+Hypothesis: even though this Z will "1/2 on average" it fails to recover the distribution log(1/X) because values bigger than 1 fail to "tighten" the distribution. Compounding the problem is values below 0 (negative values) flip/reflect values across the y-axis.  See below:
+
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, -1, 2)
+#mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.1)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-1.1,2.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+
+
+___
+
 
 So far we have considered cases where the alpha for X and Y are the same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the original distribution of log(1/X) (equivalently, log(1/Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the distribution for either log(1/X) or log(1/Y) -- it would be a distribution "in-between" those two distributions -- but not an Exponential with an alpha between $\alpha_x$ and $\alpha_y$.  We consider this "unequal alpha" as a bonus case below.
 
@@ -813,8 +980,9 @@ Firstly, one may want to consult Wikipedia.
 
 There's no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so trying different distributions for $Z$ leads to different blends of  the X,Y distributions:
 
-### $Z \sim$ U(0,1)
+### Z distributed as U(0,1)
 
+  * $Z \sim$ U(0,1)
   * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html).
   * page 80 green notebook
 
@@ -916,8 +1084,9 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```
 
 
-### $Z \sim$ Inverse-Gamma($\alpha_z$, $\beta_z$)
+### Z distributed as Inverse-Gamma(alpha, beta)
 
+  * $Z \sim$ Inverse-Gamma($alpha_z$, $beta_z$)
   * page 83 green notebook
   * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar 
   
@@ -1029,11 +1198,286 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   
   
   
-### $Z \sim$ Pareto  
+### Z distributed as Pareto  
 
   * TBD. don't have R code yet.  see page 81 green notebook
   
-  
+##  Bonus: What about 3 exponentials?
+
+Let's see what the resultant Z(log(1/X)+log(1/Y)+log(1/A)) distribution would look like.
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 1e4
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+z <- runif(nsims, 0, 1)
+#mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.1)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-0.1,1.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+It looks like we need more tightening.  Instead of multiplying by 1/2 on average, we need to multiply by 1/3 on average.  We need Z uniform, with positive values smaller than 1 that average to a 1/3.  Let's replace `z<-runif(nsims, 0, 1)` with `z<-runif(nsims, 0, 2/3)` in the code:
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 1e5
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+z <- runif(nsims, 0, 2/3)
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.1)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-0.1,1.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+Doesn't quite seem to do it.  That's because the sum of 2 exponential is not an exponential, so certainly a sum of 3 exponentials is not going to be an exponential.  In fact, looking at the [inductive form](https://math.stackexchange.com/a/3485159/180716), Z may not have a "recovering" distribution for a sum of more than 2 exponentials.
+
+
+
+If Q ~ Gamma(3,alpha) then what do we multiply by Q to get an exponential?  
+
+>A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ). 
+
+And 
+
+>Solution:            \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\).
+
+One can tinker and see how close they can get but the theory says it will be in exact.
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- 6e5
+aa_x <- 1#4#0.633
+aa_y <- 1#4#0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+z <- rgamma(nsims, 0.9, 3)
+##z <- rgamma(nsims, 3, aa_x)
+#z <- invgamma::rinvgamma(nsims, 3, aa_x)
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.1)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-0.1,1.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      col="limegreen"
+)
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+
+
 #### Miscellany / Notes to self / Stubs for future ideas
 
   *   [Proof of -ln(X) being an Exponential](https://math.stackexchange.com/a/3173387/180716)
