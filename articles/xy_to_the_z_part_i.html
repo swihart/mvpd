@@ -36,6 +36,7 @@
 <li><a class="dropdown-item" href="../articles/deep_dive_kolm.html">Deeper Dive: Kolmogorov Distribution, Density, Random Variates</a></li>
     <li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
     <li><a class="dropdown-item" href="../articles/intro1.html">Introduction and Primer II</a></li>
+    <li><a class="dropdown-item" href="../articles/mvt_mvss_mvcauchy.html">Why do both the mvt and mvss have a mvcauchy special instance?</a></li>
     <li><a class="dropdown-item" href="../articles/xy_to_the_z_part_i.html">(XY)^Z Part I</a></li>
     <li><a class="dropdown-item" href="../articles/xy_to_the_z_part_ii.html">(XY)^Z Part II</a></li>
   </ul>
@@ -416,8 +417,8 @@ look like if we replaced <code>z&lt;-runif(nsims, 0, 1)</code> with
 <code>z&lt;-runif(nsims, -1, 2)</code> in the code. The mean of Z is
 1/2. However, Z is not bounded between 0 and 1. Hypothesis: even though
 this Z will “1/2 on average” it fails to recover the distribution
-log(1/X) because values bigger than 1 fail to “tighten” the
-distribution. Compounding the problem is values below 0 (negative
+log(1/X) because Z values bigger than 1 fail to “tighten” the
+distribution. Compounding the problem is that Z values below 0 (negative
 values) flip/reflect values across the y-axis. See below:</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <hr>
@@ -491,20 +492,23 @@ Z converges on 1 and the distributions look more similar</li>
 <p>Let’s see what the resultant Z(log(1/X)+log(1/Y)+log(1/A))
 distribution would look like.</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
-<p>It looks like we need more tightening. Instead of multiplying by 1/2
-on average, we need to multiply by 1/3 on average. We need Z uniform,
-with positive values smaller than 1 that average to a 1/3. Let’s replace
+<p>It looks like we need more tightening. Let’s tinker. Instead of
+multiplying by 1/2 on average, perhaps we need to multiply by 1/3 on
+average? Let’s leave Z as a uniform, with positive values smaller than 1
+that average to a 1/3. Let’s replace
 <code>z&lt;-runif(nsims, 0, 1)</code> with
 <code>z&lt;-runif(nsims, 0, 2/3)</code> in the code:</p>
 <pre><code><span><span class="co">#&gt; [1] 0.333627</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
-<p>Doesn’t quite seem to do it. That’s because the sum of 2 exponential
-is not an exponential, so certainly a sum of 3 exponentials is not going
-to be an exponential. In fact, looking at the <a href="https://math.stackexchange.com/a/3485159/180716" class="external-link">inductive
-form</a>, Z may not have a “recovering” distribution for a sum of more
-than 2 exponentials.</p>
+<p>While that was fun, this modification (shortening the range of the
+uniform) does not quite seem to “recover” the distribution of
+log(1/x).</p>
+<p>This is where turning to theory might save us some time.</p>
+<p>The sum of 3 iid
+Exponential(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
+variables will be distributed as Gamma(3,alpha).</p>
 <p>If Q ~ Gamma(3,alpha) then what do we multiply by Q to get an
-exponential?</p>
+exponential? A: P</p>
 <blockquote>
 <p>A Gamma distribution times a Gamma distribution will result in an
 exponential distribution if the shape parameter of both Gamma
@@ -523,8 +527,8 @@ is equal to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Exponential(\alpha )</annotation></semantics></math>.</p>
 </blockquote>
 <p>One can tinker and see how close they can get but the theory says it
-will be in exact.</p>
-<pre><code><span><span class="co">#&gt; [1] 0.3000795</span></span></code></pre>
+will be inexact.</p>
+<pre><code><span><span class="co">#&gt; [1] 0.4998502</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 <div class="section level4">
 <h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
@@ -536,6 +540,9 @@ of -ln(X) being an Exponential</a></p></li>
 transformation of beta relevant for a=0, b=1?</a></p></li>
 <li><p><a href="https://stats.stackexchange.com/a/461337/35034" class="external-link">Keep in
 back pocket for generalizing Uniform…U(-1,1)</a></p></li>
+<li><p>Looking at the <a href="https://math.stackexchange.com/a/3485159/180716" class="external-link">inductive
+form</a>, may provide insight as to why Z may not have a “recovering”
+distribution for a sum of more than 2 exponentials.</p></li>
 </ul>
 </div>
 </div>

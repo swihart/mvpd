@@ -36,6 +36,7 @@
 <li><a class="dropdown-item" href="../articles/deep_dive_kolm.html">Deeper Dive: Kolmogorov Distribution, Density, Random Variates</a></li>
     <li><a class="dropdown-item" href="../articles/intro.html">Introduction and Primer</a></li>
     <li><a class="dropdown-item" href="../articles/intro1.html">Introduction and Primer II</a></li>
+    <li><a class="dropdown-item" href="../articles/mvt_mvss_mvcauchy.html">Why do both the mvt and mvss have a mvcauchy special instance?</a></li>
     <li><a class="dropdown-item" href="../articles/xy_to_the_z_part_i.html">(XY)^Z Part I</a></li>
     <li><a class="dropdown-item" href="../articles/xy_to_the_z_part_ii.html">(XY)^Z Part II</a></li>
   </ul>
@@ -350,7 +351,7 @@ the denominators, and then take the square root of that sum.</p>
 <span><span class="va">rkdraw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rkolm.html">rkolm</a></span><span class="op">(</span><span class="fl">5e4</span>, nterms<span class="op">=</span><span class="fl">5e2</span><span class="op">)</span></span>
 <span><span class="va">end</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">end</span><span class="op">-</span><span class="va">beg</span></span>
-<span><span class="co">#&gt; Time difference of 0.8786781 secs</span></span>
+<span><span class="co">#&gt; Time difference of 0.8992646 secs</span></span>
 <span></span>
 <span><span class="co">## Expected value</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
