@@ -1,0 +1,74 @@
+---
+title: "Why do both the mvt and mvss have a mvcauchy special instance?"
+author: Bruce J. Swihart
+date: 2025-05-20
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mvpd)
+
+
+
+
+
+nu <- 2
+xdom <- seq(0,4,.01)
+yran <- invgamma::dinvgamma(xdom, nu/2, nu/2)
+zran <- VGAMextra::dinvweibull(xdom, scale=1, shape=1) ##
+
+par(mfrow=c(1,1))
+plot(xdom,yran, type="l", main=
+       "black invgamma(1/2,1/2), blue inverse chisquare(1)
+        black invgamma(1/2,1/2), green S(,,,,) alpha=1
+       black invgamma(2/2,2/2), red inverse exponential(1)",
+     ylim=c(0,1))
+points(xdom,zran,col="red")
+
+
+nu <- 1
+xdom <- seq(0,4,.01)
+yran <- invgamma::dinvgamma(xdom, nu/2, nu/2)
+zran <- VGAMextra::dinv.chisq(xdom, nu)
+aran <- {alpha<-1; libstable4u::stable_pdf(xdom,
+                                pars=c(
+                                  alpha = alpha/2,
+                                  beta = 1,
+                                  sigma = 2*cos(pi*alpha/4)^(2/alpha),
+                                  mu = 0),
+                                parametrization = 1L)
+}
+
+
+
+par(mfrow=c(1,1))
+lines(xdom,yran, type="l", main="black invgamma, blue inverse chisquare")
+points(xdom,zran,col="blue")
+points(xdom,aran, col="darkgreen")
+
+nu <- 3
+yran <- invgamma::dinvgamma(xdom, nu/2, nu/2)
+
+lines(xdom,yran, type="l", main="black invgamma, blue inverse chisquare")
+points(xdom,yran,col="purple")
+
+
+nu <- 35
+yran <- invgamma::dinvgamma(xdom, nu/2, nu/2)
+
+lines(xdom,yran, type="l", main="black invgamma, blue inverse chisquare")
+points(xdom,yran,col="gold")
+
+nu <- 3500
+yran <- invgamma::dinvgamma(xdom, nu/2, nu/2)
+
+lines(xdom,yran, type="l", main="black invgamma, blue inverse chisquare")
+points(xdom,yran,col="brown")
+
+```

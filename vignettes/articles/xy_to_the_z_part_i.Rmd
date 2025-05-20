@@ -893,7 +893,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   * Q: Ok, so Z has to be random.  But can it be 1/2 but with bounds bigger than 0,1 ?
 
 Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like if we replaced `z<-runif(nsims, 0, 1)` with `z<-runif(nsims, -1, 2)` in the code. The mean of Z is 1/2.  However, Z is not bounded between 0 and 1.
-Hypothesis: even though this Z will "1/2 on average" it fails to recover the distribution log(1/X) because values bigger than 1 fail to "tighten" the distribution. Compounding the problem is values below 0 (negative values) flip/reflect values across the y-axis.  See below:
+Hypothesis: even though this Z will "1/2 on average" it fails to recover the distribution log(1/X) because Z values bigger than 1 fail to "tighten" the distribution. Compounding the problem is that Z values below 0 (negative values) flip/reflect values across the y-axis.  See below:
 
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
@@ -1287,7 +1287,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
-It looks like we need more tightening.  Instead of multiplying by 1/2 on average, we need to multiply by 1/3 on average.  We need Z uniform, with positive values smaller than 1 that average to a 1/3.  Let's replace `z<-runif(nsims, 0, 1)` with `z<-runif(nsims, 0, 2/3)` in the code:
+It looks like we need more tightening. Let's tinker.  Instead of multiplying by 1/2 on average, perhaps we need to multiply by 1/3 on average?  Let's leave Z as a uniform, with positive values smaller than 1 that average to a 1/3.  Let's replace `z<-runif(nsims, 0, 1)` with `z<-runif(nsims, 0, 2/3)` in the code:
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
@@ -1370,11 +1370,14 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
-Doesn't quite seem to do it.  That's because the sum of 2 exponential is not an exponential, so certainly a sum of 3 exponentials is not going to be an exponential.  In fact, looking at the [inductive form](https://math.stackexchange.com/a/3485159/180716), Z may not have a "recovering" distribution for a sum of more than 2 exponentials.
+While that was fun, this modification (shortening the range of the uniform) does not quite seem to "recover" the distribution of log(1/x).  
 
+This is where turning to theory might save us some time.
 
+The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,alpha).
 
-If Q ~ Gamma(3,alpha) then what do we multiply by Q to get an exponential?  
+If Q ~ Gamma(3,alpha) then what do we multiply by Q to get an exponential? 
+A: P
 
 >A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ). 
 
@@ -1382,13 +1385,13 @@ And
 
 >Solution:            \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\).
 
-One can tinker and see how close they can get but the theory says it will be in exact.
+One can tinker and see how close they can get but the theory says it will be inexact.
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
 nsims <- 6e5
-aa_x <- 1#4#0.633
-aa_y <- 1#4#0.633
+aa_x <- 0.633
+aa_y <- 0.633
 
 bb_x <- 1
 bb_y <- 1
@@ -1397,7 +1400,8 @@ x <- rbeta(nsims, aa_x, bb_x)
 y <- rbeta(nsims, aa_y, bb_y)
 a <- rbeta(nsims, aa_x, bb_x)
 
-z <- rgamma(nsims, 0.9, 3)
+z <- runif(nsims,0,1)
+#z <- rgamma(nsims, 0.9, 3)
 ##z <- rgamma(nsims, 3, aa_x)
 #z <- invgamma::rinvgamma(nsims, 3, aa_x)
 mean(z)
@@ -1462,13 +1466,25 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
-hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
      main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
       col="red"
 )
+
+
+
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      0.5*(1+aa_x*seq(s.xlim[1], s.xlim[2],0.01 )) * 
+        dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      col="blue"
+)
+
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
@@ -1486,3 +1502,4 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   
   * [Keep in back pocket for generalizing Uniform...U(-1,1)](https://stats.stackexchange.com/a/461337/35034)
 
+  * Looking at the [inductive form](https://math.stackexchange.com/a/3485159/180716), may provide insight as to why Z may not have a "recovering" distribution for a sum of more than 2 exponentials.
