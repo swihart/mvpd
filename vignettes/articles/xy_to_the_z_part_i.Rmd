@@ -9,6 +9,16 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+nsim.switch <- 1e4
+overlaid.dens.lwd <- 3
+## https://stackoverflow.com/a/57157075/2727349
+safe_colorblind_palette <- c("#88CCEE", "#CC6677", "#DDCC77", 
+                             "#117733", "#332288", "#AA4499", 
+                             "#44AA99", "#999933", "#882255", 
+                             "#661100", "#6699CC", "#888888")
+scales::show_col(safe_colorblind_palette)
+
+
 ```
 
 ```{r setup, include=FALSE}
@@ -66,14 +76,17 @@ Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because B
 
 ###  Sanity check: Result 1
 
-Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  We'll plot the theoretical result -- that is, the density that the result says the quantity should take -- in purple on top of the histogram.  First for $\alpha=1$, the special uniform instance (because that is what started it all!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
+Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  That is, we will draw `r scales::comma(nsim.switch)` random 
+variates of each X, Y, and Z, plot density histograms of those draws and of combinations of those draws.  (Quick note: One can increase this number in the .Rmd file linked below the title by changing the global variable `nsim.switch`.  I kept it moderate for web building/loading purposes; cranking it up allows the barplots to more accurately "fall in line" with the overlaid density.)
+
+We will also overlay the theoretical result -- that is, the density that the mathematical/statistical theory says the quantity should take -- in purple on top of the histogram.  First for $\alpha=1$, the special uniform instance (because that is what started it all!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
 
 
 #### alpha = 1
 
 ```{r, fig.show="hold", out.width="50%"}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 1
 aa_y <- 1
 
@@ -85,6 +98,7 @@ hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -92,6 +106,7 @@ hist(x, freq=FALSE, breaks=50, xlim=c(0,1))
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -114,7 +129,7 @@ var(x) + mean(x)^2
 
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 4.318
 aa_y <- 4.318
 
@@ -129,6 +144,7 @@ hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -136,6 +152,7 @@ hist(x, freq=FALSE, breaks=50, xlim=c(0,1))
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -158,7 +175,7 @@ var(x) + mean(x)^2
 
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -173,6 +190,7 @@ hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -180,6 +198,7 @@ hist(x, freq=FALSE, breaks=50, xlim=c(0,1))
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -211,7 +230,7 @@ Take a look at this for alpha=1:
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 1
 aa_y <- 1
 
@@ -241,6 +260,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
                bb_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -250,6 +270,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_y,
                bb_y),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -271,6 +292,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
                bb_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -294,7 +316,7 @@ See for other values for alpha:
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 4.318
 aa_y <- 4.318
 
@@ -324,6 +346,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
                bb_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -333,6 +356,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_y,
                bb_y),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -354,6 +378,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
                bb_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -368,7 +393,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -401,6 +426,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
                bb_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -410,6 +436,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_y,
                bb_y),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -431,6 +458,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
                aa_x,
                bb_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -450,7 +478,7 @@ Now we draw a bunch of random beta and uniform random variables and then plot th
 
 ```{r, fig.show="hold", out.width="50%"}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 1
 aa_y <- 1
 
@@ -458,11 +486,12 @@ x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
 y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
 z <- runif(nsims,0,1)
 
-hist((1/x*1/y)^z, breaks=1e4, freq=FALSE, xlim=c(0,15), ylim=c(0,1))
+hist((1/x*1/y)^z, breaks=nsim.switch, freq=FALSE, xlim=c(0,15), ylim=c(0,1))
 
 lines(               seq(0,100,0.01),
                      LNPar::dpareto(seq(0,100,0.01),1,alpha=aa_x),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -470,6 +499,7 @@ hist(1/x, freq=FALSE, breaks=6e4, xlim=c(0,15), ylim=c(0,1))
 lines(               seq(0,100,0.01),
                      LNPar::dpareto(seq(0,100,0.01),1,alpha=aa_x),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -493,7 +523,7 @@ var(1/x) + mean(1/x)^2
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
 
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 4.318
 aa_y <- 4.318
 
@@ -508,6 +538,7 @@ hist((1/x*1/y)^z, breaks=30, freq=FALSE, xlim=c(0,3),ylim=c(0,5.0))
 lines(               seq(0,10,0.01),
                      LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -515,6 +546,7 @@ hist(1/x, freq=FALSE, breaks=50, xlim=c(0,3),ylim=c(0,5.0))
 lines(               seq(0,10,0.01),
                      LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -540,7 +572,7 @@ var(1/x) + mean(1/x)^2
 #set.seed(103)
 #set.seed(207)
 set.seed(219)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -555,6 +587,7 @@ hist((1/x*1/y)^z, breaks=1e6, freq=FALSE, xlim=c(0,20), ylim=c(0,0.50))
 lines(               seq(0,20,0.01),
                      LNPar::dpareto(seq(0,20,0.01),1,alpha=aa_x),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -562,6 +595,7 @@ hist(1/x, freq=FALSE, breaks=2e5, xlim=c(0,20), ylim=c(0,0.50))
 lines(               seq(0,20,0.01),
                      LNPar::dpareto(seq(0,20,0.01),1,alpha=aa_x),
                      type="l",
+                     lwd=overlaid.dens.lwd,
                      col="purple"
 )
 
@@ -591,7 +625,7 @@ Take a look at this for alpha=1:
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## sum of two indep exponentials aa_x = aa_y
 
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 1
 aa_y <- 1
 
@@ -619,6 +653,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -627,6 +662,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -647,6 +683,7 @@ hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -668,7 +705,7 @@ See for other values for alpha:
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 4.318
 aa_y <- 4.318
 
@@ -696,6 +733,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -704,6 +742,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -724,6 +763,7 @@ hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -737,7 +777,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -767,6 +807,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -775,6 +816,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -795,6 +837,7 @@ hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -825,7 +868,7 @@ Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like i
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -854,6 +897,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -862,6 +906,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -885,6 +930,7 @@ hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -903,7 +949,7 @@ Hypothesis: even though this Z will "1/2 on average" it fails to recover the dis
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -932,6 +978,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -940,6 +987,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -960,6 +1008,7 @@ hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -989,14 +1038,16 @@ So, in this setup, there is no *one* distribution to recover since  $\alpha_x \n
 ### Z distributed as U(0,1)
 
   * $Z \sim$ U(0,1)
-  * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html).
-  * page 80 green notebook
-  * describe what each color density is
+  <!-- * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html). -->
+  <!-- * page 80 green notebook  -->
+  <!-- * describe what each color density is -->
+  * magenta density
+    * $f_w(w) = \frac{numer}{ denom }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
 
-```{r, results='hide', echo=FALSE}
+```{r, results='hide', echo=FALSE, warning=FALSE}
 ## sum of two indep exponentials aa_x != aa_y
 ## Z is uniform
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 4
 aa_y <- 2
 
@@ -1030,6 +1081,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="blue"
 )
 
@@ -1038,7 +1090,8 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_y),
-      col="blue"
+      lwd=overlaid.dens.lwd,
+      col="cyan"
 )
 
 hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
@@ -1059,6 +1112,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
               aa_x,
               aa_y),
+      lwd=overlaid.dens.lwd,
       col="darkorange"
 )
 
@@ -1083,6 +1137,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       fw_dens(seq(s.xlim[1], s.xlim[2],0.01 ),
               aa_x,
               aa_y),
+      lwd=overlaid.dens.lwd,
       col="magenta"
 )
 
@@ -1095,16 +1150,19 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ### Z distributed as Inverse-Gamma(alpha, beta)
 
-  * $Z \sim$ Inverse-Gamma($alpha_z$, $beta_z$)
-  * page 83 green notebook
-  * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar 
-  * describe what each color of density is
-  
+  * $Z \sim$ Inverse-Gamma($\alpha_z$, $\beta_z$)
+  <!-- * page 83 green notebook -->
+  <!-- * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar  -->
+  <!-- * describe what each color of density is -->
+  * gold density
+    * $f_w(w) = \frac{numer}{ denom }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+
+    
 ```{r, results='hide', echo=FALSE}
 ## sum of two indep exponentials aa_x != aa_y
 ## and z ~ IG(a_z, b_z)
 
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 4
 aa_y <- 2
 
@@ -1141,6 +1199,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="blue"
 )
 
@@ -1150,10 +1209,11 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_y),
-      col="blue"
+      lwd=overlaid.dens.lwd,
+      col="cyan"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,4), 
+hist(    z , freq=FALSE, breaks=500, ylim=s.ylim, xlim=c(0,4), 
      main="Z", xlab="",ylab="")
 
 
@@ -1171,6 +1231,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
               aa_x,
               aa_y),
+      lwd=overlaid.dens.lwd,
       col="darkorange"
 )
 
@@ -1179,7 +1240,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
-hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=1000, ylim=s.ylim, xlim=s.xlim, 
      main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
 
 
@@ -1199,7 +1260,8 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
               aa_y,
               aa_z,
               bb_z),
-      col="magenta"
+      lwd=overlaid.dens.lwd,
+      col="#F0E442" 
 )
 
 
@@ -1208,15 +1270,131 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   
 ### Z distributed as Pareto  
 
-  * TBD. don't have R code yet.  see page 81 green notebook
+  * $Z \sim$ Pareto($x_m=1$,$\alpha_m=1$) (where 1/Z ~ U(0,1))
+  <!-- * page 81 green notebook -->
+  <!-- * describe what each color of density is -->
+
+  * magenta:  
+    * $f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+  
+```{r, results='hide', echo=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## and z ~ IG(a_z, b_z)
+
+nsims <- nsim.switch
+aa_x <- 4
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+aa_z <- 3
+bb_z <- .9
+
+x <- rbeta (nsims, aa_x, bb_x)
+y <- rbeta (nsims, aa_y, bb_y)
+z <- LNPar::rpareto(nsims,1,alpha=1)
 
 
+s.xlim <- c(0,3)
+#   range(c(log(1/x),
+#                   log(1/y),
+#                   z,
+#                   log(1/x * 1/y),
+#                   z*log(1/x*1/y)
+# )) 
+#c(-10,0)
+#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim
+s.xlim
+
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="blue"
+)
 
 
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      lwd=overlaid.dens.lwd,
+      col="cyan"
+)
+
+hist(    z , freq=FALSE, breaks=1e5, ylim=c(0,1), xlim=c(0,10), 
+     main="Z", xlab="",ylab="")
 
 
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="darkorange"
+)
 
 
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=1e5, ylim=s.ylim, xlim=c(0,10), 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+fw_dens_pareto <- function(w, m, n){
+  
+  denom <- m*n*(n-m)*w^2
+  num1 <- n^2 * (1-exp(-m*w)*(1+m*w))
+  num2 <- m^2 * (1-exp(-n*w)*(1+n*w))
+
+  (num1-num2) / denom
+}
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       fw_dens_pareto(seq(s.xlim[1], s.xlim[2],0.01 ),
+#               aa_x,
+#               aa_y),
+#       lwd=overlaid.dens.lwd,
+#       col="magenta" 
+# )
+
+lines(seq(0, 10,0.01 ),
+      fw_dens_pareto(seq(0, 10,0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="magenta" 
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+```
+  
+
+
+  * the opposite of "concentration" -- bleeding?  
 
 
 
@@ -1228,7 +1406,7 @@ Let's see what the resultant Z(log(1/X)+log(1/Y)+log(1/A)) distribution would lo
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -1258,6 +1436,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1266,6 +1445,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1274,6 +1454,7 @@ hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1288,6 +1469,15 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
      main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
 
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
+
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
@@ -1298,6 +1488,7 @@ hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1311,7 +1502,7 @@ It looks like we need more tightening. Let's tinker.  Instead of multiplying by 
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4
+nsims <- nsim.switch
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -1341,6 +1532,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1349,6 +1541,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1357,6 +1550,7 @@ hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1371,6 +1565,14 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
      main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
 
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
@@ -1381,6 +1583,7 @@ hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1394,16 +1597,12 @@ While that was fun, this modification (shortening the range of the uniform) does
 
 This is where turning to theory might save us some time.
 
-The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,alpha).
+  * The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,alpha).
 
-If Q ~ Gamma(3,alpha) then what do we multiply by Q to get an exponential? 
-A: P
 
->A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ). 
+  * A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ). 
 
-And 
-
->Solution:            \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\).
+  * Therefore \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\).
 
 One can tinker and see how close they can get but the theory says it will be inexact.
 
@@ -1411,9 +1610,10 @@ One can tinker and see how close they can get but the theory says it will be ine
   * go through green books examples of trying to isolate the 'x' and showing that it is going to show up either way for n=3 and then plot!
 
 
+
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e4 ##6e5
+nsims <- nsim.switch ##6e5
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -1448,6 +1648,7 @@ hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1456,6 +1657,7 @@ hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1464,6 +1666,7 @@ hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim,
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1482,7 +1685,8 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
            3,
            aa_x),
-      col="limegreen"
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
 )
 
 
@@ -1498,6 +1702,7 @@ hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
+      lwd=overlaid.dens.lwd,
       col="red"
 )
 
@@ -1508,7 +1713,8 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       0.5*(1+aa_x*seq(s.xlim[1], s.xlim[2],0.01 )) * 
         dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
            aa_x),
-      col="blue"
+      lwd=overlaid.dens.lwd,
+      col="gold"
 )
 
 
