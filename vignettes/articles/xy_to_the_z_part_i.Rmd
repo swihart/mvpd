@@ -229,7 +229,7 @@ s.xlim <- range(c(log(x),
                   z*log(x*y)
 )
 ) 
-
+s.xlim <- c(-6,0.5)
 s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
 
 dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
@@ -253,7 +253,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,1.2), xlim=c(0,1), 
      main="Z", xlab="",ylab="")
 
 
@@ -314,7 +314,7 @@ s.xlim <- range(c(log(x),
 ) 
 
 s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
-
+s.xlim <- c(-1.5,0.5)
 dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
 
 par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
@@ -390,7 +390,7 @@ s.xlim <- range(c(log(x),
 s.xlim <- c(-5.133322,0.9999)
 
 s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
-s.ylim <- c(0,1.01)
+s.ylim <- c(0,0.6)
 
 dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
 
@@ -413,7 +413,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,1.2), xlim=c(0,1), 
      main="Z", xlab="",ylab="")
 
 
@@ -458,7 +458,7 @@ x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
 y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
 z <- runif(nsims,0,1)
 
-hist((1/x*1/y)^z, breaks=2*500, freq=FALSE, xlim=c(0,100), ylim=c(0,0.5))
+hist((1/x*1/y)^z, breaks=1e4, freq=FALSE, xlim=c(0,15), ylim=c(0,1))
 
 lines(               seq(0,100,0.01),
                      LNPar::dpareto(seq(0,100,0.01),1,alpha=aa_x),
@@ -466,7 +466,7 @@ lines(               seq(0,100,0.01),
                      col="purple"
 )
 
-hist(1/x, freq=FALSE, breaks=2*3000, xlim=c(0,100), ylim=c(0,0.5))
+hist(1/x, freq=FALSE, breaks=6e4, xlim=c(0,15), ylim=c(0,1))
 lines(               seq(0,100,0.01),
                      LNPar::dpareto(seq(0,100,0.01),1,alpha=aa_x),
                      type="l",
@@ -503,7 +503,7 @@ z <- runif(nsims,0,1)
 
 
   
-hist((1/x*1/y)^z, breaks=30, freq=FALSE, xlim=c(0,10),ylim=c(0,3.0))
+hist((1/x*1/y)^z, breaks=30, freq=FALSE, xlim=c(0,3),ylim=c(0,5.0))
 
 lines(               seq(0,10,0.01),
                      LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
@@ -511,7 +511,7 @@ lines(               seq(0,10,0.01),
                      col="purple"
 )
 
-hist(1/x, freq=FALSE, breaks=50, xlim=c(0,10),ylim=c(0,3.0))
+hist(1/x, freq=FALSE, breaks=50, xlim=c(0,3),ylim=c(0,5.0))
 lines(               seq(0,10,0.01),
                      LNPar::dpareto(seq(0,10,0.01),1,alpha=aa_x),
                      type="l",
@@ -610,7 +610,7 @@ s.xlim <- range(c(log(1/x),
                   z*log(1/x*1/y)
 )
 ) #c(-10,0)#c(-4,2)
-
+s.xlim <- c(0,6)
 s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
 
 par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
@@ -630,7 +630,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,1.2), xlim=c(0,1), 
      main="Z", xlab="",ylab="")
 
 
@@ -687,7 +687,7 @@ s.xlim <- range(c(log(1/x),
                   z*log(1/x*1/y)
 )
 ) #c(-10,0)#c(-4,2)
-
+s.xlim <- c(0,2.0)
 s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
 
 par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
@@ -757,7 +757,9 @@ s.xlim <- range(c(log(1/x),
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0,1.1)
+
+s.xlim <- c(0,10)
+s.ylim <- c(0,0.6)
 
 par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
 hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
@@ -776,7 +778,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,1.2), xlim=c(0,1), 
      main="Z", xlab="",ylab="")
 
 
@@ -816,9 +818,9 @@ Follow up questions means we can explore more.  This was a top comment on the re
 This comment in addition to the video helped inspire this document.  The comment in particular inspired two questions of mine.
 
 
-  * Q: Why "1/2 on average" and not just "1/2 all the time" no variation?
+  * Q: Why "1/2 on average" and not just "1/2 all the time with no variation"?
 
-Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like if we replaced `z<-runif(nsims, 0, 1)` with `z <- rep(1/2, nsims)` in the code. We will see it "concentrates" too much and doesn't recover the distribution of log(1/X).
+Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like if we replaced `z<-runif(nsims, 0, 1)` with `z <- rep(1/2, nsims)` in the code. We will see it "concentrates" too much and doesn't recover the distribution of log(1/X) -- the bars go well above the red density line of the exponential:
 
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
@@ -843,7 +845,8 @@ s.xlim <- range(c(log(1/x),
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0,1.1)
+s.xlim <- c(0,10)
+s.ylim <- c(0,0.6)
 
 par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
 hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
@@ -920,7 +923,8 @@ s.xlim <- range(c(log(1/x),
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0,1.1)
+s.xlim <- c(-5,10)
+s.ylim <- c(0,0.8)
 
 par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
 hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
@@ -1011,6 +1015,8 @@ s.xlim <- range(c(log(1/x),
                   z*log(1/x*1/y)
 )
 ) #c(-10,0)#c(-4,2)
+
+s.xlim <- c(0,3)
 
 s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
 s.ylim
@@ -1105,15 +1111,15 @@ aa_y <- 2
 bb_x <- 1
 bb_y <- 1
 
-aa_z <- 25
-bb_z <- 25
+aa_z <- 3
+bb_z <- .9
 
 x <- rbeta (nsims, aa_x, bb_x)
 y <- rbeta (nsims, aa_y, bb_y)
 z <- invgamma::rinvgamma(nsims, shape=aa_z, rate=bb_z)
 
 
-s.xlim <- c(0,4)
+s.xlim <- c(0,3)
 #   range(c(log(1/x),
 #                   log(1/y),
 #                   z,
@@ -1200,15 +1206,25 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```
   
-  
-  
 ### Z distributed as Pareto  
 
   * TBD. don't have R code yet.  see page 81 green notebook
+
+
+
+
+
+
+
+
+
+
+
+
   
 ##  Bonus: What about 3 exponentials?
 
-Let's see what the resultant Z(log(1/X)+log(1/Y)+log(1/A)) distribution would look like.
+Let's see what the resultant Z(log(1/X)+log(1/Y)+log(1/A)) distribution would look like, with X,Y,A as iid beta(0.633,1) and an independent Z iid U(0,1)
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
@@ -1234,8 +1250,8 @@ s.xlim <- range(c(log(1/x),
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0,1.1)
-
+s.ylim <- c(0,0.6)
+s.xlim <- c(0,12)
 par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
 hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
      main="log(1/X)", xlab="",ylab="")
@@ -1261,7 +1277,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-0.1,1.1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(-0.1,1.1), xlim=c(-0.1,1.1), 
      main="Z", xlab="",ylab="")
 
 
@@ -1295,7 +1311,7 @@ It looks like we need more tightening. Let's tinker.  Instead of multiplying by 
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e5
+nsims <- 1e4
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -1317,8 +1333,8 @@ s.xlim <- range(c(log(1/x),
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0,1.1)
-
+s.ylim <- c(0,0.6)
+s.xlim <- c(0,12)
 par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
 hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
      main="log(1/X)", xlab="",ylab="")
@@ -1344,7 +1360,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-0.1,1.1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(0.0,2.0), xlim=c(-0.1,1.1), 
      main="Z", xlab="",ylab="")
 
 
@@ -1397,7 +1413,7 @@ One can tinker and see how close they can get but the theory says it will be ine
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 6e5
+nsims <- 1e4 ##6e5
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -1422,7 +1438,9 @@ s.xlim <- range(c(log(1/x),
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0,1.1)
+
+s.ylim <- c(0,0.6)
+s.xlim <- c(0,12)
 
 par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
 hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
@@ -1449,7 +1467,7 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
       col="red"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(-0.1,1.1), 
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,1.2), xlim=c(-0.1,1.1), 
      main="Z", xlab="",ylab="")
 
 
