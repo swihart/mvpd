@@ -304,7 +304,7 @@ as an arbitrary value smaller than 1.</p>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">rbeta</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="va">aa_y</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">##runif(nsims,0,1)</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, breaks<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="fl">500</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, breaks<span class="op">=</span><span class="fl">1e4</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">15</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
@@ -312,7 +312,7 @@ as an arbitrary value smaller than 1.</p>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, breaks<span class="op">=</span><span class="fl">2</span><span class="op">*</span><span class="fl">3000</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, breaks<span class="op">=</span><span class="fl">6e4</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">15</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
@@ -403,14 +403,14 @@ result.</p>
 <p>This comment in addition to the video helped inspire this document.
 The comment in particular inspired two questions of mine.</p>
 <ul>
-<li>Q: Why “1/2 on average” and not just “1/2 all the time” no
-variation?</li>
+<li>Q: Why “1/2 on average” and not just “1/2 all the time with no
+variation”?</li>
 </ul>
 <p>Let’s see what the resultant Z(log(1/X)+log(1/Y)) distribution would
 look like if we replaced <code>z&lt;-runif(nsims, 0, 1)</code> with
 <code>z &lt;- rep(1/2, nsims)</code> in the code. We will see it
-“concentrates” too much and doesn’t recover the distribution of
-log(1/X).</p>
+“concentrates” too much and doesn’t recover the distribution of log(1/X)
+– the bars go well above the red density line of the exponential:</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 <ul>
 <li>Q: Ok, so Z has to be random. But can it be 1/2 on average but with
@@ -468,6 +468,8 @@ goulet made one for R</a>.</li>
 <li>page 80 green notebook</li>
 <li>describe what each color density is</li>
 </ul>
+<pre><code><span><span class="co">#&gt; Warning in expint::gammainc(0, m * w): NaNs produced</span></span>
+<span><span class="co">#&gt; Warning in expint::gammainc(0, n * w): NaNs produced</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -498,7 +500,8 @@ Z converges on 1 and the distributions look more similar</li>
 <h2 id="bonus-what-about-3-exponentials">Bonus: What about 3 exponentials?<a class="anchor" aria-label="anchor" href="#bonus-what-about-3-exponentials"></a>
 </h2>
 <p>Let’s see what the resultant Z(log(1/X)+log(1/Y)+log(1/A))
-distribution would look like.</p>
+distribution would look like, with X,Y,A as iid beta(0.633,1) and an
+independent Z iid U(0,1)</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <p>It looks like we need more tightening. Let’s tinker. Instead of
 multiplying by 1/2 on average, perhaps we need to multiply by 1/3 on
@@ -506,7 +509,7 @@ average? Let’s leave Z as a uniform, with positive values smaller than 1
 that average to a 1/3. Let’s replace
 <code>z&lt;-runif(nsims, 0, 1)</code> with
 <code>z&lt;-runif(nsims, 0, 2/3)</code> in the code:</p>
-<pre><code><span><span class="co">#&gt; [1] 0.333627</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] 0.3317288</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 <p>While that was fun, this modification (shortening the range of the
 uniform) does not quite seem to “recover” the distribution of
@@ -541,7 +544,7 @@ will be inexact.</p>
 showing that it is going to show up either way for n=3 and then
 plot!</li>
 </ul>
-<pre><code><span><span class="co">#&gt; [1] 0.4998502</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] 0.4975932</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 <div class="section level4">
 <h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
