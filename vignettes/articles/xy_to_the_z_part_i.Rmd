@@ -36,7 +36,7 @@ caught my attention, as well as a call for intuitive approaches to explaining th
 The result and good explanations of the result have been around for a while, as shown in this [Math SE post from 2012](https://math.stackexchange.com/q/261783/180716).  
 
 This [response video by 
-Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) has an explanation that is similar to the one on this page and connects it to Poisson processes and some other statistical results.  I focus more on visualizing the distributions and thinking of the result in terms of convolution and scale mixture, which should be no surprise given these are commonly used in the underlying theory of `mvpd`.  I also generalize the result, showing that the original problem is a specific instance of the more general result.
+Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) has an explanation that is similar to the one on this page and connects it to Poisson processes and some other statistical results.  I focus more on visualizing the distributions and thinking of the result in terms of convolution and scale mixture, which should be no surprise given these concepts are commonly used in the underlying theory of `mvpd`.  I also generalize the result, showing that the original problem is a specific instance of the more general result.
 
 
 ## Restatement of the Relations
@@ -66,7 +66,7 @@ Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because B
 
 ###  Sanity check: Result 1
 
-Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  We'll plot the theoretical result in purple on top of the histogram.  First for $\alpha=1$, the special uniform instance (because that is what started it all!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
+Lets do a number of simulations and then plot the quantities to see the theory in action for $(XY)^Z  \sim$ Beta($\alpha$, 1).  We'll plot the theoretical result -- that is, the density that the result says the quantity should take -- in purple on top of the histogram.  First for $\alpha=1$, the special uniform instance (because that is what started it all!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
 
 
 #### alpha = 1
@@ -81,10 +81,7 @@ x <- rbeta(nsims,aa_x,1) ##runif(nsims,0,1)
 y <- rbeta(nsims,aa_y,1) ##runif(nsims,0,1)
 z <- runif(nsims,0,1)
 
-
-  
 hist((x*y)^z, breaks=50, freq=FALSE, xlim=c(0,1))
-
 lines(               seq(0,1,0.01),
                      dbeta(seq(0,1,0.01),aa_x,1),
                      type="l",
@@ -100,10 +97,10 @@ lines(               seq(0,1,0.01),
 
 ## compare mean, variance, and 2nd moment
 prod <- (x*y)^z
+
 mean(prod)
 var(prod)
 var(prod) + mean(prod)^2
-
 
 mean(x)
 var(x)
@@ -205,14 +202,16 @@ var(x) + mean(x)^2
 
 Consider the log scale, which changes the relation from a product raised to a power into a sum multiplied by a number.  In other words, a convolution (sum of two random variables) and a scale mixture (then multiplied by a random variable).  
 
-We will visualize this using 5 plots arranged in a 3x3 grid.  The left column will show the distributions of each of the 3 components of consideration (log(X), log(Y), and Z), the middle column will just show the convolution of log(X) and log(Y), that is to say log(X)+log(Y), and the third one will show the scale mixture applied to the convolution.
+We will visualize this using 5 plots arranged in a 3x3 grid.  The left column will show the distributions of each of the 3 components of consideration (log(X), log(Y), and Z), the middle column will just show the convolution of log(X) and log(Y), that is to say log(X)+log(Y), and the third one will show the scale mixture applied to the convolution.  If a line appears on top of the histogram, that's the theoretical result, and the bars falling nicely along the line shows agreement between the simulation and the expected theoretical result.
+
+
 
 Take a look at this for alpha=1:
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
 set.seed(1)
-nsims <- 1e7
+nsims <- 1e4
 aa_x <- 1
 aa_y <- 1
 
@@ -284,6 +283,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 Quick observations --
 
   * log(X): is a Reflected Exponential with rate $\alpha$, as is log(Y) *and* Z(log(X)+log(Y))!
+    * the bars fall along the red density line
   * log(X) + log(Y): the convolution (i.e., sum) of two Reflected Exponentials is more disperse and squattier than just one Reflected Exponential. We know this already -- think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
   * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, log(X), we need to "tighten" or "gather" or "concentrate" the log(X)+log(Y) distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
@@ -294,7 +294,7 @@ See for other values for alpha:
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
 set.seed(1)
-nsims <- 1e7
+nsims <- 1e4
 aa_x <- 4.318
 aa_y <- 4.318
 
@@ -368,7 +368,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## okay, just keep it to beta(a,1) with a uniform 
 set.seed(1)
-nsims <- 1e7
+nsims <- 1e4
 aa_x <- 0.633
 aa_y <- 0.633
 
@@ -443,7 +443,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ### Sanity check: Result 2
 
-Lets do a number of simulations and then plot the quantities to see the theory in action for $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$).  We'll plot the theoretical result in purple on top of the histogram. First for $\alpha=1$, the special uniform instance (because that is what started it all for Result 1!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
+Now we draw a bunch of random beta and uniform random variables and then plot the quantities to see the theory in action for $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$).  We will plot the theoretical result in purple on top of the histogram. First for $\alpha=1$, the special uniform instance (because that is what started it all for Result 1!) and $\alpha=4.318$ as an arbitrary value bigger than 1 and $\alpha=0.633$ as an arbitrary value smaller than 1.
 
 
 #### alpha = 1.000
@@ -536,8 +536,10 @@ var(1/x) + mean(1/x)^2
 #### alpha = 0.633
 
 ```{r, fig.show="hold", out.width="50%", echo=FALSE, results='hide'}
-
-set.seed(103)
+# tricky to get the binning right for dpareto
+#set.seed(103)
+#set.seed(207)
+set.seed(219)
 nsims <- 1e4
 aa_x <- 0.633
 aa_y <- 0.633
@@ -556,7 +558,7 @@ lines(               seq(0,20,0.01),
                      col="purple"
 )
 
-hist(1/x, freq=FALSE, breaks=1e6, xlim=c(0,20), ylim=c(0,0.50))
+hist(1/x, freq=FALSE, breaks=2e5, xlim=c(0,20), ylim=c(0,0.50))
 lines(               seq(0,20,0.01),
                      LNPar::dpareto(seq(0,20,0.01),1,alpha=aa_x),
                      type="l",
@@ -589,7 +591,7 @@ Take a look at this for alpha=1:
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 ## sum of two indep exponentials aa_x = aa_y
 
-nsims <- 1e7
+nsims <- 1e4
 aa_x <- 1
 aa_y <- 1
 
@@ -666,7 +668,7 @@ See for other values for alpha:
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
-nsims <- 1e3
+nsims <- 1e4
 aa_x <- 4.318
 aa_y <- 4.318
 
@@ -890,7 +892,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```
 
 
-  * Q: Ok, so Z has to be random.  But can it be 1/2 but with bounds bigger than 0,1 ?
+  * Q: Ok, so Z has to be random.  But can it be 1/2 on average but with bounds bigger than 0,1 ?
 
 Let's see what the resultant Z(log(1/X)+log(1/Y)) distribution would look like if we replaced `z<-runif(nsims, 0, 1)` with `z<-runif(nsims, -1, 2)` in the code. The mean of Z is 1/2.  However, Z is not bounded between 0 and 1.
 Hypothesis: even though this Z will "1/2 on average" it fails to recover the distribution log(1/X) because Z values bigger than 1 fail to "tighten" the distribution. Compounding the problem is that Z values below 0 (negative values) flip/reflect values across the y-axis.  See below:
@@ -978,18 +980,19 @@ Firstly, one may want to consult Wikipedia.
   * [Wikipedia Sum of Two Independent Exponential Random Variables](https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables)
   
 
-There's no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so trying different distributions for $Z$ leads to different blends of  the X,Y distributions:
+So, in this setup, there is no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so trying different distributions for $Z$ leads to different blends of the X,Y distributions for the quantity Z(log(1/X)+log(1/Y)).  
 
 ### Z distributed as U(0,1)
 
   * $Z \sim$ U(0,1)
   * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html).
   * page 80 green notebook
+  * describe what each color density is
 
 ```{r, results='hide', echo=FALSE}
 ## sum of two indep exponentials aa_x != aa_y
 ## Z is uniform
-nsims <- 1e5
+nsims <- 1e4
 aa_x <- 4
 aa_y <- 2
 
@@ -1089,12 +1092,13 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   * $Z \sim$ Inverse-Gamma($alpha_z$, $beta_z$)
   * page 83 green notebook
   * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar 
+  * describe what each color of density is
   
 ```{r, results='hide', echo=FALSE}
 ## sum of two indep exponentials aa_x != aa_y
 ## and z ~ IG(a_z, b_z)
 
-nsims <- 1e6
+nsims <- 1e4
 aa_x <- 4
 aa_y <- 2
 
@@ -1386,6 +1390,10 @@ And
 >Solution:            \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\).
 
 One can tinker and see how close they can get but the theory says it will be inexact.
+
+
+  * go through green books examples of trying to isolate the 'x' and showing that it is going to show up either way for n=3 and then plot!
+
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)

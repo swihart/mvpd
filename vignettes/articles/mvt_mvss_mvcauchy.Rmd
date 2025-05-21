@@ -4,6 +4,15 @@ author: Bruce J. Swihart
 date: 2025-05-20
 ---
 
+
+
+___ 
+
+**IN PROGRESS**
+
+---
+
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -13,10 +22,10 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(mvpd)
+```
 
 
-
-
+```{r, results='hide', echo=FALSE}
 
 nu <- 2
 xdom <- seq(0,4,.01)
