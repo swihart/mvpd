@@ -161,9 +161,16 @@ U(0,1) (because Beta(1, 1) is U(0,1)).</p>
 the theory in action for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
-1). We’ll plot the theoretical result – that is, the density that the
-result says the quantity should take – in purple on top of the
-histogram. First for
+1). That is, we will draw 10,000 random variates of each X, Y, and Z,
+plot density histograms of those draws and of combinations of those
+draws. (Quick note: One can increase this number in the .Rmd file linked
+below the title by changing the global variable
+<code>nsim.switch</code>. I kept it moderate for web building/loading
+purposes; cranking it up allows the barplots to more accurately “fall in
+line” with the overlaid density.)</p>
+<p>We will also overlay the theoretical result – that is, the density
+that the mathematical/statistical theory says the quantity should take –
+in purple on top of the histogram. First for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>,
 the special uniform instance (because that is what started it all!) and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>4.318</mn></mrow><annotation encoding="application/x-tex">\alpha=4.318</annotation></semantics></math>
@@ -175,7 +182,7 @@ as an arbitrary value smaller than 1.</p>
 </h4>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
+<span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="va">nsim.switch</span></span>
 <span><span class="va">aa_x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">aa_y</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
@@ -187,6 +194,7 @@ as an arbitrary value smaller than 1.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                     <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">dbeta</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="va">aa_x</span>,<span class="fl">1</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
+<span>                     lwd<span class="op">=</span><span class="va">overlaid.dens.lwd</span>,</span>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -194,6 +202,7 @@ as an arbitrary value smaller than 1.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                     <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">dbeta</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="va">aa_x</span>,<span class="fl">1</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
+<span>                     lwd<span class="op">=</span><span class="va">overlaid.dens.lwd</span>,</span>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -296,7 +305,7 @@ as an arbitrary value smaller than 1.</p>
 </h4>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
+<span><span class="va">nsims</span> <span class="op">&lt;-</span> <span class="va">nsim.switch</span></span>
 <span><span class="va">aa_x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">aa_y</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span></span>
@@ -304,11 +313,12 @@ as an arbitrary value smaller than 1.</p>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Beta.html" class="external-link">rbeta</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="va">aa_y</span>,<span class="fl">1</span><span class="op">)</span> <span class="co">##runif(nsims,0,1)</span></span>
 <span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">nsims</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, breaks<span class="op">=</span><span class="fl">1e4</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">15</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">/</span><span class="va">y</span><span class="op">)</span><span class="op">^</span><span class="va">z</span>, breaks<span class="op">=</span><span class="va">nsim.switch</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">15</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
+<span>                     lwd<span class="op">=</span><span class="va">overlaid.dens.lwd</span>,</span>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -316,6 +326,7 @@ as an arbitrary value smaller than 1.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span>               <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                     <span class="fu">LNPar</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/LNPar/man/dpareto.html" class="external-link">dpareto</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">100</span>,<span class="fl">0.01</span><span class="op">)</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="va">aa_x</span><span class="op">)</span>,</span>
 <span>                     type<span class="op">=</span><span class="st">"l"</span>,</span>
+<span>                     lwd<span class="op">=</span><span class="va">overlaid.dens.lwd</span>,</span>
 <span>                     col<span class="op">=</span><span class="st">"purple"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -462,14 +473,22 @@ Z(log(1/X)+log(1/Y)).</p>
 <ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
-U(0,1)</li>
-<li>mathematica says I need incomplete gamma. luckily <a href="https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html" class="external-link">vincent
-goulet made one for R</a>.</li>
-<li>page 80 green notebook</li>
-<li>describe what each color density is</li>
+U(0,1)
+<!-- * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html). -->
+<!-- * page 80 green notebook  -->
+<!-- * describe what each color density is -->
+</li>
+<li>magenta density
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi></mrow><mrow><mi>d</mi><mi>e</mi><mi>n</mi><mi>o</mi><mi>m</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{numer}{ denom }</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo>+</mo><mo>log</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)</annotation></semantics></math>,
+m=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,
+n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>.</li>
 </ul>
-<pre><code><span><span class="co">#&gt; Warning in expint::gammainc(0, m * w): NaNs produced</span></span>
-<span><span class="co">#&gt; Warning in expint::gammainc(0, n * w): NaNs produced</span></span></code></pre>
+</li>
+</ul>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -478,13 +497,22 @@ goulet made one for R</a>.</li>
 <ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
-Inverse-Gamma(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>l</mi><mi>p</mi><mi>h</mi><msub><mi>a</mi><mi>z</mi></msub></mrow><annotation encoding="application/x-tex">alpha_z</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mi>e</mi><mi>t</mi><msub><mi>a</mi><mi>z</mi></msub></mrow><annotation encoding="application/x-tex">beta_z</annotation></semantics></math>)</li>
-<li>page 83 green notebook</li>
-<li>as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>z</mi></msub><mo>=</mo><msub><mi>β</mi><mi>z</mi></msub><mo>&gt;</mo><mo>&gt;</mo><mo>&gt;</mo><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha_z = \beta_z &gt;&gt;&gt;&gt; 1</annotation></semantics></math>
-Z converges on 1 and the distributions look more similar</li>
-<li>describe what each color of density is</li>
+Inverse-Gamma(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>z</mi></msub><annotation encoding="application/x-tex">\alpha_z</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>z</mi></msub><annotation encoding="application/x-tex">\beta_z</annotation></semantics></math>)
+<!-- * page 83 green notebook -->
+<!-- * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar  -->
+<!-- * describe what each color of density is -->
+</li>
+<li>gold density
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi></mrow><mrow><mi>d</mi><mi>e</mi><mi>n</mi><mi>o</mi><mi>m</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{numer}{ denom }</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo>+</mo><mo>log</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)</annotation></semantics></math>,
+m=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,
+n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>.</li>
+</ul>
+</li>
 </ul>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 </div>
@@ -492,7 +520,25 @@ Z converges on 1 and the distributions look more similar</li>
 <h3 id="z-distributed-as-pareto">Z distributed as Pareto<a class="anchor" aria-label="anchor" href="#z-distributed-as-pareto"></a>
 </h3>
 <ul>
-<li>TBD. don’t have R code yet. see page 81 green notebook</li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
+Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_m=1</annotation></semantics></math>,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha_m=1</annotation></semantics></math>)
+(where 1/Z ~ U(0,1)) <!-- * page 81 green notebook -->
+<!-- * describe what each color of density is --></p></li>
+<li>
+<p>magenta:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mi>n</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mo>exp</mo><mrow><mo>−</mo><mi>m</mi><mi>w</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>m</mi><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><msup><mi>m</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mo>exp</mo><mrow><mo>−</mo><mi>n</mi><mi>w</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>n</mi><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>m</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mi>w</mi><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo>+</mo><mo>log</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)</annotation></semantics></math>,
+m=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,
+n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>.</li>
+</ul>
+</li>
+</ul>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<ul>
+<li>the opposite of “concentration” – bleeding?</li>
 </ul>
 </div>
 </div>
@@ -502,7 +548,7 @@ Z converges on 1 and the distributions look more similar</li>
 <p>Let’s see what the resultant Z(log(1/X)+log(1/Y)+log(1/A))
 distribution would look like, with X,Y,A as iid beta(0.633,1) and an
 independent Z iid U(0,1)</p>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 <p>It looks like we need more tightening. Let’s tinker. Instead of
 multiplying by 1/2 on average, perhaps we need to multiply by 1/3 on
 average? Let’s leave Z as a uniform, with positive values smaller than 1
@@ -510,33 +556,28 @@ that average to a 1/3. Let’s replace
 <code>z&lt;-runif(nsims, 0, 1)</code> with
 <code>z&lt;-runif(nsims, 0, 2/3)</code> in the code:</p>
 <pre><code><span><span class="co">#&gt; [1] 0.3317288</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
 <p>While that was fun, this modification (shortening the range of the
 uniform) does not quite seem to “recover” the distribution of
 log(1/x).</p>
 <p>This is where turning to theory might save us some time.</p>
-<p>The sum of 3 iid
+<ul>
+<li><p>The sum of 3 iid
 Exponential(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
-variables will be distributed as Gamma(3,alpha).</p>
-<p>If Q ~ Gamma(3,alpha) then what do we multiply by Q to get an
-exponential? A: P</p>
-<blockquote>
-<p>A Gamma distribution times a Gamma distribution will result in an
+variables will be distributed as Gamma(3,alpha).</p></li>
+<li><p>A Gamma distribution times a Gamma distribution will result in an
 exponential distribution if the shape parameter of both Gamma
 distributions is 1, and their rate parameters are the same. In other
 words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~
-Exponential(λ).</p>
-</blockquote>
-<p>And</p>
-<blockquote>
-<p>Solution:
+Exponential(λ).</p></li>
+<li><p>Therefore
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mi>a</mi><mi>m</mi><mi>m</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>,</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Gamma(3,\alpha )</annotation></semantics></math>
 cannot be transformed into
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Exponential(\alpha )</annotation></semantics></math>.
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mi>a</mi><mi>m</mi><mi>m</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Gamma(1,\alpha )</annotation></semantics></math>
 is equal to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Exponential(\alpha )</annotation></semantics></math>.</p>
-</blockquote>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Exponential(\alpha )</annotation></semantics></math>.</p></li>
+</ul>
 <p>One can tinker and see how close they can get but the theory says it
 will be inexact.</p>
 <ul>
@@ -545,7 +586,7 @@ showing that it is going to show up either way for n=3 and then
 plot!</li>
 </ul>
 <pre><code><span><span class="co">#&gt; [1] 0.4975932</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
 <div class="section level4">
 <h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
 </h4>
