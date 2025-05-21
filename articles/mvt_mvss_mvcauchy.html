@@ -73,66 +73,12 @@ Swihart</h4>
 
     
     
+<hr>
+<p><strong>IN PROGRESS</strong></p>
+<hr>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/swihart/mvpd" class="external-link">mvpd</a></span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class="va">nu</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
-<span><span class="va">xdom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">4</span>,<span class="fl">.01</span><span class="op">)</span></span>
-<span><span class="va">yran</span> <span class="op">&lt;-</span> <span class="fu">invgamma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/invgamma/man/invgamma.html" class="external-link">dinvgamma</a></span><span class="op">(</span><span class="va">xdom</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">zran</span> <span class="op">&lt;-</span> <span class="fu">VGAMextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/VGAMextra/man/invweibullUC.html" class="external-link">dinvweibull</a></span><span class="op">(</span><span class="va">xdom</span>, scale<span class="op">=</span><span class="fl">1</span>, shape<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co">##</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span></span>
-<span>       <span class="st">"black invgamma(1/2,1/2), blue inverse chisquare(1)</span></span>
-<span><span class="st">        black invgamma(1/2,1/2), green S(,,,,) alpha=1</span></span>
-<span><span class="st">       black invgamma(2/2,2/2), red inverse exponential(1)"</span>,</span>
-<span>     ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">zran</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">nu</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span><span class="va">xdom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">4</span>,<span class="fl">.01</span><span class="op">)</span></span>
-<span><span class="va">yran</span> <span class="op">&lt;-</span> <span class="fu">invgamma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/invgamma/man/invgamma.html" class="external-link">dinvgamma</a></span><span class="op">(</span><span class="va">xdom</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">zran</span> <span class="op">&lt;-</span> <span class="fu">VGAMextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/VGAMextra/man/invchisquaredUC.html" class="external-link">dinv.chisq</a></span><span class="op">(</span><span class="va">xdom</span>, <span class="va">nu</span><span class="op">)</span></span>
-<span><span class="va">aran</span> <span class="op">&lt;-</span> <span class="op">{</span><span class="va">alpha</span><span class="op">&lt;-</span><span class="fl">1</span>; <span class="fu">libstable4u</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/libstable4u/man/stable_pdf_and_cdf.html" class="external-link">stable_pdf</a></span><span class="op">(</span><span class="va">xdom</span>,</span>
-<span>                                pars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>                                  alpha <span class="op">=</span> <span class="va">alpha</span><span class="op">/</span><span class="fl">2</span>,</span>
-<span>                                  beta <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                                  sigma <span class="op">=</span> <span class="fl">2</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html" class="external-link">cos</a></span><span class="op">(</span><span class="va">pi</span><span class="op">*</span><span class="va">alpha</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">2</span><span class="op">/</span><span class="va">alpha</span><span class="op">)</span>,</span>
-<span>                                  mu <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>                                parametrization <span class="op">=</span> <span class="fl">1L</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"black invgamma, blue inverse chisquare"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">zran</span>,col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">aran</span>, col<span class="op">=</span><span class="st">"darkgreen"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">nu</span> <span class="op">&lt;-</span> <span class="fl">3</span></span>
-<span><span class="va">yran</span> <span class="op">&lt;-</span> <span class="fu">invgamma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/invgamma/man/invgamma.html" class="external-link">dinvgamma</a></span><span class="op">(</span><span class="va">xdom</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"black invgamma, blue inverse chisquare"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>,col<span class="op">=</span><span class="st">"purple"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="va">nu</span> <span class="op">&lt;-</span> <span class="fl">35</span></span>
-<span><span class="va">yran</span> <span class="op">&lt;-</span> <span class="fu">invgamma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/invgamma/man/invgamma.html" class="external-link">dinvgamma</a></span><span class="op">(</span><span class="va">xdom</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"black invgamma, blue inverse chisquare"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>,col<span class="op">=</span><span class="st">"gold"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">nu</span> <span class="op">&lt;-</span> <span class="fl">3500</span></span>
-<span><span class="va">yran</span> <span class="op">&lt;-</span> <span class="fu">invgamma</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/invgamma/man/invgamma.html" class="external-link">dinvgamma</a></span><span class="op">(</span><span class="va">xdom</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span>, <span class="va">nu</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"black invgamma, blue inverse chisquare"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">xdom</span>,<span class="va">yran</span>,col<span class="op">=</span><span class="st">"brown"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mvt_mvss_mvcauchy_files/figure-html/setup-1.png" width="700"></p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/swihart/mvpd" class="external-link">mvpd</a></span><span class="op">)</span></span></code></pre></div>
+<p><img src="mvt_mvss_mvcauchy_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
