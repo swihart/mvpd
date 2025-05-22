@@ -4,6 +4,7 @@ author: Bruce J. Swihart
 date: 2025-05-16
 ---
 
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -43,15 +44,15 @@ caught my attention, as well as a call for intuitive approaches to explaining th
 > -- Grant Sanderson of 3blue1brown, 2024-09-10
 
 
-The result and good explanations of the result have been around for a while, as shown in this [Math SE post from 2012](https://math.stackexchange.com/q/261783/180716).  
+While this relation and proofs of the result have been around for a while, as shown in this [Math SE post from 2012](https://math.stackexchange.com/q/261783/180716), the renewed notoriety is how it caught my attention -- and even then 8 months after the fact.  I agree none of the suggested proofs have a slam-dunk visualization.
 
 This [response video by 
-Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) has an explanation that is similar to the one on this page and connects it to Poisson processes and some other statistical results.  I focus more on visualizing the distributions and thinking of the result in terms of convolution and scale mixture, which should be no surprise given these concepts are commonly used in the underlying theory of `mvpd`.  I also generalize the result, showing that the original problem is a specific instance of the more general result.
+Dr Mihai Nica](https://www.youtube.com/watch?v=qNXBwiAsvZM&t=277s) includes an explanation has some similarities to the approaches on this page and connects it to Poisson processes and some other statistical results.  I focus more on visualizing the distributions and thinking of the result in terms of convolution and scale mixture, which should be no surprise given these concepts are commonly used in the underlying theory of `mvpd`.  I also generalize the result, showing that the original problem is a specific instance of this more general result.
 
 
 ## Restatement of the Relations
 
-We generalize X, Y being iid Beta($\alpha$, 1) (which for $\alpha=1$ is U(0,1)) and restate the result for the quantity $(XY)^Z$.  We then consider a similar quantity $\left(\frac{1}{XY} \right)^Z$ as well.  For each quantity we build intuition by thinking through the distributions on the log-scale.
+We generalize X, Y being iid Beta($\alpha$, 1) (which for $\alpha=1$ is U(0,1)) and restate the result for the computed quantity $(XY)^Z$.  We then consider a similar, computed quantity $\left(\frac{1}{XY} \right)^Z$ as well.  For each quantity we build intuition by thinking through the distributions on the log-scale.
 
 
 ---
@@ -70,7 +71,7 @@ For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
 
 ---
 
-Special instance: For $\alpha = 1$, $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
+Special  $\alpha = 1$ instance: $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
 
 
 
@@ -1042,7 +1043,8 @@ So, in this setup, there is no *one* distribution to recover since  $\alpha_x \n
   <!-- * page 80 green notebook  -->
   <!-- * describe what each color density is -->
   * magenta density
-    * $f_w(w) = \frac{numer}{ denom }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+    * $f_w(w) = - \frac{mn \left( \Gamma(0,mw) - \Gamma(0,nw)\right)}{ m-n }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$
+    * $\Gamma(.,.)$ is [incomplete Gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function#Special_values).
 
 ```{r, results='hide', echo=FALSE, warning=FALSE}
 ## sum of two indep exponentials aa_x != aa_y
@@ -1147,7 +1149,8 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
-
+  * While the computed quantity is not exponential, one can see it is a concentration of the convolution and that it is kind of "in-between" the two component distributions.
+  
 ### Z distributed as Inverse-Gamma(alpha, beta)
 
   * $Z \sim$ Inverse-Gamma($\alpha_z$, $\beta_z$)
@@ -1155,7 +1158,9 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   <!-- * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar  -->
   <!-- * describe what each color of density is -->
   * gold density
-    * $f_w(w) = \frac{numer}{ denom }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+  
+    * $f_w(w) = \frac{mn}{ n-m }\frac{\beta_z^{\alpha_z}\Gamma(\alpha_z + 1)}{ \Gamma(\alpha_z) } \left( \frac{1}{ \left(mw+\beta_z\right)^{\alpha_z +1}}-\frac{1}{ \left(nw+\beta_z\right)^{\alpha_z +1}} \right)$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+
 
     
 ```{r, results='hide', echo=FALSE}
@@ -1267,6 +1272,8 @@ lines(seq(s.xlim[1], s.xlim[2],0.01 ),
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```
+
+  * While the computed quantity is not exponential, one can see it is a concentration of the convolution and that it is kind of "in-between" the two component distributions.
   
 ### Z distributed as Pareto  
 
@@ -1274,7 +1281,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   <!-- * page 81 green notebook -->
   <!-- * describe what each color of density is -->
 
-  * magenta:  
+  * magenta density:  
     * $f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
   
 ```{r, results='hide', echo=FALSE}
@@ -1394,7 +1401,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
   
 
 
-  * the opposite of "concentration" -- bleeding?  
+  * What is the opposite of "concentration" -- bleeding out?  Multiplying the convolution by a random number bigger than 1 disperses it.
 
 
 
@@ -1597,7 +1604,18 @@ While that was fun, this modification (shortening the range of the uniform) does
 
 This is where turning to theory might save us some time.
 
-  * The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,alpha).
+<!-- Green note book page 88 and 89 -->
+
+  * The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,$\alpha$).
+  
+  * If W ~ Gamma(3,lambda) then cW ~ Gamma(3, lambda/c)
+  
+  * I'll leave it as an exercise for the reader, but the two best hopes for a choice of distribution for Z in trying to get the computed quantity back to the original Exponential is Z ~ U(0,1) or Z ~ Beta(2,1).  Either case ends up with Z(log(1/X)+log(1/Y)+log(1/A)) having a density that looks like an exponential density multiplied by extra stuff:
+  
+    * $\lambda e^{-\lambda x} \times \left[ \frac{1+ \lambda x}{2} \right]$ or
+    * $\lambda e^{-\lambda x} \times \left[ \lambda x \right]$
+    
+    * 
 
 
   * A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ). 
@@ -1724,6 +1742,125 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
+<!-- See page 90 of green notebook. 2025-05-22. -->
+
+One can even try Z ~ InverseGamma(.9,.2), but the computed quantity is never going to be an Exponential.
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- nsim.switch ##6e5
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+#z <- runif(nsims,0,1)
+#z <- rgamma(nsims, 0.9, 3)
+##z <- rgamma(nsims, 3, aa_x)
+z <- invgamma::rinvgamma(nsims, .9, .2)
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+
+s.ylim <- c(0,0.6)
+s.xlim <- c(0,12)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+#hist(    z , freq=FALSE, breaks=50, ylim=c(0,1.2), xlim=c(-0.1,1.1), 
+#     main="Z", xlab="",ylab="")
+
+hist(z, freq=FALSE, breaks=500000, ylim=c(0,4), xlim=s.xlim, 
+     main="Z", xlab="",ylab="")
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=500000, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       0.5*(1+aa_x*seq(s.xlim[1], s.xlim[2],0.01 )) * 
+#         dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+#            aa_x),
+#       lwd=overlaid.dens.lwd,
+#       col="pink"
+# )
+# 
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
 
 
 #### Miscellany / Notes to self / Stubs for future ideas
