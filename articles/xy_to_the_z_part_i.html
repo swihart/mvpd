@@ -90,18 +90,20 @@ one, please send it my way and I’ll strongly consider making a video on
 it.</p>
 <p>– Grant Sanderson of 3blue1brown, 2024-09-10</p>
 </blockquote>
-<p>The result and good explanations of the result have been around for a
+<p>While this relation and proofs of the result have been around for a
 while, as shown in this <a href="https://math.stackexchange.com/q/261783/180716" class="external-link">Math SE post from
-2012</a>.</p>
+2012</a>, the renewed notoriety is how it caught my attention – and even
+then 8 months after the fact. I agree none of the suggested proofs have
+a slam-dunk visualization.</p>
 <p>This <a href="https://www.youtube.com/watch?v=qNXBwiAsvZM&amp;t=277s" class="external-link">response
-video by Dr Mihai Nica</a> has an explanation that is similar to the one
-on this page and connects it to Poisson processes and some other
-statistical results. I focus more on visualizing the distributions and
-thinking of the result in terms of convolution and scale mixture, which
-should be no surprise given these concepts are commonly used in the
-underlying theory of <code>mvpd</code>. I also generalize the result,
-showing that the original problem is a specific instance of the more
-general result.</p>
+video by Dr Mihai Nica</a> includes an explanation has some similarities
+to the approaches on this page and connects it to Poisson processes and
+some other statistical results. I focus more on visualizing the
+distributions and thinking of the result in terms of convolution and
+scale mixture, which should be no surprise given these concepts are
+commonly used in the underlying theory of <code>mvpd</code>. I also
+generalize the result, showing that the original problem is a specific
+instance of this more general result.</p>
 <div class="section level2">
 <h2 id="restatement-of-the-relations">Restatement of the Relations<a class="anchor" aria-label="anchor" href="#restatement-of-the-relations"></a>
 </h2>
@@ -109,9 +111,9 @@ general result.</p>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
 1) (which for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>
-is U(0,1)) and restate the result for the quantity
+is U(0,1)) and restate the result for the computed quantity
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">(XY)^Z</annotation></semantics></math>.
-We then consider a similar quantity
+We then consider a similar, computed quantity
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z</annotation></semantics></math>
 as well. For each quantity we build intuition by thinking through the
 distributions on the log-scale.</p>
@@ -148,8 +150,9 @@ Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 </li>
 </ul>
 <hr>
-<p>Special instance: For
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>,
+<p>Special
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>
+instance:
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
@@ -481,32 +484,41 @@ U(0,1)
 <li>magenta density
 <ul>
 <li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi></mrow><mrow><mi>d</mi><mi>e</mi><mi>n</mi><mi>o</mi><mi>m</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{numer}{ denom }</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>−</mo><mfrac><mrow><mi>m</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>m</mi><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mi>n</mi><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>m</mi><mo>−</mo><mi>n</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = - \frac{mn \left( \Gamma(0,mw) - \Gamma(0,nw)\right)}{ m-n }</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo>+</mo><mo>log</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)</annotation></semantics></math>,
 m=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,
-n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>.</li>
+n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>
+</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>.</mi><mo>,</mo><mi>.</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\Gamma(.,.)</annotation></semantics></math>
+is <a href="https://en.wikipedia.org/wiki/Incomplete_gamma_function#Special_values" class="external-link">incomplete
+Gamma function</a>.</li>
 </ul>
 </li>
 </ul>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
+<ul>
+<li>While the computed quantity is not exponential, one can see it is a
+concentration of the convolution and that it is kind of “in-between” the
+two component distributions.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="z-distributed-as-inverse-gammaalpha-beta">Z distributed as Inverse-Gamma(alpha, beta)<a class="anchor" aria-label="anchor" href="#z-distributed-as-inverse-gammaalpha-beta"></a>
 </h3>
 <ul>
-<li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \sim</annotation></semantics></math>
 Inverse-Gamma(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>z</mi></msub><annotation encoding="application/x-tex">\alpha_z</annotation></semantics></math>,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mi>z</mi></msub><annotation encoding="application/x-tex">\beta_z</annotation></semantics></math>)
 <!-- * page 83 green notebook -->
 <!-- * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar  -->
-<!-- * describe what each color of density is -->
-</li>
-<li>gold density
+<!-- * describe what each color of density is --></p></li>
+<li>
+<p>gold density</p>
 <ul>
 <li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>n</mi><mi>u</mi><mi>m</mi><mi>e</mi><mi>r</mi></mrow><mrow><mi>d</mi><mi>e</mi><mi>n</mi><mi>o</mi><mi>m</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{numer}{ denom }</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>m</mi><mi>n</mi></mrow><mrow><mi>n</mi><mo>−</mo><mi>m</mi></mrow></mfrac><mfrac><mrow><msubsup><mi>β</mi><mi>z</mi><msub><mi>α</mi><mi>z</mi></msub></msubsup><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mi>z</mi></msub><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mi>z</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>m</mi><mi>w</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><msub><mi>α</mi><mi>z</mi></msub><mo>+</mo><mn>1</mn></mrow></msup></mfrac><mo>−</mo><mfrac><mn>1</mn><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mi>w</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><msub><mi>α</mi><mi>z</mi></msub><mo>+</mo><mn>1</mn></mrow></msup></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{mn}{ n-m }\frac{\beta_z^{\alpha_z}\Gamma(\alpha_z + 1)}{ \Gamma(\alpha_z) } \left( \frac{1}{ \left(mw+\beta_z\right)^{\alpha_z +1}}-\frac{1}{ \left(nw+\beta_z\right)^{\alpha_z +1}} \right)</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>log</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo>+</mo><mo>log</mo><mfrac><mn>1</mn><mi>Y</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)</annotation></semantics></math>,
 m=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,
@@ -515,6 +527,11 @@ n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><
 </li>
 </ul>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<ul>
+<li>While the computed quantity is not exponential, one can see it is a
+concentration of the convolution and that it is kind of “in-between” the
+two component distributions.</li>
+</ul>
 </div>
 <div class="section level3">
 <h3 id="z-distributed-as-pareto">Z distributed as Pareto<a class="anchor" aria-label="anchor" href="#z-distributed-as-pareto"></a>
@@ -525,7 +542,7 @@ Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semant
 (where 1/Z ~ U(0,1)) <!-- * page 81 green notebook -->
 <!-- * describe what each color of density is --></p></li>
 <li>
-<p>magenta:</p>
+<p>magenta density:</p>
 <ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>w</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mi>n</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mo>exp</mo><mrow><mo>−</mo><mi>m</mi><mi>w</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>m</mi><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><msup><mi>m</mi><mn>2</mn></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><msup><mo>exp</mo><mrow><mo>−</mo><mi>n</mi><mi>w</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>n</mi><mi>w</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>m</mi><mi>n</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo>−</mo><mi>m</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mi>w</mi><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }</annotation></semantics></math>
@@ -538,7 +555,8 @@ n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><
 </ul>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <ul>
-<li>the opposite of “concentration” – bleeding?</li>
+<li>What is the opposite of “concentration” – bleeding out? Multiplying
+the convolution by a random number bigger than 1 disperses it.</li>
 </ul>
 </div>
 </div>
@@ -561,10 +579,28 @@ that average to a 1/3. Let’s replace
 uniform) does not quite seem to “recover” the distribution of
 log(1/x).</p>
 <p>This is where turning to theory might save us some time.</p>
+<!-- Green note book page 88 and 89 -->
 <ul>
 <li><p>The sum of 3 iid
 Exponential(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
-variables will be distributed as Gamma(3,alpha).</p></li>
+variables will be distributed as
+Gamma(3,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>).</p></li>
+<li><p>If W ~ Gamma(3,lambda) then cW ~ Gamma(3, lambda/c)</p></li>
+<li>
+<p>I’ll leave it as an exercise for the reader, but the two best
+hopes for a choice of distribution for Z in trying to get the computed
+quantity back to the original Exponential is Z ~ U(0,1) or Z ~
+Beta(2,1). Either case ends up with Z(log(1/X)+log(1/Y)+log(1/A)) having
+a density that looks like an exponential density multiplied by extra
+stuff:</p>
+<ul>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi><mi>x</mi></mrow></msup><mo>×</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mi>λ</mi><mi>x</mi></mrow><mn>2</mn></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda e^{-\lambda x} \times \left[ \frac{1+ \lambda x}{2} \right]</annotation></semantics></math>
+or</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi><mi>x</mi></mrow></msup><mo>×</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>λ</mi><mi>x</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda e^{-\lambda x} \times \left[ \lambda x \right]</annotation></semantics></math></p></li>
+<li>
+</li>
+</ul>
+</li>
 <li><p>A Gamma distribution times a Gamma distribution will result in an
 exponential distribution if the shape parameter of both Gamma
 distributions is 1, and their rate parameters are the same. In other
@@ -587,6 +623,11 @@ plot!</li>
 </ul>
 <pre><code><span><span class="co">#&gt; [1] 0.4975932</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<!-- See page 90 of green notebook. 2025-05-22. -->
+<p>One can even try Z ~ InverseGamma(.9,.2), but the computed quantity
+is never going to be an Exponential.</p>
+<pre><code><span><span class="co">#&gt; [1] 4.37813</span></span></code></pre>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 <div class="section level4">
 <h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
 </h4>
