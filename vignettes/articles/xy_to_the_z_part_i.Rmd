@@ -5,6 +5,11 @@ date: 2025-05-16
 ---
 
 
+
+
+
+
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -57,6 +62,7 @@ We generalize X, Y being iid Beta($\alpha$, 1) (which for $\alpha=1$ is U(0,1)) 
 
 ---
 
+
 For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
 
 **Result 1**:
@@ -69,11 +75,28 @@ For iid $X,Y \sim$ Beta($\alpha$, 1) and independent $Z \sim U(0,1)$
   * $\left(\frac{1}{XY} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$)
     * Which implies $Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right) \sim$ Exp($\alpha$)
 
----
-
 Special  $\alpha = 1$ instance: $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
 
+---
 
+Later we will generalize this to the sum of K Exponentials.  Right now, let's just keep it to 2 to build intuition.
+
+
+SUM K
+
+For iid $X_k \sim$ Beta($\alpha$, 1), $k=1,...,K, K \in {1,2,...}$ and independent $Z \sim Beta(1,K-1)$, where Beta(1,0) is the point mass / constant 1, and Beta(1,1) is the Uniform(0,1).
+
+**Result 1**:
+
+  * $(\prod X_k)^Z  \sim$ Beta($\alpha$, 1)
+    * Which implies $Z \left( \sum \log X_k \right) \sim$ ReflectedExp($\alpha$)
+
+**Result 2**:    
+
+  * $\left( \prod \frac{1}{X_k} \right)^Z  \sim$ Pareto($x_m=1$, $\alpha_m = \alpha$)
+    * Which implies $Z \left( \sum \log \frac{1}{X_k} \right) \sim$ Exp($\alpha$)
+
+Special  $\alpha = 1$ and $K=2$ instance: $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
 
 ###  Sanity check: Result 1
 
@@ -1602,30 +1625,345 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 While that was fun, this modification (shortening the range of the uniform) does not quite seem to "recover" the distribution of log(1/x).  
 
-This is where turning to theory might save us some time.
-
-<!-- Green note book page 88 and 89 -->
-
-  * The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,$\alpha$).
-  
-  * If W ~ Gamma(3,lambda) then cW ~ Gamma(3, lambda/c)
-  
-  * I'll leave it as an exercise for the reader, but the two best hopes for a choice of distribution for Z in trying to get the computed quantity back to the original Exponential is Z ~ U(0,1) or Z ~ Beta(2,1).  Either case ends up with Z(log(1/X)+log(1/Y)+log(1/A)) having a density that looks like an exponential density multiplied by extra stuff:
-  
-    * $\lambda e^{-\lambda x} \times \left[ \frac{1+ \lambda x}{2} \right]$ or
-    * $\lambda e^{-\lambda x} \times \left[ \lambda x \right]$
-    
-    * 
+There's another way to get Z to be "1/3 on average".  That is, we could draw two uniforms, V ~ uniform(0,1) and W ~ uniform(0,1) and let Z=min(V,W).  This is the same as letting Z ~ beta(1,**3**-1).  The **3** is bolded, because this is the number of exponentials we're summing, and it generalizes to any positive integer.
 
 
-  * A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ). 
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- nsim.switch
+aa_x <- 0.633
+aa_y <- 0.633
 
-  * Therefore \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\).
+bb_x <- 1
+bb_y <- 1
 
-One can tinker and see how close they can get but the theory says it will be inexact.
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
 
 
-  * go through green books examples of trying to isolate the 'x' and showing that it is going to show up either way for n=3 and then plot!
+v <- runif(nsims,0,1)
+w <- runif(nsims,0,1)
+z <- matrixStats::rowMins(cbind(v,w))
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,0.6)
+s.xlim <- c(0,12)
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(    z , freq=FALSE, breaks=50, ylim=c(0.0,2.0), xlim=c(-0.1,1.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+* nailed it!
+
+Let's try it for summing 10 exponentials.
+
+This means we need Z to be "1/10 on average".  That is, we could draw 9 uniforms let Z be the minimum of those 9 uniforms.  This is the same as letting Z ~ beta(1,**10**-1).  The **10** is bolded, because this is the number of exponentials we're summing, and it generalizes to any positive integer.
+
+Be mindful of the x-axis and y-axis limits -- they are not the same for every plot!
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE, fig.height=25}
+set.seed(1)
+nsims <- nsim.switch
+aa_x <- 0.633
+aa_y <- 0.633
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+b <- rbeta(nsims, aa_x, bb_x)
+c <- rbeta(nsims, aa_y, bb_y)
+d <- rbeta(nsims, aa_x, bb_x)
+
+e <- rbeta(nsims, aa_x, bb_x)
+f <- rbeta(nsims, aa_y, bb_y)
+g <- rbeta(nsims, aa_x, bb_x)
+
+h <- rbeta(nsims, aa_x, bb_x)
+
+
+z <- rbeta(nsims, 1, 9)
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,0.6)
+s.xlim <- c(0,12)
+par(mfcol=c(11,3), mai=c(0.3,0.3,0.3,0.3))
+
+
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+hist(log(1/b), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/B)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/c), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/C)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/d), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/D)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+hist(log(1/e), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/E)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/f), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/F)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/g), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/G)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/h), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/H)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+
+
+hist(    z , freq=FALSE, breaks=50, ylim=c(0.0,10.0), xlim=c(-0.1,1.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a)+
+       log(1/b)+log(1/c)+log(1/d)+
+       log(1/e)+log(1/f)+log(1/g)+
+       log(1/h)
+     , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,36), 
+     main="log(1/(XYABCDEFGH))", xlab="",ylab="")
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+#            3,
+#            aa_x),
+#       lwd=overlaid.dens.lwd,
+#       col="skyblue"
+# )
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)+
+       log(1/b)+log(1/c)+log(1/d)+
+       log(1/e)+log(1/f)+log(1/g)+
+       log(1/h)
+     ), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/(XYABCDEFGH))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+
+<!-- This is where turning to theory might save us some time. -->
+
+<!-- <!-- Green note book page 88 and 89 --> -->
+
+<!--   * The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,$\alpha$). -->
+
+<!--   * If W ~ Gamma(3,lambda) then cW ~ Gamma(3, lambda/c) -->
+
+<!--   * I'll leave it as an exercise for the reader, but the two best hopes for a choice of distribution for Z in trying to get the computed quantity back to the original Exponential is Z ~ U(0,1) or Z ~ Beta(2,1).  Either case ends up with Z(log(1/X)+log(1/Y)+log(1/A)) having a density that looks like an exponential density multiplied by extra stuff: -->
+
+<!--     * $\lambda e^{-\lambda x} \times \left[ \frac{1+ \lambda x}{2} \right]$ or -->
+<!--     * $\lambda e^{-\lambda x} \times \left[ \lambda x \right]$ -->
+
+<!-- For kicks, I googled this problem of transforming Gamma(3,a) into Gamma(1,a) and got this from the AI results: -->
+
+<!--   * A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ).  -->
+
+<!--   * Therefore \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\). -->
+
+<!-- One can tinker and see how close they can get but the theory says it will be inexact. -->
+
+
+<!--   * go through green books examples of trying to isolate the 'x' and showing that it is going to show up either way for n=3 and then plot! -->
 
 
 
@@ -1742,9 +2080,12 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
-<!-- See page 90 of green notebook. 2025-05-22. -->
+See page 90 of green notebook. 2025-05-22.
 
-One can even try Z ~ InverseGamma(.9,.2), but the computed quantity is never going to be an Exponential.
+As an exercize, one can solve for the density if Z is InverseGamma(az,bz) and then try to select az,bz >0  that gives the closest match to an exponential density.
+
+One can even try Z ~ InverseGamma(.9,.2) (below), but the computed quantity is never going to be an Exponential.  So I guess the sum of two exponentials involved in this result is special and doesn't generalize to 3, i.e., while (XY)^Z is Uniform, (XYA)^Z won't be.
+
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
@@ -1835,6 +2176,379 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=500000, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       0.5*(1+aa_x*seq(s.xlim[1], s.xlim[2],0.01 )) * 
+#         dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+#            aa_x),
+#       lwd=overlaid.dens.lwd,
+#       col="pink"
+# )
+# 
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+But wait! Dr. Mihai Nica saves the day again. If Z is min of two uniforms, then the relation will hold for sum of three exponentials with a commmon rate! [https://www.youtube.com/watch?v=Zx5T_IrNhUE](follow-up vid)
+
+  * Z~min(V,W) where V,W iid U(0,1)
+  * wait... that just makes Z ~ beta(1,2)
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- nsim.switch ##6e5
+aa_x <- 2
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+v <- runif(nsims,0,1)
+w <- runif(nsims,0,1)
+
+
+
+z <- matrixStats::rowMins(cbind(v,w))
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+
+s.ylim <- c(0,1.2)
+s.xlim <- c(0,12)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,3), xlim=c(-0.1,1.1),
+    main="min(V,W)", xlab="",ylab="")
+
+# hist(z, freq=FALSE, breaks=500000, ylim=c(0,4), xlim=s.xlim, 
+#      main="Z", xlab="",ylab="")
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       0.5*(1+aa_x*seq(s.xlim[1], s.xlim[2],0.01 )) * 
+#         dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+#            aa_x),
+#       lwd=overlaid.dens.lwd,
+#       col="pink"
+# )
+# 
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+  * What about 5 exponentials?
+  * do I take the min of 4 uniforms?
+  * Z~min(m,n,o,p) where m,n,o,p iid U(0,1)
+  * wait... that just makes Z ~ beta(1,4)
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- nsim.switch ##6e5
+aa_x <- 2
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+b <- rbeta(nsims, aa_y, bb_y)
+c <- rbeta(nsims, aa_x, bb_x)
+
+
+m <- runif(nsims,0,1)
+n <- runif(nsims,0,1)
+o <- runif(nsims,0,1)
+p <- runif(nsims,0,1)
+
+
+
+z <- matrixStats::rowMins(cbind(m,n,o,p))
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+
+s.ylim <- c(0,1.2)
+s.xlim <- c(0,12)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+hist(    z , freq=FALSE, breaks=50, ylim=c(0,5), xlim=c(-0.1,1.1),
+    main="min(m,n,o,p)", xlab="",ylab="")
+
+# hist(z, freq=FALSE, breaks=500000, ylim=c(0,4), xlim=s.xlim, 
+#      main="Z", xlab="",ylab="")
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a)+log(1/b)+log(1/c), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/(XYABC))", xlab="",ylab="")
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+#            3,
+#            aa_x),
+#       lwd=overlaid.dens.lwd,
+#       col="skyblue"
+# )
+# 
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)+log(1/b)+log(1/c)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/(XYABC)))", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       0.5*(1+aa_x*seq(s.xlim[1], s.xlim[2],0.01 )) * 
+#         dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+#            aa_x),
+#       lwd=overlaid.dens.lwd,
+#       col="pink"
+# )
+# 
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+
+  * max(V,W)^B ... I can't get it to work. is it for the other computed quantity (xy)^Z?? remember the code below is for (1/x * 1/y)^z
+
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE}
+set.seed(1)
+nsims <- nsim.switch ##6e5
+aa_x <- 1
+aa_y <- 1
+
+bb_x <- 1
+bb_y <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_x, bb_x)
+
+v <- runif(nsims,0,1)
+w <- runif(nsims,0,1)
+b <- runif(nsims,0,1)
+
+
+z <- matrixStats::rowMaxs(cbind(v,w))
+mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+
+s.ylim <- c(0,1.2)
+s.xlim <- c(0,12)
+
+par(mfcol=c(4,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+hist(    z^(1-b) , freq=FALSE, breaks=50, ylim=c(0,3), xlim=c(-0.1,1.1),
+    main="max(V,W)^B", xlab="",ylab="")
+
+# hist(z, freq=FALSE, breaks=500000, ylim=c(0,4), xlim=s.xlim, 
+#      main="Z", xlab="",ylab="")
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(log(1/x)+log(1/y)+log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)+log(1/A)", xlab="",ylab="")
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dgamma(seq(s.xlim[1], s.xlim[2],0.01 ),
+           3,
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)+log(1/a)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
      main="Z(log(1/X)+log(1/Y)+log(1/A))", xlab="",ylab="")
 
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
