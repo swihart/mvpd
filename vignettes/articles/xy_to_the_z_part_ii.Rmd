@@ -9,6 +9,16 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+nsim.switch <- 1e4
+overlaid.dens.lwd <- 3
+## https://stackoverflow.com/a/57157075/2727349
+safe_colorblind_palette <- c("#88CCEE", "#CC6677", "#DDCC77", 
+                             "#117733", "#332288", "#AA4499", 
+                             "#44AA99", "#999933", "#882255", 
+                             "#661100", "#6699CC", "#888888")
+scales::show_col(safe_colorblind_palette)
+
+
 ```
 
 ```{r setup, include=FALSE}
@@ -21,193 +31,386 @@ ___
 
 ---
 
-I'm about 8 months late to the party, but a challenge problem from 3blue1brown
-caught my attention, as well as a call for intuitive approaches.
 
-> Here's the challenge mode for all you math whizzes. Sample three numbers x, y, z uniformly at random in [0, 1], and compute (xy)^z. What distribution describes this result?
->
-> Answer: It's uniform!
->
-> I know how to prove it, but haven't yet found the "aha" style explanation where it feels expected or visualizable. If any of you have one, please send it my way and I'll strongly consider making a video on it.
->
-> -- Grant Sanderson of 3blue1brown, 2024-09-10
+So far we have considered cases where the alpha for X and Y are the same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the original distribution of log(1/X) (equivalently, log(1/Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the distribution for either log(1/X) or log(1/Y) -- it would be a distribution "in-between" those two distributions -- but not an Exponential with an alpha between $\alpha_x$ and $\alpha_y$.  We consider this "unequal alpha" as a bonus case below.
 
 
+## Bonus: Unequal alpha cases
 
-## Beta, Beta, Beta
+Firstly, one may want to consult Wikipedia.
 
-In Part I, we kept Z as a U(0,1).  This is because initially I swung for the fences, investigating generalizing the original problem of X,Y,Z being all uniform to X,Y,Z being all beta and got some tantalizing results but I could not quite bring it to fruition.  Below is the stub of code and I'll write it up later.
-
-Browser tabs that were useful on the search:
-
-  * [Math SE post from 2012](https://math.stackexchange.com/q/261783/180716).  
+  * [Wikipedia Sum of Two Independent Exponential Random Variables](https://en.wikipedia.org/wiki/Exponential_distribution#Sum_of_two_independent_exponential_random_variables)
   
-  * [product of two betas](https://math.stackexchange.com/q/1073364/180716)
-  
-  * [moment matching techinque (applied to product of betas)](https://math.stackexchange.com/a/2440749/180716)
-  
-  * [and using mathematica (check your files)](https://math.stackexchange.com/a/2441409/180716)
-    * which could lead to [mathstatica](http://www.mathstatica.com/) as reviewed [here](http://www.jstatsoft.org/v47/s01/paper)
-    * and/or [Rubi](https://rulebasedintegration.org/downloadRubi.html)
-    * which led to reading about [2F1()](https://en.wikipedia.org/wiki/Hypergeometric_function#Integral_formulas)
 
-```{r, include=TRUE, evaluate=FALSE}
+So, in this setup, there is no *one* distribution to recover since  $\alpha_x \neq \alpha_y$, so trying different distributions for $Z$ leads to different blends of the X,Y distributions for the quantity Z(log(1/X)+log(1/Y)).  
 
-nsims <- 1e7
-aa <- 2#1#8.5
-bb <- 2#1#8.5
-x <- rbeta(nsims, aa, bb)
-y <- rbeta(nsims, aa, bb)
-z <- rbeta(nsims, aa, bb)
-cor(x  ,y  )
-cor(x^z,y^z)
+### Z distributed as U(0,1)
 
-xytothez <- (x*y)^z
+  * $Z \sim$ U(0,1)
+  <!-- * mathematica says I need incomplete gamma. luckily [vincent goulet made one for R](https://search.r-project.org/CRAN/refmans/expint/html/gammainc.html). -->
+  <!-- * page 80 green notebook  -->
+  <!-- * describe what each color density is -->
+  * magenta density
+    * $f_w(w) = - \frac{mn \left( \Gamma(0,mw) - \Gamma(0,nw)\right)}{ m-n }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$
+    * $\Gamma(.,.)$ is [incomplete Gamma function](https://en.wikipedia.org/wiki/Incomplete_gamma_function#Special_values).
 
+```{r, results='hide', echo=FALSE, warning=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## Z is uniform
+nsims <- nsim.switch
+aa_x <- 4
+aa_y <- 2
 
-par(mfrow=c(1,2))
-hist(xytothez, freq=FALSE, breaks=50)
-mean(xytothez)
-var(xytothez)
-var(xytothez) + mean(xytothez)^2
+bb_x <- 1
+bb_y <- 1
 
-hist(x, freq=FALSE, breaks=50)
-mean(x)
-var(x)
-var(x) + mean(x)^2
-
-moment_integrand <- function(x, k, a, b){
-  
-  #beta(a + x*k, b) / beta(a,b) * dbeta(x, a, b)
-  
-  beta(a + x*k, b) / beta(a,b) * 
-  beta(a + x*k, b) / beta(a,b) * 
-                     dbeta(x, a, b)
-  
-  
-}
-
-mom2 <- as.numeric(
-  integrate(moment_integrand,
-            lower=0,
-            upper=1,
-            k=2, a=aa, b=bb)[1])
-mom2
-#var(x^z) + mean(x^z)^2
-var(xytothez) + mean(xytothez)^2
-beta(aa + 2, bb) / beta(aa,bb)
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+z <- runif(nsims, 0, 1)
 
 
-mom1 <- as.numeric(
-  integrate(moment_integrand,
-            lower=0,
-            upper=1,
-            k=1, a=aa, b=bb)[1])
-mom1
-#mean(x^z)
-mean(xytothez)
-beta(aa + 1, bb) / beta(aa,bb)
-
-
-## effort into getting standardized axes for the quantities involved
-
-s.xlim <- range(c(log(x),
-                      log(y),
-                      z,
-                      log(x*y),
-                      z*log(x*y)
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
 )
 ) #c(-10,0)#c(-4,2)
 
-s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa, bb)))
+s.xlim <- c(0,3)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
 s.ylim
 s.xlim
 
-dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
 
-par(mfcol=c(3,3))
-hist(log(x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
-      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
-               aa,
-               bb),
-      col="red"
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="blue"
 )
 
-hist(log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
 lines(seq(s.xlim[1], s.xlim[2],0.01 ),
-      dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
-               aa,
-               bb),
-      col="red"
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      lwd=overlaid.dens.lwd,
+      col="cyan"
 )
 
-hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1))
+hist(    z , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
 
 
 
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
-hist(log(x)+log(y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="darkorange"
+)
+
+
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
-hist(z*(log(x)+log(y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim)
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+fw_dens <- function(w, m, n){
+  
+  num = m*n*(expint::gammainc(0,m*w) - expint::gammainc(0, n*w))
+  den = m-n
+  
+  -num/den
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      fw_dens(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="magenta"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+```
+
+  * While the computed quantity is not exponential, one can see it is a concentration of the convolution and that it is kind of "in-between" the two component distributions.
+  
+### Z distributed as Inverse-Gamma(alpha, beta)
+
+  * $Z \sim$ Inverse-Gamma($\alpha_z$, $\beta_z$)
+  <!-- * page 83 green notebook -->
+  <!-- * as $\alpha_z = \beta_z >>>> 1$ Z converges on 1 and the distributions look more similar  -->
+  <!-- * describe what each color of density is -->
+  * gold density
+  
+    * $f_w(w) = \frac{mn}{ n-m }\frac{\beta_z^{\alpha_z}\Gamma(\alpha_z + 1)}{ \Gamma(\alpha_z) } \left( \frac{1}{ \left(mw+\beta_z\right)^{\alpha_z +1}}-\frac{1}{ \left(nw+\beta_z\right)^{\alpha_z +1}} \right)$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+
+
+    
+```{r, results='hide', echo=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## and z ~ IG(a_z, b_z)
+
+nsims <- nsim.switch
+aa_x <- 4
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+aa_z <- 3
+bb_z <- .9
+
+x <- rbeta (nsims, aa_x, bb_x)
+y <- rbeta (nsims, aa_y, bb_y)
+z <- invgamma::rinvgamma(nsims, shape=aa_z, rate=bb_z)
+
+
+s.xlim <- c(0,3)
+#   range(c(log(1/x),
+#                   log(1/y),
+#                   z,
+#                   log(1/x * 1/y),
+#                   z*log(1/x*1/y)
+# )) 
+#c(-10,0)
+#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim
+s.xlim
+
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="blue"
+)
+
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      lwd=overlaid.dens.lwd,
+      col="cyan"
+)
+
+hist(    z , freq=FALSE, breaks=500, ylim=s.ylim, xlim=c(0,4), 
+     main="Z", xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="darkorange"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=1000, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+fw_dens_ig <- function(w, m, n, o, p){
+  
+  fac1 <- (m*n) / (n-m)
+  fac2 <- p^o * gamma(o+1) / gamma(o)
+  fac3 <- (1/(m*w+p)^(o+1) - 1/(n*w+p)^(o+1))
+  
+  fac1*fac2*fac3
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      fw_dens_ig(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y,
+              aa_z,
+              bb_z),
+      lwd=overlaid.dens.lwd,
+      col="#F0E442" 
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+```
+
+  * While the computed quantity is not exponential, one can see it is a concentration of the convolution and that it is kind of "in-between" the two component distributions.
+  
+### Z distributed as Pareto  
+
+  * $Z \sim$ Pareto($x_m=1$,$\alpha_m=1$) (where 1/Z ~ U(0,1))
+  <!-- * page 81 green notebook -->
+  <!-- * describe what each color of density is -->
+
+  * magenta density:  
+    * $f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$.
+  
+```{r, results='hide', echo=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## and z ~ IG(a_z, b_z)
+
+nsims <- nsim.switch
+aa_x <- 4
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+aa_z <- 3
+bb_z <- .9
+
+x <- rbeta (nsims, aa_x, bb_x)
+y <- rbeta (nsims, aa_y, bb_y)
+z <- LNPar::rpareto(nsims,1,alpha=1)
+
+
+s.xlim <- c(0,3)
+#   range(c(log(1/x),
+#                   log(1/y),
+#                   z,
+#                   log(1/x * 1/y),
+#                   z*log(1/x*1/y)
+# )) 
+#c(-10,0)
+#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim
+s.xlim
+
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="blue"
+)
+
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      lwd=overlaid.dens.lwd,
+      col="cyan"
+)
+
+hist(    z , freq=FALSE, breaks=1e5, ylim=c(0,1), xlim=c(0,10), 
+     main="Z", xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="darkorange"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=1e5, ylim=s.ylim, xlim=c(0,10), 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+fw_dens_pareto <- function(w, m, n){
+  
+  denom <- m*n*(n-m)*w^2
+  num1 <- n^2 * (1-exp(-m*w)*(1+m*w))
+  num2 <- m^2 * (1-exp(-n*w)*(1+n*w))
+
+  (num1-num2) / denom
+}
+
 # lines(seq(s.xlim[1], s.xlim[2],0.01 ),
-#       dlogbeta(seq(s.xlim[1], s.xlim[2],0.01 ),
-#                aa,
-#                bb),
-#       col="red"
+#       fw_dens_pareto(seq(s.xlim[1], s.xlim[2],0.01 ),
+#               aa_x,
+#               aa_y),
+#       lwd=overlaid.dens.lwd,
+#       col="magenta" 
 # )
 
+lines(seq(0, 10,0.01 ),
+      fw_dens_pareto(seq(0, 10,0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="magenta" 
+)
+
+
 plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
-
-
-mean(   log(x)        ) 
-digamma(aa) - digamma(aa+bb)
-mean(z*(log(x)+log(y)))
-
-var (   log(x)        ) 
-trigamma(aa) - trigamma(aa+bb)
-var (z*(log(x)+log(y)) )
-
-
-## attempts at new relations:
-## attempts at new relations:
-## attempts at new relations:
-
-con <- 1.0055
-var (z^con * con * (log(x)+log(y)))
-mean (z^con * con * (log(x)+log(y)))
-
-con2 <- 0.0325
-var (z*(log(x)+log(y) - con2 ))
-mean(z*(log(x)+log(y) - con2 ))
-
-var (z*(log(x)+log(y)+ (log(x)*log(y))  ) )
 ```
+  
 
 
-## Normal Approximation
-
-  * So if we get a result generalizing to betas, interesting to note the [normal approximation for betas](https://en.wikipedia.org/wiki/Beta_distribution#Normal_approximation_to_the_Beta_distribution)
+  * What is the opposite of "concentration" -- bleeding out?  Multiplying the convolution by a random number bigger than 1 disperses it.
 
 
-```{r, include=TRUE, eval=TRUE}
-nsims <- 1e6
-## https://en.wikipedia.org/wiki/Beta_distribution#Normal_approximation_to_the_Beta_distribution
-aa<-bb<-5.5
-mu <- 0.5
-sig <- (1/(4*(2*aa+1)))
-x <- rnorm(nsims, mu, sig)
-y <- rnorm(nsims, mu, sig)
-z <- rnorm(nsims, mu, sig)
 
-par(mfrow=c(1,2))
-hist((x*y)^z, freq=FALSE, breaks=50)
-mean((x*y)^z)
-var((x*y)^z)
-hist(rnorm(nsims, mu,sig), freq=FALSE, breaks=50)
-mean(rnorm(nsims, mu,sig))
-var(rnorm(nsims, mu,sig))
-```
+
