@@ -149,9 +149,56 @@ Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 </ul>
 </li>
 </ul>
-<hr>
 <p>Special
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>
+instance:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
+U(0,1) (because Beta(1, 1) is U(0,1)).</p>
+<hr>
+<p>Later we will generalize this to the sum of K Exponentials. Right
+now, let’s just keep it to 2 to build intuition.</p>
+<p>SUM K</p>
+<p>For iid
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mi>k</mi></msub><mo>∼</mo></mrow><annotation encoding="application/x-tex">X_k \sim</annotation></semantics></math>
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1),
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>K</mi><mo>,</mo><mi>K</mi><mo>∈</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi></mrow></mrow><annotation encoding="application/x-tex">k=1,...,K, K \in {1,2,...}</annotation></semantics></math>
+and independent
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Z \sim Beta(1,K-1)</annotation></semantics></math>,
+where Beta(1,0) is the point mass / constant 1, and Beta(1,1) is the
+Uniform(0,1).</p>
+<p><strong>Result 1</strong>:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>∏</mo><msub><mi>X</mi><mi>k</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(\prod X_k)^Z  \sim</annotation></semantics></math>
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)
+<ul>
+<li>Which implies
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>∑</mo><mo>log</mo><msub><mi>X</mi><mi>k</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \left( \sum \log X_k \right) \sim</annotation></semantics></math>
+ReflectedExp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Result 2</strong>:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>∏</mo><mfrac><mn>1</mn><msub><mi>X</mi><mi>k</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">\left( \prod \frac{1}{X_k} \right)^Z  \sim</annotation></semantics></math>
+Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_m=1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>m</mi></msub><mo>=</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha_m = \alpha</annotation></semantics></math>)
+<ul>
+<li>Which implies
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mrow><mo stretchy="true" form="prefix">(</mo><mo>∑</mo><mo>log</mo><mfrac><mn>1</mn><msub><mi>X</mi><mi>k</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mo>∼</mo></mrow><annotation encoding="application/x-tex">Z \left( \sum \log \frac{1}{X_k} \right) \sim</annotation></semantics></math>
+Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+</li>
+</ul>
+<p>Special
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">K=2</annotation></semantics></math>
 instance:
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
 and
@@ -578,56 +625,75 @@ that average to a 1/3. Let’s replace
 <p>While that was fun, this modification (shortening the range of the
 uniform) does not quite seem to “recover” the distribution of
 log(1/x).</p>
-<p>This is where turning to theory might save us some time.</p>
-<!-- Green note book page 88 and 89 -->
-<ul>
-<li><p>The sum of 3 iid
-Exponential(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
-variables will be distributed as
-Gamma(3,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>).</p></li>
-<li><p>If W ~ Gamma(3,lambda) then cW ~ Gamma(3, lambda/c)</p></li>
-<li>
-<p>I’ll leave it as an exercise for the reader, but the two best
-hopes for a choice of distribution for Z in trying to get the computed
-quantity back to the original Exponential is Z ~ U(0,1) or Z ~
-Beta(2,1). Either case ends up with Z(log(1/X)+log(1/Y)+log(1/A)) having
-a density that looks like an exponential density multiplied by extra
-stuff:</p>
-<ul>
-<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi><mi>x</mi></mrow></msup><mo>×</mo><mrow><mo stretchy="true" form="prefix">[</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mi>λ</mi><mi>x</mi></mrow><mn>2</mn></mfrac><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda e^{-\lambda x} \times \left[ \frac{1+ \lambda x}{2} \right]</annotation></semantics></math>
-or</p></li>
-<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><msup><mi>e</mi><mrow><mo>−</mo><mi>λ</mi><mi>x</mi></mrow></msup><mo>×</mo><mrow><mo stretchy="true" form="prefix">[</mo><mi>λ</mi><mi>x</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda e^{-\lambda x} \times \left[ \lambda x \right]</annotation></semantics></math></p></li>
-<li>
-</li>
-</ul>
-</li>
-<li><p>A Gamma distribution times a Gamma distribution will result in an
-exponential distribution if the shape parameter of both Gamma
-distributions is 1, and their rate parameters are the same. In other
-words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~
-Exponential(λ).</p></li>
-<li><p>Therefore
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mi>a</mi><mi>m</mi><mi>m</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo>,</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Gamma(3,\alpha )</annotation></semantics></math>
-cannot be transformed into
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Exponential(\alpha )</annotation></semantics></math>.
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>G</mi><mi>a</mi><mi>m</mi><mi>m</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Gamma(1,\alpha )</annotation></semantics></math>
-is equal to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>E</mi><mi>x</mi><mi>p</mi><mi>o</mi><mi>n</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Exponential(\alpha )</annotation></semantics></math>.</p></li>
-</ul>
-<p>One can tinker and see how close they can get but the theory says it
-will be inexact.</p>
-<ul>
-<li>go through green books examples of trying to isolate the ‘x’ and
-showing that it is going to show up either way for n=3 and then
-plot!</li>
-</ul>
-<pre><code><span><span class="co">#&gt; [1] 0.4975932</span></span></code></pre>
+<p>There’s another way to get Z to be “1/3 on average”. That is, we
+could draw two uniforms, V ~ uniform(0,1) and W ~ uniform(0,1) and let
+Z=min(V,W). This is the same as letting Z ~
+beta(1,<strong>3</strong>-1). The <strong>3</strong> is bolded, because
+this is the number of exponentials we’re summing, and it generalizes to
+any positive integer.</p>
+<pre><code><span><span class="co">#&gt; [1] 0.3295565</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
-<!-- See page 90 of green notebook. 2025-05-22. -->
-<p>One can even try Z ~ InverseGamma(.9,.2), but the computed quantity
-is never going to be an Exponential.</p>
-<pre><code><span><span class="co">#&gt; [1] 4.37813</span></span></code></pre>
+<ul>
+<li>nailed it!</li>
+</ul>
+<p>Let’s try it for summing 10 exponentials.</p>
+<p>This means we need Z to be “1/10 on average”. That is, we could draw
+9 uniforms let Z be the minimum of those 9 uniforms. This is the same as
+letting Z ~ beta(1,<strong>10</strong>-1). The <strong>10</strong> is
+bolded, because this is the number of exponentials we’re summing, and it
+generalizes to any positive integer.</p>
+<p>Be mindful of the x-axis and y-axis limits – they are not the same
+for every plot!</p>
+<pre><code><span><span class="co">#&gt; [1] 0.0997494</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
+<!-- This is where turning to theory might save us some time. -->
+<!-- <!-- Green note book page 88 and 89 -->
+<p>–&gt;</p>
+<!--   * The sum of 3 iid Exponential($\alpha$) variables will be distributed as Gamma(3,$\alpha$). -->
+<!--   * If W ~ Gamma(3,lambda) then cW ~ Gamma(3, lambda/c) -->
+<!--   * I'll leave it as an exercise for the reader, but the two best hopes for a choice of distribution for Z in trying to get the computed quantity back to the original Exponential is Z ~ U(0,1) or Z ~ Beta(2,1).  Either case ends up with Z(log(1/X)+log(1/Y)+log(1/A)) having a density that looks like an exponential density multiplied by extra stuff: -->
+<!--     * $\lambda e^{-\lambda x} \times \left[ \frac{1+ \lambda x}{2} \right]$ or -->
+<!--     * $\lambda e^{-\lambda x} \times \left[ \lambda x \right]$ -->
+<!-- For kicks, I googled this problem of transforming Gamma(3,a) into Gamma(1,a) and got this from the AI results: -->
+<!--   * A Gamma distribution times a Gamma distribution will result in an exponential distribution if the shape parameter of both Gamma distributions is 1, and their rate parameters are the same. In other words, if X ~ Gamma(1, λ) and Y ~ Gamma(1, λ), then their product X*Y ~ Exponential(λ).  -->
+<!--   * Therefore \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\). -->
+<!-- One can tinker and see how close they can get but the theory says it will be inexact. -->
+<!--   * go through green books examples of trying to isolate the 'x' and showing that it is going to show up either way for n=3 and then plot! -->
+<pre><code><span><span class="co">#&gt; [1] 0.4975932</span></span></code></pre>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
+<p>See page 90 of green notebook. 2025-05-22.</p>
+<p>As an exercize, one can solve for the density if Z is
+InverseGamma(az,bz) and then try to select az,bz &gt;0 that gives the
+closest match to an exponential density.</p>
+<p>One can even try Z ~ InverseGamma(.9,.2) (below), but the computed
+quantity is never going to be an Exponential. So I guess the sum of two
+exponentials involved in this result is special and doesn’t generalize
+to 3, i.e., while (XY)^Z is Uniform, (XYA)^Z won’t be.</p>
+<pre><code><span><span class="co">#&gt; [1] 4.37813</span></span></code></pre>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p>But wait! Dr. Mihai Nica saves the day again. If Z is min of two
+uniforms, then the relation will hold for sum of three exponentials with
+a commmon rate! <a href="follow-up%20vid">https://www.youtube.com/watch?v=Zx5T_IrNhUE</a></p>
+<ul>
+<li>Z~min(V,W) where V,W iid U(0,1)</li>
+<li>wait… that just makes Z ~ beta(1,2)</li>
+</ul>
+<pre><code><span><span class="co">#&gt; [1] 0.3308208</span></span></code></pre>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<ul>
+<li>What about 5 exponentials?</li>
+<li>do I take the min of 4 uniforms?</li>
+<li>Z~min(m,n,o,p) where m,n,o,p iid U(0,1)</li>
+<li>wait… that just makes Z ~ beta(1,4)</li>
+</ul>
+<pre><code><span><span class="co">#&gt; [1] 0.2001201</span></span></code></pre>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<ul>
+<li>max(V,W)^B … I can’t get it to work. is it for the other computed
+quantity (xy)^Z?? remember the code below is for (1/x * 1/y)^z</li>
+</ul>
+<pre><code><span><span class="co">#&gt; [1] 0.6668294</span></span></code></pre>
+<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 <div class="section level4">
 <h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
 </h4>
