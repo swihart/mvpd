@@ -108,7 +108,144 @@ instance of this more general result.</p>
 <div class="section level2">
 <h2 id="restatement-of-the-relations">Restatement of the Relations<a class="anchor" aria-label="anchor" href="#restatement-of-the-relations"></a>
 </h2>
-<p>We generalize X, Y being iid
+<div class="section level3">
+<h3 id="overview-sketch">Overview Sketch<a class="anchor" aria-label="anchor" href="#overview-sketch"></a>
+</h3>
+<p>The original problem could be stated as:</p>
+<p>If</p>
+<ul>
+<li>X ~ U(0,1)</li>
+<li>Y ~ U(0,1)</li>
+<li>Z ~ U(0,1)</li>
+</ul>
+<p>Then</p>
+<ul>
+<li>(XY)^Z ~ U(0,1)</li>
+</ul>
+<p>We first note that
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1) is a generalization of the U(0,1). For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>,
+Beta(1,1) is the same as U(0,1). I had a hunch the result would
+generalize, so for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\alpha &gt; 0</annotation></semantics></math>,
+we state:</p>
+<p>If</p>
+<ul>
+<li>X ~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</li>
+<li>Y ~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</li>
+<li>Z ~ U(0,1),</li>
+</ul>
+<p>Then</p>
+<ul>
+<li>(XY)^Z ~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</li>
+</ul>
+<p>We then can generalize the distribution of Z to Beta(1, K-1), where K
+is the number of random variates being multiplied. In the original
+problem, K=2, because X and Y were being multiplied and raised to Z.
+Well, for K=2, Beta(1,K-1) is Beta(1,1) which is U(0,1). That leaves us
+with:</p>
+<p>If</p>
+<ul>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_2</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</p></li>
+<li><p>…</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mi>K</mi></msub><annotation encoding="application/x-tex">X_K</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+~ Beta(1, K-1)</p></li>
+</ul>
+<p>Then</p>
+<ul>
+<li>(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><msub><mi>X</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">X_1 X_2</annotation></semantics></math>
+…
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mi>K</mi></msub><annotation encoding="application/x-tex">X_K</annotation></semantics></math>)^<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</li>
+</ul>
+<p>Turns out there is another computed quantity with a distribution:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><msub><mi>X</mi><mn>1</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mi>…</mi><msub><mi>X</mi><mi>K</mi></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left( \frac{1}{X_1 X_2 \dots X_K} \right)^Z</annotation></semantics></math>
+~ Pareto(scale = 1,
+shape=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+<p>We build intuition on the <strong>log-scale</strong>, which changes
+the computed quantities from a product raised to a power to a sum
+multiplied by a scalar. Since these are random variables, this amounts
+to a convolution and then a change of scale (aka “scale mixtures”). As
+one can see, this challenge problem is right up <code>mvpd</code>’s
+alley!</p>
+<blockquote>
+<p>In short, for intuition, the sum of a bunch of exponentials is a
+gamma, and to recover the original exponential distribution, the sum is
+multiplied by a beta.</p>
+</blockquote>
+<p>Well, that’s the way you’d say it at coffee before a seminar to seem
+cool. The parts that fill it in a bit more:</p>
+<blockquote>
+<p>In short, for intuition, the sum of K iid exponential random
+variables with common rate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+is a gamma(K,). To recover the original exponential distribution, the
+sum is multiplied by a beta(1, K-1) random variable.</p>
+</blockquote>
+<p>Going forward, it may be useful to know that</p>
+<p>If</p>
+<ul>
+<li>X ~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1)</li>
+</ul>
+<p>Then</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\log(X)</annotation></semantics></math>
+~
+ReflectedExp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></msubsup><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mi>k</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\sum_{k=1}^K  \log(X_k)</annotation></semantics></math>
+~ ReflectedGamma(K,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+<p>and</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mi>X</mi></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\log(\frac{1}{X})</annotation></semantics></math>
+=
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">-\log(X)</annotation></semantics></math>
+~
+Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>K</mi></msubsup><mo>−</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mi>k</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\sum_{k=1}^K -\log(X_k)</annotation></semantics></math>
+~ Gamma(K,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
+</ul>
+<p>As well as</p>
+<ul>
+<li>If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mn>1</mn></msub><mo>,</mo><msub><mi>u</mi><mn>2</mn></msub><mo>,</mo><msub><mi>u</mi><mn>3</mn></msub><mo>,</mo><mi>…</mi><msub><mi>u</mi><mi>K</mi></msub></mrow><annotation encoding="application/x-tex">u_1, u_2, u_3, \dots u_K</annotation></semantics></math>
+iid U(0,1) then
+min(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mn>1</mn></msub><mo>,</mo><msub><mi>u</mi><mn>2</mn></msub><mo>,</mo><msub><mi>u</mi><mn>3</mn></msub><mo>,</mo><mi>…</mi><msub><mi>u</mi><mi>K</mi></msub></mrow><annotation encoding="application/x-tex">u_1, u_2, u_3, \dots u_K</annotation></semantics></math>)
+~ Beta(1,K-1).</li>
+</ul>
+<p>We’ll make lots of pictures.</p>
+<p>In closing, we generalize X, Y being iid
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
 1) (which for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>
@@ -118,7 +255,15 @@ We then consider a similar, computed quantity
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z</annotation></semantics></math>
 as well. For each quantity we build intuition by thinking through the
 distributions on the log-scale.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="concise-statements">Concise statements<a class="anchor" aria-label="anchor" href="#concise-statements"></a>
+</h2>
 <hr>
+<p>Result 1 and 2 generalizes the U(0,1) of the X, Y, and (XY)^Z to
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
+1).</p>
 <p>For iid
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>∼</mo></mrow><annotation encoding="application/x-tex">X,Y \sim</annotation></semantics></math>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
@@ -150,27 +295,23 @@ Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 </ul>
 </li>
 </ul>
-<p>Special
+<p>The original challenge problem is the special
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>
 instance:
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>X</mi><mo>,</mo><mi>Y</mi><mo>,</mo><mi>Z</mi></mrow><annotation encoding="application/x-tex">X,Y,Z</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
 U(0,1) (because Beta(1, 1) is U(0,1)).</p>
-<hr>
-<p>Later we will generalize this to the sum of K Exponentials. Right
-now, let’s just keep it to 2 to build intuition.</p>
-<p>SUM K</p>
+<p>Result 1-K and 2-K generalizes the U(0,1) of the Z to Beta(1,
+K-1).</p>
 <p>For iid
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mi>k</mi></msub><mo>∼</mo></mrow><annotation encoding="application/x-tex">X_k \sim</annotation></semantics></math>
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
 1),
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><mi>K</mi><mo>,</mo><mi>K</mi><mo>∈</mo><mrow><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi></mrow></mrow><annotation encoding="application/x-tex">k=1,...,K, K \in {1,2,...}</annotation></semantics></math>
 and independent
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Z \sim Beta(1,K-1)</annotation></semantics></math>,
-where Beta(1,0) is the point mass / constant 1, and Beta(1,1) is the
-Uniform(0,1).</p>
-<p><strong>Result 1</strong>:</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Z</mi><mo>∼</mo><mi>B</mi><mi>e</mi><mi>t</mi><mi>a</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Z \sim Beta(1,K-1)</annotation></semantics></math></p>
+<p><strong>Result 1-K</strong>:</p>
 <ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>∏</mo><msub><mi>X</mi><mi>k</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(\prod X_k)^Z  \sim</annotation></semantics></math>
@@ -183,7 +324,7 @@ ReflectedExp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><
 </ul>
 </li>
 </ul>
-<p><strong>Result 2</strong>:</p>
+<p><strong>Result 2-K</strong>:</p>
 <ul>
 <li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mo>∏</mo><mfrac><mn>1</mn><msub><mi>X</mi><mi>k</mi></msub></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">\left( \prod \frac{1}{X_k} \right)^Z  \sim</annotation></semantics></math>
@@ -196,7 +337,7 @@ Exp(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics
 </ul>
 </li>
 </ul>
-<p>Special
+<p>The original challenge problem is the special
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha = 1</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">K=2</annotation></semantics></math>
@@ -205,6 +346,8 @@ instance:
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">(XY)^Z  \sim</annotation></semantics></math>
 U(0,1) (because Beta(1, 1) is U(0,1)).</p>
+<p>Also note this holds for K=1 because Beta(1,0) is the point mass
+(constant) 1 (in limit).</p>
 <div class="section level3">
 <h3 id="sanity-check-result-1">Sanity check: Result 1<a class="anchor" aria-label="anchor" href="#sanity-check-result-1"></a>
 </h3>
@@ -340,8 +483,8 @@ by a random number between 0 and 1 will do exactly that.</li>
 <p>Now we draw a bunch of random beta and uniform random variables and
 then plot the quantities to see the theory in action for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><mo>∼</mo></mrow><annotation encoding="application/x-tex">\left(\frac{1}{XY} \right)^Z  \sim</annotation></semantics></math>
-Pareto(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>x</mi><mi>m</mi></msub><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">x_m=1</annotation></semantics></math>,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>m</mi></msub><mo>=</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">\alpha_m = \alpha</annotation></semantics></math>).
+Pareto(scale<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">=1</annotation></semantics></math>,
+shape<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mi>α</mi></mrow><annotation encoding="application/x-tex">= \alpha</annotation></semantics></math>).
 We will plot the theoretical result in purple on top of the histogram.
 First for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha=1</annotation></semantics></math>,
@@ -493,28 +636,29 @@ values) flip/reflect values across the y-axis. See below:</p>
 <div class="section level2">
 <h2 id="bonus-what-about-3-exponentials">Bonus: What about 3 exponentials?<a class="anchor" aria-label="anchor" href="#bonus-what-about-3-exponentials"></a>
 </h2>
+<p>We have already stated Results 1-K and 2-K which generalized things
+to summing K exponentials. However, let’s build some intuition
+pretending we didn’t have those results and just tried to add a 3rd
+variable to the procedure we’re been doing to this point.</p>
 <p>Let’s see what the resultant Z(log(1/X)+log(1/Y)+log(1/A))
 distribution would look like, with X,Y,A as iid beta(0.633,1) and an
 independent Z iid U(0,1)</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<p>It looks like we need more tightening. Let’s tinker. Instead of
-multiplying by 1/2 on average, perhaps we need to multiply by 1/3 on
+<p>It looks like we need more tightening from Z. Let’s tinker. Instead
+of multiplying by 1/2 on average, perhaps we need to multiply by 1/3 on
 average? Let’s leave Z as a uniform, with positive values smaller than 1
 that average to a 1/3. Let’s replace
 <code>z&lt;-runif(nsims, 0, 1)</code> with
 <code>z&lt;-runif(nsims, 0, 2/3)</code> in the code:</p>
-<pre><code><span><span class="co">#&gt; [1] 0.3317288</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>While that was fun, this modification (shortening the range of the
 uniform) does not quite seem to “recover” the distribution of
-log(1/x).</p>
+log(1/X).</p>
 <p>There’s another way to get Z to be “1/3 on average”. That is, we
 could draw two uniforms, V ~ uniform(0,1) and W ~ uniform(0,1) and let
 Z=min(V,W). This is the same as letting Z ~
 beta(1,<strong>3</strong>-1). The <strong>3</strong> is bolded, because
-this is the number of exponentials we’re summing, and it generalizes to
-any positive integer.</p>
-<pre><code><span><span class="co">#&gt; [1] 0.3295565</span></span></code></pre>
+this is the number of exponentials that are being summed.</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <ul>
 <li>nailed it!</li>
@@ -527,7 +671,6 @@ bolded, because this is the number of exponentials we’re summing, and it
 generalizes to any positive integer.</p>
 <p>Be mindful of the x-axis and y-axis limits – they are not the same
 for every plot!</p>
-<pre><code><span><span class="co">#&gt; [1] 0.0997494</span></span></code></pre>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-19-1.png" width="700"></p>
 <!-- This is where turning to theory might save us some time. -->
 <!-- <!-- Green note book page 88 and 89 -->
@@ -542,41 +685,17 @@ for every plot!</p>
 <!--   * Therefore \(Gamma(3,\alpha )\) cannot be transformed into \(Exponential(\alpha )\). \(Gamma(1,\alpha )\) is equal to \(Exponential(\alpha )\). -->
 <!-- One can tinker and see how close they can get but the theory says it will be inexact. -->
 <!--   * go through green books examples of trying to isolate the 'x' and showing that it is going to show up either way for n=3 and then plot! -->
-<pre><code><span><span class="co">#&gt; [1] 0.4975932</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-20-1.png" width="700"></p>
-<p>See page 90 of green notebook. 2025-05-22.</p>
-<p>As an exercize, one can solve for the density if Z is
-InverseGamma(az,bz) and then try to select az,bz &gt;0 that gives the
-closest match to an exponential density.</p>
-<p>One can even try Z ~ InverseGamma(.9,.2) (below), but the computed
-quantity is never going to be an Exponential. So I guess the sum of two
-exponentials involved in this result is special and doesn’t generalize
-to 3, i.e., while (XY)^Z is Uniform, (XYA)^Z won’t be.</p>
-<pre><code><span><span class="co">#&gt; [1] 4.37813</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
-<p>But wait! Dr. Mihai Nica saves the day again. If Z is min of two
-uniforms, then the relation will hold for sum of three exponentials with
-a commmon rate! <a href="follow-up%20vid">https://www.youtube.com/watch?v=Zx5T_IrNhUE</a></p>
-<ul>
-<li>Z~min(V,W) where V,W iid U(0,1)</li>
-<li>wait… that just makes Z ~ beta(1,2)</li>
-</ul>
-<pre><code><span><span class="co">#&gt; [1] 0.3308208</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
-<ul>
-<li>What about 5 exponentials?</li>
-<li>do I take the min of 4 uniforms?</li>
-<li>Z~min(m,n,o,p) where m,n,o,p iid U(0,1)</li>
-<li>wait… that just makes Z ~ beta(1,4)</li>
-</ul>
-<pre><code><span><span class="co">#&gt; [1] 0.2001201</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
-<ul>
-<li>max(V,W)^B … I can’t get it to work. is it for the other computed
-quantity (xy)^Z?? remember the code below is for (1/x * 1/y)^z</li>
-</ul>
-<pre><code><span><span class="co">#&gt; [1] 0.6668294</span></span></code></pre>
-<p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<!-- See page 90 of green notebook. 2025-05-22. -->
+<!-- As an exercize, one can solve for the density if Z is InverseGamma(az,bz) and then try to select az,bz >0  that gives the closest match to an exponential density. -->
+<!-- One can even try Z ~ InverseGamma(.9,.2) (below), but the computed quantity is never going to be an Exponential.  So I guess the sum of two exponentials involved in this result is special and doesn't generalize to 3, i.e., while (XY)^Z is Uniform, (XYA)^Z won't be. -->
+<!-- But wait! Dr. Mihai Nica saves the day again. If Z is min of two uniforms, then the relation will hold for sum of three exponentials with a commmon rate! [https://www.youtube.com/watch?v=Zx5T_IrNhUE](follow-up vid) -->
+<!--   * Z~min(V,W) where V,W iid U(0,1) -->
+<!--   * wait... that just makes Z ~ beta(1,2) -->
+<p><!-- * What about 5 exponentials? -->
+<!-- * do I take the min of 4 uniforms? -->
+<!-- * Z~min(m,n,o,p) where m,n,o,p iid U(0,1) -->
+<!-- * wait... that just makes Z ~ beta(1,4) --></p>
+<p><!-- * max(V,W)^B ... I can't get it to work. is it for the other computed quantity (xy)^Z?? remember the code below is for (1/x * 1/y)^z --></p>
 <div class="section level4">
 <h4 id="miscellany-notes-to-self-stubs-for-future-ideas">Miscellany / Notes to self / Stubs for future ideas<a class="anchor" aria-label="anchor" href="#miscellany-notes-to-self-stubs-for-future-ideas"></a>
 </h4>
