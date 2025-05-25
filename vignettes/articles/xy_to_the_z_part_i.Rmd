@@ -96,21 +96,16 @@ If
 
 Then
 
-  * ($X_1 X_2$ ... $X_K$)^$Z$ ~ Beta($\alpha$, 1)
+  * $\left(X_1 X_2 \dots X_K \right)^Z$ ~ Beta($\alpha$, 1)
 
 Turns out there is another computed quantity with a distribution:
 
   * $\left( \frac{1}{X_1 X_2 \dots X_K} \right)^Z$ ~ Pareto(scale = 1, shape=$\alpha$)
 
+We will make pictures of these computed quantities to show they follow these distributions in a bit. While they are useful, they are more confirmatory than intuition building.
 
-We build intuition on the **log-scale**, which changes the computed quantities from a product raised to a power to a sum multiplied by a scalar.  Since these are random variables, this amounts to a convolution and then a change of scale (aka "scale mixtures"). 
+For building intuition, I view things on the **log-scale**, which changes the computed quantities from **a product raised to a power** to **a sum multiplied by a scalar**.  Since these are random variables, this amounts to a convolution and then a change of scale (aka "scale mixtures"). 
 As one can see, this challenge problem is right up `mvpd`'s alley!  
-
-> In short, for intuition, the sum of a bunch of exponentials is a gamma, and to recover the original exponential distribution, the sum is multiplied by a beta.
-
-Well, that's the way you'd say it at coffee before a seminar to seem cool.  The parts that fill it in a bit more:
-
-> In short, for intuition, the sum of K iid exponential random variables with common rate $\alpha$ is a gamma(K,\alpha). To recover the original exponential distribution, the sum is multiplied by a beta(1, K-1) random variable.
 
 Going forward, it may be useful to know that
 
@@ -132,7 +127,32 @@ As well as
 
   * If $u_1, u_2, u_3, \dots u_K$ iid U(0,1) then min($u_1, u_2, u_3, \dots u_K$) ~ Beta(1,K-1).
 
-We'll make lots of pictures.
+
+We'll make lots of pictures of these down below.  Quickly, I'll state what we are showing with those pictures.
+
+> In short, for intuition, the sum of a bunch of exponentials is a gamma, and to recover the original exponential distribution, the sum is multiplied by a beta.
+
+Well, that's the way you'd say it at coffee before a seminar to seem cool.  The parts that fill it in a bit more:
+
+> In short, for intuition, the sum of K iid exponential random variables with common rate $\alpha$ is a gamma(K,$\alpha$). To recover the original exponential distribution, the sum is multiplied by a beta(1, K-1) random variable.
+
+For those that would like a density argument:
+
+ * The sum S~Gamma(K,$\alpha$) has density $f(x) = \frac{\alpha^K}{\Gamma(K)} x^{K-1} \exp(-\alpha x)$
+ 
+ * The product ZS ~ Gamma(K, $\alpha$/Z) has density $f(x) = \frac{(\alpha/Z)^K}{\Gamma(K)} x^{K-1} \exp(-(\alpha/Z) x)$
+ 
+ * Since Z is random we want to integrate it out with respect to its distribution.  So the puzzle becomes for what $f_z$ does the integral solve to the exponential density $f(x) = \alpha \exp(-\alpha x)$?
+ 
+ * $\int f_x f_z dz$ = $\int f(x) = \frac{(\alpha/Z)^K}{\Gamma(K)} x^{K-1} \exp(-(\alpha/Z) x) f_z dz$
+
+ * If $f_z(z) = \frac{(1-z)^{K-2}}{B(1,K-1)}$, then 
+   * $\int f_x f_z dz$ = $\int \frac{(\alpha/Z)^K}{\Gamma(K-1)\Gamma(1)} x^{K-1} \exp(-(\alpha/Z) x) (1-z)^{K-2} dz$ = 
+   * $\frac{x^{K-1}}{\Gamma(K-1)}  \int (\alpha/Z)^K \exp(-(\alpha/Z) x) (1-z)^{K-2} dz$ =
+   * $\frac{x^{K-1}}{\Gamma(K-1)} \left( \alpha \exp(-\alpha x) \frac{\Gamma(K-1)}{x^{K+1}}  \right)$ =
+   * $\alpha \exp(-\alpha x) ~~\blacksquare$ 
+
+
 
 In closing, we generalize X, Y being iid Beta($\alpha$, 1) (which for $\alpha=1$ is U(0,1)) and restate the result for the computed quantity $(XY)^Z$.  We then consider a similar, computed quantity $\left(\frac{1}{XY} \right)^Z$ as well.  For each quantity we build intuition by thinking through the distributions on the log-scale.
 
@@ -419,6 +439,7 @@ Quick observations --
   * log(X): is a Reflected Exponential with rate $\alpha$, as is log(Y) *and* Z(log(X)+log(Y))!
     * the bars fall along the red density line
   * log(X) + log(Y): the convolution (i.e., sum) of two Reflected Exponentials is more disperse and squattier than just one Reflected Exponential. We know this already -- think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
+    * the bars fall along a RefelectedGamma(2,$\alpha$) density
   * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, log(X), we need to "tighten" or "gather" or "concentrate" the log(X)+log(Y) distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
 See for other values for alpha:
@@ -838,6 +859,7 @@ Quick observations --
 
   * log(X): is an Exponential($\alpha$), as is log(Y) *and* Z(log(X)+log(Y))!
   * log(X) + log(Y): the convolution (i.e., sum) of two Exponentials is more disperse and squattier. We know this already -- think of adding two normals together and the variance of the resultant Normal having the sum of the variances of the original normals.
+    * the bars fall along a Gamma(2,$\alpha$) density  
   * Z(log(X)+log(Y)): to "recover" or "get back to" the original distribution before the convolution, log(X), we need to "tighten" or "gather" or "concentrate" the log(X)+log(Y) distribution. Multiplying it by a random number between 0 and 1 will do exactly that. 
   
 See for other values for alpha:
@@ -1203,8 +1225,8 @@ ___
   
 ##  Bonus: What about 3 exponentials?
 
-We have already stated Results 1-K and 2-K which generalized things to summing K exponentials.  However, let's build some intuition pretending we didn't have 
-those results and just tried to add a 3rd variable to the procedure we're been doing to this point.
+We have already stated Results 1-K and 2-K which generalized things to summing K exponentials.  However, let's build some intuition pretending we did not have
+those results and just tried to add a 3rd variable to the procedure we have been doing to this point.
 
 Let's see what the resultant Z(log(1/X)+log(1/Y)+log(1/A)) distribution would look like, with X,Y,A as iid beta(0.633,1) and an independent Z iid U(0,1)
 
@@ -1397,10 +1419,10 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 ```
 
-While that was fun, this modification (shortening the range of the uniform) does not quite seem to "recover" the distribution of log(1/X).  
+While that was fun, this modification (shortening the range of the uniform) does not quite seem to "recover" the distribution of log(1/X).  It seems we needed more Z values that are smaller to fill in the part of the density near 0.  
 
-There's another way to get Z to be "1/3 on average".  That is, we could draw two uniforms, V ~ uniform(0,1) and W ~ uniform(0,1) and let Z=min(V,W).  This is the same as letting Z ~ beta(1,**3**-1).  The **3** is bolded, because this is the number of exponentials that are being summed.
-
+There's another way to get Z to be "1/3 on average".  That is, we could draw two uniforms, V ~ uniform(0,1) and W ~ uniform(0,1) and let Z=min(V,W) (This insight was shown by Dr. Mihai Nica's [follow-up video](https://www.youtube.com/watch?v=Zx5T_IrNhUE).
+).  Note, this is the same as letting Z ~ beta(1,**3**-1).  The **3** is bolded, because this is the number of exponentials that are being summed. This gives us a way to generalize to **K** exponentials being summed.  
 
 ```{r, include=TRUE, eval=TRUE, echo=FALSE}
 set.seed(1)
