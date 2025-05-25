@@ -171,9 +171,8 @@ Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantic
 </ul>
 <p>Then</p>
 <ul>
-<li>(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>X</mi><mn>1</mn></msub><msub><mi>X</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">X_1 X_2</annotation></semantics></math>
-…
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mi>K</mi></msub><annotation encoding="application/x-tex">X_K</annotation></semantics></math>)^<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>X</mi><mn>1</mn></msub><msub><mi>X</mi><mn>2</mn></msub><mi>…</mi><msub><mi>X</mi><mi>K</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left(X_1 X_2 \dots X_K \right)^Z</annotation></semantics></math>
 ~
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
 1)</li>
@@ -185,26 +184,16 @@ Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantic
 ~ Pareto(scale = 1,
 shape=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)</li>
 </ul>
-<p>We build intuition on the <strong>log-scale</strong>, which changes
-the computed quantities from a product raised to a power to a sum
-multiplied by a scalar. Since these are random variables, this amounts
-to a convolution and then a change of scale (aka “scale mixtures”). As
-one can see, this challenge problem is right up <code>mvpd</code>’s
+<p>We will make pictures of these computed quantities to show they
+follow these distributions in a bit. While they are useful, they are
+more confirmatory than intuition building.</p>
+<p>For building intuition, I view things on the
+<strong>log-scale</strong>, which changes the computed quantities from
+<strong>a product raised to a power</strong> to <strong>a sum multiplied
+by a scalar</strong>. Since these are random variables, this amounts to
+a convolution and then a change of scale (aka “scale mixtures”). As one
+can see, this challenge problem is right up <code>mvpd</code>’s
 alley!</p>
-<blockquote>
-<p>In short, for intuition, the sum of a bunch of exponentials is a
-gamma, and to recover the original exponential distribution, the sum is
-multiplied by a beta.</p>
-</blockquote>
-<p>Well, that’s the way you’d say it at coffee before a seminar to seem
-cool. The parts that fill it in a bit more:</p>
-<blockquote>
-<p>In short, for intuition, the sum of K iid exponential random
-variables with common rate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
-is a gamma(K,). To recover the original exponential distribution, the
-sum is multiplied by a beta(1, K-1) random variable.</p>
-</blockquote>
 <p>Going forward, it may be useful to know that</p>
 <p>If</p>
 <ul>
@@ -244,7 +233,62 @@ iid U(0,1) then
 min(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>u</mi><mn>1</mn></msub><mo>,</mo><msub><mi>u</mi><mn>2</mn></msub><mo>,</mo><msub><mi>u</mi><mn>3</mn></msub><mo>,</mo><mi>…</mi><msub><mi>u</mi><mi>K</mi></msub></mrow><annotation encoding="application/x-tex">u_1, u_2, u_3, \dots u_K</annotation></semantics></math>)
 ~ Beta(1,K-1).</li>
 </ul>
-<p>We’ll make lots of pictures.</p>
+<p>We’ll make lots of pictures of these down below. Quickly, I’ll state
+what we are showing with those pictures.</p>
+<blockquote>
+<p>In short, for intuition, the sum of a bunch of exponentials is a
+gamma, and to recover the original exponential distribution, the sum is
+multiplied by a beta.</p>
+</blockquote>
+<p>Well, that’s the way you’d say it at coffee before a seminar to seem
+cool. The parts that fill it in a bit more:</p>
+<blockquote>
+<p>In short, for intuition, the sum of K iid exponential random
+variables with common rate
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+is a
+gamma(K,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>).
+To recover the original exponential distribution, the sum is multiplied
+by a beta(1, K-1) random variable.</p>
+</blockquote>
+<p>For those that would like a density argument:</p>
+<ul>
+<li><p>The sum
+S~Gamma(K,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
+has density
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>α</mi><mi>K</mi></msup><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><msup><mi>x</mi><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>α</mi><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x) = \frac{\alpha^K}{\Gamma(K)} x^{K-1} \exp(-\alpha x)</annotation></semantics></math></p></li>
+<li><p>The product ZS ~ Gamma(K,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>/Z)
+has density
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>K</mi></msup><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><msup><mi>x</mi><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x) = \frac{(\alpha/Z)^K}{\Gamma(K)} x^{K-1} \exp(-(\alpha/Z) x)</annotation></semantics></math></p></li>
+<li><p>Since Z is random we want to integrate it out with respect to its
+distribution. So the puzzle becomes for what
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>f</mi><mi>z</mi></msub><annotation encoding="application/x-tex">f_z</annotation></semantics></math>
+does the integral solve to the exponential density
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>α</mi><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>α</mi><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x) = \alpha \exp(-\alpha x)</annotation></semantics></math>?</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><msub><mi>f</mi><mi>x</mi></msub><msub><mi>f</mi><mi>z</mi></msub><mi>d</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">\int f_x f_z dz</annotation></semantics></math>
+=
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>K</mi></msup><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><msup><mi>x</mi><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>f</mi><mi>z</mi></msub><mi>d</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">\int f(x) = \frac{(\alpha/Z)^K}{\Gamma(K)} x^{K-1} \exp(-(\alpha/Z) x) f_z dz</annotation></semantics></math></p></li>
+<li>
+<p>If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>z</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>K</mi><mo>−</mo><mn>2</mn></mrow></msup><mrow><mi>B</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">f_z(z) = \frac{(1-z)^{K-2}}{B(1,K-1)}</annotation></semantics></math>,
+then</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><msub><mi>f</mi><mi>x</mi></msub><msub><mi>f</mi><mi>z</mi></msub><mi>d</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">\int f_x f_z dz</annotation></semantics></math>
+=
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>K</mi></msup><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><msup><mi>x</mi><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>K</mi><mo>−</mo><mn>2</mn></mrow></msup><mi>d</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">\int \frac{(\alpha/Z)^K}{\Gamma(K-1)\Gamma(1)} x^{K-1} \exp(-(\alpha/Z) x) (1-z)^{K-2} dz</annotation></semantics></math>
+=</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>x</mi><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></msup><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>∫</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>K</mi></msup><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mi>/</mi><mi>Z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>K</mi><mo>−</mo><mn>2</mn></mrow></msup><mi>d</mi><mi>z</mi></mrow><annotation encoding="application/x-tex">\frac{x^{K-1}}{\Gamma(K-1)}  \int (\alpha/Z)^K \exp(-(\alpha/Z) x) (1-z)^{K-2} dz</annotation></semantics></math>
+=</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>x</mi><mrow><mi>K</mi><mo>−</mo><mn>1</mn></mrow></msup><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>α</mi><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mfrac><mrow><mi>Γ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>K</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><msup><mi>x</mi><mrow><mi>K</mi><mo>+</mo><mn>1</mn></mrow></msup></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\frac{x^{K-1}}{\Gamma(K-1)} \left( \alpha \exp(-\alpha x) \frac{\Gamma(K-1)}{x^{K+1}}  \right)</annotation></semantics></math>
+=</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mi>α</mi><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mspace width="0.222em"></mspace><mi>◼</mi></mrow><annotation encoding="application/x-tex">\alpha \exp(-\alpha x) ~~\blacksquare</annotation></semantics></math></li>
+</ul>
+</li>
+</ul>
 <p>In closing, we generalize X, Y being iid
 Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>,
 1) (which for
@@ -459,7 +503,13 @@ as is log(Y) <em>and</em> Z(log(X)+log(Y))!
 Exponentials is more disperse and squattier than just one Reflected
 Exponential. We know this already – think of adding two normals together
 and the variance of the resultant Normal having the sum of the variances
-of the original normals.</li>
+of the original normals.
+<ul>
+<li>the bars fall along a
+RefelectedGamma(2,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
+density</li>
+</ul>
+</li>
 <li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
 distribution before the convolution, log(X), we need to “tighten” or
 “gather” or “concentrate” the log(X)+log(Y) distribution. Multiplying it
@@ -576,7 +626,14 @@ as is log(Y) <em>and</em> Z(log(X)+log(Y))!</li>
 <li>log(X) + log(Y): the convolution (i.e., sum) of two Exponentials is
 more disperse and squattier. We know this already – think of adding two
 normals together and the variance of the resultant Normal having the sum
-of the variances of the original normals.</li>
+of the variances of the original normals.
+<ul>
+<li>the bars fall along a
+Gamma(2,<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>)
+density<br>
+</li>
+</ul>
+</li>
 <li>Z(log(X)+log(Y)): to “recover” or “get back to” the original
 distribution before the convolution, log(X), we need to “tighten” or
 “gather” or “concentrate” the log(X)+log(Y) distribution. Multiplying it
@@ -638,8 +695,8 @@ values) flip/reflect values across the y-axis. See below:</p>
 </h2>
 <p>We have already stated Results 1-K and 2-K which generalized things
 to summing K exponentials. However, let’s build some intuition
-pretending we didn’t have those results and just tried to add a 3rd
-variable to the procedure we’re been doing to this point.</p>
+pretending we did not have those results and just tried to add a 3rd
+variable to the procedure we have been doing to this point.</p>
 <p>Let’s see what the resultant Z(log(1/X)+log(1/Y)+log(1/A))
 distribution would look like, with X,Y,A as iid beta(0.633,1) and an
 independent Z iid U(0,1)</p>
@@ -652,13 +709,16 @@ that average to a 1/3. Let’s replace
 <code>z&lt;-runif(nsims, 0, 2/3)</code> in the code:</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
 <p>While that was fun, this modification (shortening the range of the
-uniform) does not quite seem to “recover” the distribution of
-log(1/X).</p>
+uniform) does not quite seem to “recover” the distribution of log(1/X).
+It seems we needed more Z values that are smaller to fill in the part of
+the density near 0.</p>
 <p>There’s another way to get Z to be “1/3 on average”. That is, we
 could draw two uniforms, V ~ uniform(0,1) and W ~ uniform(0,1) and let
-Z=min(V,W). This is the same as letting Z ~
-beta(1,<strong>3</strong>-1). The <strong>3</strong> is bolded, because
-this is the number of exponentials that are being summed.</p>
+Z=min(V,W) (This insight was shown by Dr. Mihai Nica’s <a href="https://www.youtube.com/watch?v=Zx5T_IrNhUE" class="external-link">follow-up video</a>.
+). Note, this is the same as letting Z ~ beta(1,<strong>3</strong>-1).
+The <strong>3</strong> is bolded, because this is the number of
+exponentials that are being summed. This gives us a way to generalize to
+<strong>K</strong> exponentials being summed.</p>
 <p><img src="xy_to_the_z_part_i_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 <ul>
 <li>nailed it!</li>
@@ -723,7 +783,7 @@ distribution for a sum of more than 2 exponentials.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
