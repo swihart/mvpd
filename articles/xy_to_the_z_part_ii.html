@@ -77,10 +77,91 @@ Swihart</h4>
 <hr>
 <p><strong>IN PROGRESS</strong></p>
 <hr>
-<p>So far we have considered cases where the alpha for X and Y are the
-same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover
-the original distribution of log(1/X) (equivalently, log(1/Y)). However,
-if
+<p>First off, it is natural to see what would happen if we relaxed the
+constraint of common rates. Second off, doing so will immediately ruin
+the wow factor of the challenge problem. Think about it – if X is
+beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,1)
+and Y is
+beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>,1)
+then
+Z(log(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mn>1</mn><mrow><mi>X</mi><mi>Y</mi></mrow></mfrac><annotation encoding="application/x-tex">\frac{1}{XY}</annotation></semantics></math>))
+cannot be both, simultaneously,
+beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>,1)
+and
+beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>,1).
+Maybe there’s some cool formula that shows the computed quantity to be a
+mix of the two, like weights that involve
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>x</mi></msub><annotation encoding="application/x-tex">\alpha_x</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>
+– but by definition, X, Y, and Z(log($)) cannot all have the same
+distribution – and that was part of the wow factor of the challenge
+problem in my opinion.</p>
+<p>If we wanted to allow different rates, there are two ways to go about
+it. One is to generalize the computed quantity in Result 1-K and 2-K.
+This “seems obvious” given all the results in <a href="https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html">part
+I</a>. That is, we raise each variable in the product to the rate of its
+distribution and that basically makes Exp(1) variables on the log scale.
+The other approach is to keep the computed quantity the same and see how
+we can handle the different rates solely by investigating the
+distribution of Z for Result 1 and 2 (I don’t try the general K case).
+We look at each of these in the following sections.</p>
+<div class="section level2">
+<h2 id="generalize-the-computed-quantities">Generalize The Computed Quantities<a class="anchor" aria-label="anchor" href="#generalize-the-computed-quantities"></a>
+</h2>
+<p>If</p>
+<ul>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>1</mn></msub><annotation encoding="application/x-tex">X_1</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mn>1</mn></msub><annotation encoding="application/x-tex">\alpha_1</annotation></semantics></math>,
+1)</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mn>2</mn></msub><annotation encoding="application/x-tex">X_2</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mn>2</mn></msub><annotation encoding="application/x-tex">\alpha_2</annotation></semantics></math>,
+1)</p></li>
+<li><p>…</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>X</mi><mi>K</mi></msub><annotation encoding="application/x-tex">X_K</annotation></semantics></math>
+~
+Beta(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>K</mi></msub><annotation encoding="application/x-tex">\alpha_K</annotation></semantics></math>,
+1)</p></li>
+<li><p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Z</mi><annotation encoding="application/x-tex">Z</annotation></semantics></math>
+~ Beta(1, K-1)</p></li>
+</ul>
+<p>Then</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>X</mi><mn>1</mn><msub><mi>α</mi><mn>1</mn></msub></msubsup><msubsup><mi>X</mi><mn>2</mn><msub><mi>α</mi><mn>2</mn></msub></msubsup><mi>…</mi><msubsup><mi>X</mi><mi>K</mi><msub><mi>α</mi><mi>K</mi></msub></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left(X_1^{\alpha_1} X_2^{\alpha_2} \dots X_K^{\alpha_K} \right)^Z</annotation></semantics></math>
+~ Beta(1, 1)</li>
+</ul>
+<p>Turns out there is another computed quantity with a distribution:</p>
+<ul>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mn>1</mn><mrow><msubsup><mi>X</mi><mn>1</mn><msub><mi>α</mi><mn>1</mn></msub></msubsup><msubsup><mi>X</mi><mn>2</mn><msub><mi>α</mi><mn>2</mn></msub></msubsup><mi>…</mi><msubsup><mi>X</mi><mi>K</mi><msub><mi>α</mi><mi>K</mi></msub></msubsup></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mi>Z</mi></msup><annotation encoding="application/x-tex">\left( \frac{1}{X_1^{\alpha_1} X_2^{\alpha_2} \dots X_K^{\alpha_K}} \right)^Z</annotation></semantics></math>
+~ Pareto(scale = 1, shape=1)</li>
+</ul>
+<p>Let’s try it for summing 10 exponentials with different rates… and
+look at this new computed quantity.</p>
+<p>This means we need Z to be “1/10 on average”. That is, we could draw
+9 uniforms let Z be the minimum of those 9 uniforms. This is the same as
+letting Z ~ beta(1,<strong>10</strong>-1). The <strong>10</strong> is
+bolded, because this is the number of exponentials we’re summing, and it
+generalizes to any positive integer.</p>
+<p>Be mindful of the x-axis and y-axis limits – they are not the same
+for every plot!</p>
+<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p>What if we did not change the computed quantity and kept it without
+any
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>s
+as in <a href="https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html">part
+I</a>? That’s the topic of the next session.</p>
+</div>
+<div class="section level2">
+<h2 id="keep-the-generalized-quantity-investigate-z">Keep the Generalized Quantity – Investigate Z<a class="anchor" aria-label="anchor" href="#keep-the-generalized-quantity-investigate-z"></a>
+</h2>
+<p>In <a href="https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html">part
+I</a> we considered cases where the alpha for X and Y are the same and
+how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the
+original distribution of log(1/X) (equivalently, log(1/Y)). However, if
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>α</mi><mi>x</mi></msub><mo>≠</mo><msub><mi>α</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">\alpha_x \neq \alpha_y</annotation></semantics></math>,
 multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the
 distribution for either log(1/X) or log(1/Y) – it would be a
@@ -90,6 +171,7 @@ Exponential with an alpha between
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>α</mi><mi>y</mi></msub><annotation encoding="application/x-tex">\alpha_y</annotation></semantics></math>.
 We consider this “unequal alpha” as a bonus case below.</p>
+</div>
 <div class="section level2">
 <h2 id="bonus-unequal-alpha-cases">Bonus: Unequal alpha cases<a class="anchor" aria-label="anchor" href="#bonus-unequal-alpha-cases"></a>
 </h2>
@@ -132,7 +214,7 @@ Gamma function</a>.</li>
 </ul>
 </li>
 </ul>
-<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
+<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <ul>
 <li>While the computed quantity is not exponential, one can see it is a
 concentration of the convolution and that it is kind of “in-between” the
@@ -161,7 +243,7 @@ n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><
 </ul>
 </li>
 </ul>
-<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
+<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <ul>
 <li>While the computed quantity is not exponential, one can see it is a
 concentration of the convolution and that it is kind of “in-between” the
@@ -188,11 +270,21 @@ n=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><
 </ul>
 </li>
 </ul>
-<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 <ul>
 <li>What is the opposite of “concentration” – bleeding out? Multiplying
 the convolution by a random number bigger than 1 disperses it.</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="z-distributed-as">Z distributed as ????<a class="anchor" aria-label="anchor" href="#z-distributed-as"></a>
+</h3>
+<p><!-- * $Z \sim$ Pareto($x_m=1$,$\alpha_m=1$) (where 1/Z ~ U(0,1)) -->
+<!-- * page 81 green notebook -->
+<!-- * describe what each color of density is --></p>
+<p><!-- * magenta density:   -->
+<!--   * $f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$. --></p>
+<p><img src="xy_to_the_z_part_ii_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
