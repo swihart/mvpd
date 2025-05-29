@@ -64,13 +64,15 @@ Browser tabs that were useful on the search:
 ```{r, include=TRUE, evaluate=FALSE}
 
 nsims <- 1e7
-aa <- 2#1#8.5
-bb <- 2#1#8.5
+aa <- 8#2#1#8.5
+bb <- 8#2#1#8.5
 x <- rbeta(nsims, aa, bb)
 y <- rbeta(nsims, aa, bb)
-z <- rbeta(nsims, aa, bb)
+z <- rbeta(nsims, 1, 2-1)
+
 cor(x  ,y  )
-cor(x^z,y^z)
+cor(x^z,y^z) ## bc z is random
+cor(x^19, y^19)
 
 xytothez <- (x*y)^z
 

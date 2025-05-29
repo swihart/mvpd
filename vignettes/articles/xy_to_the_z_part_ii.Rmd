@@ -30,9 +30,276 @@ ___
 **IN PROGRESS**
 
 ---
+First off, it is natural to see what would happen if we relaxed the constraint of common rates.  Second off, doing so will immediately ruin the wow factor of the challenge problem. Think about it -- if X is beta($\alpha_x$,1) and Y is beta($\alpha_y$,1) then Z(log($\frac{1}{XY}$)) cannot be both, simultaneously,  beta($\alpha_x$,1) and beta($\alpha_y$,1).  Maybe there's some cool formula that shows the computed quantity to be a mix of the two, like weights that involve $\alpha_x$ and $\alpha_y$ -- but by definition, X, Y, and Z(log($\frac{1}{XY})) cannot all have the same distribution -- and that was part of the wow factor of the challenge problem in my opinion.
 
 
-So far we have considered cases where the alpha for X and Y are the same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the original distribution of log(1/X) (equivalently, log(1/Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the distribution for either log(1/X) or log(1/Y) -- it would be a distribution "in-between" those two distributions -- but not an Exponential with an alpha between $\alpha_x$ and $\alpha_y$.  We consider this "unequal alpha" as a bonus case below.
+If we wanted to allow different rates, there are two ways to go about it.  One is to generalize the computed quantity in Result 1-K and 2-K.  This "seems obvious" given all the results in  [part I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html). That is, we raise each variable in the product to the rate of its distribution and that basically makes Exp(1) variables on the log scale.  The other approach is to keep the computed quantity the same and see how we can handle the different rates solely by investigating the distribution of Z for Result 1 and 2 (I don't  try the general K case).  We look at each of these in the following sections.
+
+## Generalize The Computed Quantities
+
+If
+
+  * $X_1$ ~ Beta($\alpha_1$, 1)
+  * $X_2$ ~ Beta($\alpha_2$, 1)
+  * ...
+  * $X_K$ ~ Beta($\alpha_K$, 1)
+  
+  * $Z$ ~ Beta(1, K-1)
+
+Then
+
+  * $\left(X_1^{\alpha_1} X_2^{\alpha_2} \dots X_K^{\alpha_K} \right)^Z$ ~ Beta(1, 1)
+
+Turns out there is another computed quantity with a distribution:
+
+  * $\left( \frac{1}{X_1^{\alpha_1} X_2^{\alpha_2} \dots X_K^{\alpha_K}} \right)^Z$ ~ Pareto(scale = 1, shape=1)
+
+Let's try it for summing 10 exponentials with different rates... and look at this new computed quantity.
+
+This means we need Z to be "1/10 on average".  That is, we could draw 9 uniforms let Z be the minimum of those 9 uniforms.  This is the same as letting Z ~ beta(1,**10**-1).  The **10** is bolded, because this is the number of exponentials we're summing, and it generalizes to any positive integer.
+
+Be mindful of the x-axis and y-axis limits -- they are not the same for every plot!
+
+```{r, include=TRUE, eval=TRUE, echo=FALSE, fig.height=15}
+set.seed(1)
+nsims <- nsim.switch
+aa_x <- runif(1, 0, 10)
+aa_y <- runif(1, 0, 10)
+aa_a <- runif(1, 0, 10)
+aa_b <- runif(1, 0, 10)
+aa_c <- runif(1, 0, 10)
+aa_d <- runif(1, 0, 10)
+aa_e <- runif(1, 0, 10)
+aa_f <- runif(1, 0, 10)
+aa_g <- runif(1, 0, 10)
+aa_h <- runif(1, 0, 10)
+
+# print(c(aa_x,aa_y,aa_a,aa_b,
+#         aa_c,aa_d,aa_e,aa_f,
+#         aa_g,aa_h
+#         ))
+
+bb_x <- bb_y <- bb_a <- 
+  bb_b <- bb_c <- bb_d <- 
+  bb_e <- bb_f <- bb_g <- 
+  bb_h <- 1
+
+x <- rbeta(nsims, aa_x, bb_x)
+y <- rbeta(nsims, aa_y, bb_y)
+a <- rbeta(nsims, aa_a, bb_a)
+
+b <- rbeta(nsims, aa_b, bb_b)
+c <- rbeta(nsims, aa_c, bb_c)
+d <- rbeta(nsims, aa_d, bb_d)
+
+e <- rbeta(nsims, aa_e, bb_e)
+f <- rbeta(nsims, aa_f, bb_f)
+g <- rbeta(nsims, aa_g, bb_g)
+
+h <- rbeta(nsims, aa_h, bb_h)
+
+
+z <- rbeta(nsims, 1, 9)
+#mean(z)
+
+s.xlim <- range(c(log(1/x),
+                  log(1/y),
+                  z,
+                  log(1/x * 1/y),
+                  z*log(1/x*1/y)
+)
+) #c(-10,0)#c(-4,2)
+
+s.ylim <- c(0,1.2)
+s.xlim <- c(0,12)
+par(mfcol=c(11,3), mai=c(0.3,0.3,0.3,0.3))
+
+
+hist(aa_x*log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_x * log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_y*log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_y * log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_a*log(1/a), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_a * log(1/A)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+hist(aa_b*log(1/b), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_b * log(1/B)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_c * log(1/c), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_c * log(1/C)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_d * log(1/d), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_d * log(1/D)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+hist(aa_e * log(1/e), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_e * log(1/E)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_f * log(1/f), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_f * log(1/F)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_g * log(1/g), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_g * log(1/G)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+hist(aa_h * log(1/h), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="a_h * log(1/H)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+
+
+
+
+hist(    z , freq=FALSE, breaks=50, ylim=c(0.0,10.0), xlim=c(-0.1,1.1), 
+     main="Z", xlab="",ylab="")
+
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(  aa_x * log(1/x)+
+       aa_y * log(1/y)+
+       aa_a * log(1/a)+
+       aa_b * log(1/b)+
+       aa_c * log(1/c)+
+       aa_d * log(1/d)+
+       aa_e * log(1/e)+
+       aa_f * log(1/f)+
+       aa_g * log(1/g)+
+       aa_h * log(1/h)
+     , freq=FALSE, breaks=50, ylim=s.ylim, xlim=c(0,36), 
+     main="log(1/(X^a_x * Y^a_y * ... * H^a_h))", xlab="",ylab="")
+
+lines(seq(0, 36,0.01 ),
+      dgamma(seq(0, 36,0.01 ),
+           10,
+           1),
+      lwd=overlaid.dens.lwd,
+      col="skyblue"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(aa_x * log(1/x)+
+       aa_y * log(1/y)+
+       aa_a * log(1/a)+
+       aa_b * log(1/b)+
+       aa_c * log(1/c)+
+       aa_d * log(1/d)+
+       aa_e * log(1/e)+
+       aa_f * log(1/f)+
+       aa_g * log(1/g)+
+       aa_h * log(1/h)
+     ), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/(X^a_x * Y^a_y * ... * H^a_h)))", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           1),
+      lwd=overlaid.dens.lwd,
+      col="red"
+)
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+
+
+```
+
+What if we did not change the computed quantity and kept it without any $\alpha$s as in [part I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html)?  That's the topic of the next session.
+
+## Keep the Generalized Quantity -- Investigate Z
+
+In [part I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html)  we considered cases where the alpha for X and Y are the same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the original distribution of log(1/X) (equivalently, log(1/Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the distribution for either log(1/X) or log(1/Y) -- it would be a distribution "in-between" those two distributions -- but not an Exponential with an alpha between $\alpha_x$ and $\alpha_y$.  We consider this "unequal alpha" as a bonus case below.
 
 
 ## Bonus: Unequal alpha cases
@@ -413,4 +680,139 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 
 
+
+### Z distributed as ????
+
+ <!-- * $Z \sim$ Pareto($x_m=1$,$\alpha_m=1$) (where 1/Z ~ U(0,1)) -->
+  <!-- * page 81 green notebook -->
+  <!-- * describe what each color of density is -->
+
+  <!-- * magenta density:   -->
+  <!--   * $f_w(w) = \frac{n^2 (1-\exp^{-mw}(1+mw)) - m^2 (1-\exp^{-nw}(1+nw))}{ mn(n-m)w^2 }$ where $W = Z \left( \log \frac{1}{X} + \log \frac{1}{Y} \right)$, m=$\alpha_x$, n=$\alpha_y$. -->
+  
+```{r, results='hide', echo=FALSE}
+## sum of two indep exponentials aa_x != aa_y
+## and z ~ IG(a_z, b_z)
+
+nsims <- nsim.switch
+aa_x <- 4
+aa_y <- 2
+
+bb_x <- 1
+bb_y <- 1
+
+aa_z <- 3
+bb_z <- .9
+## U R ON 2 something here....
+x <- rbeta (nsims, aa_x, bb_x)
+y <- rbeta (nsims, aa_y, bb_y)
+
+# v <- runif(nsims,0,aa_x)
+# w <- runif(nsims,0,aa_y)
+# 
+# z <- matrixStats::rowMins(cbind(v,w))
+
+
+#z <- rbeta(nsims, 1, 2-1)
+z <- rbeta(nsims, 2, 1)
+mean(z)
+
+
+
+s.xlim <- c(0,3)
+#   range(c(log(1/x),
+#                   log(1/y),
+#                   z,
+#                   log(1/x * 1/y),
+#                   z*log(1/x*1/y)
+# )) 
+#c(-10,0)
+#c(-4,2)
+
+s.ylim <- c(0, max(dbeta(seq(s.xlim[1],s.xlim[2],0.01), aa_x, bb_x)))
+s.ylim
+s.xlim
+
+#dlogbeta<-function(x,a,b) exp(a*x) * (1-exp(x))^(b-1) / beta(a,b)
+
+par(mfcol=c(3,3), mai=c(0.3,0.3,0.3,0.3))
+hist(log(1/x), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_x),
+      lwd=overlaid.dens.lwd,
+      col="blue"
+)
+
+
+hist(log(1/y), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/Y)", xlab="",ylab="")
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      dexp(seq(s.xlim[1], s.xlim[2],0.01 ),
+           aa_y),
+      lwd=overlaid.dens.lwd,
+      col="cyan"
+)
+
+hist(    z , freq=FALSE, breaks=1e2, ylim=c(0,3), xlim=c(0,1), 
+     main="Z", xlab="",ylab="")
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+hist(log(1/x)+log(1/y), freq=FALSE, breaks=500, ylim=s.ylim, xlim=s.xlim, 
+     main="log(1/X)+log(1/Y)", xlab="",ylab="")
+
+f_1x_1y <- function(w, m, n){
+  
+  m*n/(n-m) * (exp(-m*w) - exp(-n*w))
+  
+}
+
+lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+      f_1x_1y(seq(s.xlim[1], s.xlim[2],0.01 ),
+              aa_x,
+              aa_y),
+      lwd=overlaid.dens.lwd,
+      col="darkorange"
+)
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+
+hist(z*(log(1/x)+log(1/y)), freq=FALSE, breaks=50, ylim=s.ylim, xlim=s.xlim, 
+     main="Z(log(1/X)+log(1/Y))", xlab="",ylab="")
+
+
+# fw_dens_pareto <- function(w, m, n){
+#   
+#   denom <- m*n*(n-m)*w^2
+#   num1 <- n^2 * (1-exp(-m*w)*(1+m*w))
+#   num2 <- m^2 * (1-exp(-n*w)*(1+n*w))
+# 
+#   (num1-num2) / denom
+# }
+# 
+# lines(seq(s.xlim[1], s.xlim[2],0.01 ),
+#       fw_dens_pareto(seq(s.xlim[1], s.xlim[2],0.01 ),
+#               aa_x,
+#               aa_y),
+#       lwd=overlaid.dens.lwd,
+#       col="magenta" 
+# )
+
+# lines(seq(0, 10,0.01 ),
+#       fw_dens_pareto(seq(0, 10,0.01 ),
+#               aa_x,
+#               aa_y),
+#       lwd=overlaid.dens.lwd,
+#       col="magenta" 
+# )
+
+
+plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
+```
+  
 
