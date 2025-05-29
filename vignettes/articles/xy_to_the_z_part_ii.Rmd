@@ -30,7 +30,7 @@ ___
 **IN PROGRESS**
 
 ---
-First off, it is natural to see what would happen if we relaxed the constraint of common rates.  Second off, doing so will immediately ruin the wow factor of the challenge problem. Think about it -- if X is beta($\alpha_x$,1) and Y is beta($\alpha_y$,1) then Z(log($\frac{1}{XY}$)) cannot be both, simultaneously,  beta($\alpha_x$,1) and beta($\alpha_y$,1).  Maybe there's some cool formula that shows the computed quantity to be a mix of the two, like weights that involve $\alpha_x$ and $\alpha_y$ -- but by definition, X, Y, and $Z(log(\frac{1}{XY}))$ cannot all have the same distribution -- and that was part of the wow factor of the challenge problem in my opinion.
+First off, it is natural to see what would happen if we relaxed the constraint of common rates.  Second off, doing so will immediately ruin the wow factor of the challenge problem. Think about it -- if X is beta($\alpha_x$,1) and Y is beta($\alpha_y$,1) then Z(log($\frac{1}{XY}$)) cannot be both, simultaneously,  beta($\alpha_x$,1) and beta($\alpha_y$,1).  Maybe there's some cool formula that shows the computed quantity to be a mix of the two, like weights that involve $\alpha_x$ and $\alpha_y$ -- but by definition, X, Y, and $Z(log(\frac{1}{XY}))$ cannot all have the same distribution because X and Y have different distributions -- and that was part of the wow factor of the challenge problem in my opinion.
 
 
 ## Two ways.

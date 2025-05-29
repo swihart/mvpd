@@ -172,3 +172,98 @@ abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
     * R can be thought of as a "square root" of a matrix. `r expression(R)`'`r expression(R)` = `r expression(Q)`.
   * When A $\sim \chi^2$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q). Equivalently,
   * When B $\sim \chi$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q)
+
+
+
+<!-- Graveyard / density of code? -->
+<!-- you used this to  trouble shoot the RNG problem -->
+<!-- ultimately found in libstable4u -->
+```{r, echo=FALSE, eval=FALSE, include=FALSE}
+# #' @rdname runif_sphere
+# #' @export
+runif_on_sphere2 <- function(n, d, r=1){
+  sims <- matrix(rnorm(n*d), nrow=n, ncol=d)
+  r * sims / sqrt(apply(sims, 1L, crossprod))
+}
+
+set.seed(67890)
+d <- 2
+nsim <- 1e3
+alpha <- 1.2
+draw <- libstable4u::stable_rnd(nsim,
+                                pars=c(
+                                  alpha = alpha/2,
+                                  beta = 1,
+                                  sigma = 2*cos(pi*alpha/4)^(2/alpha),
+                                  mu = 0),
+                                parametrization = 1L)
+
+
+
+xdom <- c(seq(0.0,1,0.01), seq(1.1,6,.1))
+yden <-  2*xdom*libstable4u::stable_pdf(xdom^2,
+                                        pars=c(
+                                          alpha = alpha/2,
+                                          beta = 1,
+                                          sigma = 2*cos(pi*alpha/4)^(2/alpha),
+                                          mu = 0),
+                                        parametrization = 1L)
+
+hist(draw[draw<6], freq=FALSE,breaks=100)
+
+plot(xdom,yden)
+hist(draw[draw<36]^(1/2), freq=FALSE, breaks=100)
+min(draw^(1/2))
+max(draw^(1/2))
+#plot(ecdf(sqrt(draw)), xlim=c(0,2), ylim=c(0,0.4))
+
+
+#set.seed(1)
+#unif_draw <- uniformly::runif_on_sphere(nsim,d)
+unif_draw <-runif_on_sphere2(nsim,d)
+
+tol <- 1e-2
+
+head(unif_draw[unif_draw[,1] < tol & unif_draw[,1] > -tol, ])
+head(sqrt(draw)[unif_draw[,1] < tol & unif_draw[,1] > -tol])
+head(sqrt(draw)[unif_draw[,1] < tol & unif_draw[,1] > -tol]*unif_draw[unif_draw[,1] < tol & unif_draw[,1] > -tol, ])
+
+head(unif_draw[unif_draw[,2] < tol & unif_draw[,2] > -tol, ])
+head(sqrt(draw)[unif_draw[,2] < tol & unif_draw[,2] > -tol])
+head(sqrt(draw)[unif_draw[,2] < tol & unif_draw[,2] > -tol]*unif_draw[unif_draw[,2] < tol & unif_draw[,2] > -tol, ])
+
+
+
+par(pty='s', mfrow=c(1,2), bty="n", oma=rep(0,4), mai=c(0.3,0,0.3,0))
+plot( unif_draw, 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      ##main=expression(paste(U[d])))
+      main=expression(paste(U)))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+par(pty='s')
+plot( sqrt(draw) *unif_draw, 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      ##main=expression(paste(U[d], Sigma^{~~1/2})))
+      main=expression(paste(B, U)))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+
+par(pty='s')
+plot( sign(draw)*sqrt(abs(draw)) *unif_draw, 
+      xlim=maxrange*c(-1,1),
+      ylim=maxrange*c(-1,1),
+      xlab="",
+      ylab="",
+      ##main=expression(paste(U[d], Sigma^{~~1/2})))
+      main=expression(paste(B, U)))
+abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
+
+
+```
