@@ -193,7 +193,25 @@ For iid $X_k \sim$ Beta($\alpha$, 1), $k=1,...,K, K \in {1,2,...}$ and independe
 
 The original challenge problem is the special $\alpha = 1$ and $K=2$ instance: $X,Y,Z$ and $(XY)^Z  \sim$ U(0,1) (because Beta(1, 1) is U(0,1)).
 
-Also note this holds for K=1 because Beta(1,0) is the point mass (constant) 1 (in limit).
+Also note this holds for K=1 because Beta(1,0) is the point mass (constant) 1 (in limit -- see .Rmd for code).
+
+```{r, include=FALSE, echo=FALSE, eval=FALSE}
+## see how Beta(1,0) is essentially 1.
+## take limit of beta(1,n) n -> 0 ... is it 1?
+
+BETAPARM <- 0.00001;
+
+hist(rbeta(1e4, 1, BETAPARM), freq=FALSE, ylim=c(0,5))
+
+
+gamma(1+BETAPARM) 
+gamma(1)
+gamma(BETAPARM)
+
+
+xval <- 0.99
+gamma(1+BETAPARM)/(gamma(1)*gamma(BETAPARM)) * (1-xval)^(BETAPARM - 1)
+```
 
 
 ###  Sanity check: Result 1
