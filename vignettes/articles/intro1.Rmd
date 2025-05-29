@@ -178,9 +178,8 @@ abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 <!-- Graveyard / density of code? -->
 <!-- you used this to  trouble shoot the RNG problem -->
 <!-- ultimately found in libstable4u -->
+
 ```{r, echo=FALSE, eval=FALSE, include=FALSE}
-# #' @rdname runif_sphere
-# #' @export
 runif_on_sphere2 <- function(n, d, r=1){
   sims <- matrix(rnorm(n*d), nrow=n, ncol=d)
   r * sims / sqrt(apply(sims, 1L, crossprod))
