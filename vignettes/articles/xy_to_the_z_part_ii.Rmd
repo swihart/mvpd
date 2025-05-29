@@ -33,9 +33,11 @@ ___
 First off, it is natural to see what would happen if we relaxed the constraint of common rates.  Second off, doing so will immediately ruin the wow factor of the challenge problem. Think about it -- if X is beta($\alpha_x$,1) and Y is beta($\alpha_y$,1) then Z(log($\frac{1}{XY}$)) cannot be both, simultaneously,  beta($\alpha_x$,1) and beta($\alpha_y$,1).  Maybe there's some cool formula that shows the computed quantity to be a mix of the two, like weights that involve $\alpha_x$ and $\alpha_y$ -- but by definition, X, Y, and Z(log($\frac{1}{XY})) cannot all have the same distribution -- and that was part of the wow factor of the challenge problem in my opinion.
 
 
+## Two ways.
+
 If we wanted to allow different rates, there are two ways to go about it.  One is to generalize the computed quantity in Result 1-K and 2-K.  This "seems obvious" given all the results in  [part I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html). That is, we raise each variable in the product to the rate of its distribution and that basically makes Exp(1) variables on the log scale.  The other approach is to keep the computed quantity the same and see how we can handle the different rates solely by investigating the distribution of Z for Result 1 and 2 (I don't  try the general K case).  We look at each of these in the following sections.
 
-## Generalize The Computed Quantities
+## Way 1: Generalize The Computed Quantities
 
 If
 
@@ -297,12 +299,12 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 
 What if we did not change the computed quantity and kept it without any $\alpha$s as in [part I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html)?  That's the topic of the next session.
 
-## Keep the Generalized Quantity -- Investigate Z
+## Way 2: Keep the Generalized Quantity -- Investigate Z
 
 In [part I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.html)  we considered cases where the alpha for X and Y are the same and how multiplying (log(1/X)+log(1/Y)) by Z allows one to recover the original distribution of log(1/X) (equivalently, log(1/Y)).  However, if $\alpha_x \neq \alpha_y$, multiplying (log(1/X)+log(1/Y)) by a uniform would not recover the distribution for either log(1/X) or log(1/Y) -- it would be a distribution "in-between" those two distributions -- but not an Exponential with an alpha between $\alpha_x$ and $\alpha_y$.  We consider this "unequal alpha" as a bonus case below.
 
 
-## Bonus: Unequal alpha cases
+### What is the sum in the unequal rate case?
 
 Firstly, one may want to consult Wikipedia.
 
