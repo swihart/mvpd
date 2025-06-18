@@ -88,13 +88,13 @@ stable and multivariate normal.}
 \value{
 The object returned depends on what is selected for \code{outermost.int}.  In the case of the default,
 \code{stats::integrate}, the value is a list of class "integrate" with components:
-\itemize{
+
 \item{\code{value}}{ the final estimate of the integral.}
 \item{\code{abs.error}}{ estimate of the modulus of the absolute error.}
 \item{\code{subdivisions}}{ the number of subintervals produced in the subdivision process.}
 \item{\code{message}}{ "OK" or a character string giving the error message.}
 \item{\code{call}}{ the matched call.}
-}
+
 Note: The reported \code{abs.error} is likely an under-estimate as \code{integrate}
 assumes the integrand was without error,
 which is not the case in this application.
