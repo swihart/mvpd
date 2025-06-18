@@ -187,12 +187,24 @@ stable and multivariate normal.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The object returned depends on what is selected for <code>outermost.int</code>.  In the case of the default,
-<code><a href="https://rdrr.io/r/stats/integrate.html" class="external-link">stats::integrate</a></code>, the value is a list of class "integrate" with components:</p><ul><li><p><code>value</code> the final estimate of the integral.</p></li>
-<li><p><code>abs.error</code> estimate of the modulus of the absolute error.</p></li>
-<li><p><code>subdivisions</code> the number of subintervals produced in the subdivision process.</p></li>
-<li><p><code>message</code> "OK" or a character string giving the error message.</p></li>
-<li><p><code>call</code> the matched call.</p></li>
-</ul><p>Note: The reported <code>abs.error</code> is likely an under-estimate as <code>integrate</code>
+<code><a href="https://rdrr.io/r/stats/integrate.html" class="external-link">stats::integrate</a></code>, the value is a list of class "integrate" with components:</p>
+<dl><dt><code>value</code></dt>
+<dd><p>the final estimate of the integral.</p></dd>
+
+<dt><code>abs.error</code></dt>
+<dd><p>estimate of the modulus of the absolute error.</p></dd>
+
+<dt><code>subdivisions</code></dt>
+<dd><p>the number of subintervals produced in the subdivision process.</p></dd>
+
+<dt><code>message</code></dt>
+<dd><p>"OK" or a character string giving the error message.</p></dd>
+
+<dt><code>call</code></dt>
+<dd><p>the matched call.</p></dd>
+
+
+</dl><p>Note: The reported <code>abs.error</code> is likely an under-estimate as <code>integrate</code>
 assumes the integrand was without error,
 which is not the case in this application.</p>
     </div>
