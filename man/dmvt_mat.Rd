@@ -177,12 +177,13 @@ dmvt_mat(
 df0.0 <- mvtnorm::dmvt(x, delta = mu, sigma = Sigma, df =  0, log=FALSE) # default log = TRUE!
 df0.0
 
+\dontrun{
 dmvt_mat(
   matrix(x,ncol=2),
   df = 0,
   Q = Sigma,
   delta=mu)$int 
-
+}
 }
 \references{
 Swihart & Nolan, "The R Journal: Multivariate Subgaussian Stable Distributions in R", The R Journal, 2022

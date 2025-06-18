@@ -147,12 +147,13 @@
 #' df0.0 <- mvtnorm::dmvt(x, delta = mu, sigma = Sigma, df =  0, log=FALSE) # default log = TRUE!
 #' df0.0
 #' 
+#' \dontrun{
 #' dmvt_mat(
 #'   matrix(x,ncol=2),
 #'   df = 0,
 #'   Q = Sigma,
 #'   delta=mu)$int 
-#' 
+#' }
 #' @export
 dmvt_mat <- function(x, df=1, Q = NULL, delta=rep(0,d), 
                           
