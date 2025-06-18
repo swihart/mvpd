@@ -1,5 +1,31 @@
 # mvpd R package
 Bruce Swihart  
+Jun 2023
+
+## Submission 1
+
+   * add new functions
+   * started package website with spotlight articles
+   
+## Test environments
+* local OS X install: R version 4.2.2 (2022-10-31)
+    * Platform: x86_64-apple-darwin17.0 (64-bit)
+    * Running under: macOS Big Sur 11.2.3
+* rhub::check(platforms=c("debian-clang-devel",
+                          "fedora-clang-devel",
+                          "windows-x86_64-devel"))
+
+                     
+## R CMD check results
+There were no ERRORs or WARNINGs or NOTEs.
+
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package.
+
+---
+# mvpd R package
+Bruce Swihart  
 Sept 2023
 
 ## Submission 1

@@ -4,6 +4,8 @@
 * add dmvt_mat(). this is a developmental multivariate t distribution
 * add [pr]mvlogis
 * add [dr]kolm
+* check out the package website that has a deeper dive on some topics
+* https://swihart.github.io/mvpd/index.html
 
 # mvpd 0.0.4
 
