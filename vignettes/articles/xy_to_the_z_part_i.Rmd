@@ -2391,7 +2391,7 @@ plot(NA,NA,axes=F,xlim=c(0,1),ylim=c(0,1),xlab="",ylab="")
 ```
 
 
-All of these simulations and results are for a common $\alpha$.  We consider the case unequal $\alpha$ case in [part II of this topic](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_ii.html).
+All of these simulations and results are for a common $\alpha$.  We consider the unequal $\alpha$ case in [part II of this topic](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_ii.html).
 
 #### Miscellany / Notes to self / Stubs for future ideas
 
