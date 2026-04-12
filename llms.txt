@@ -1,0 +1,86 @@
+# mvpd: An R Package for Multivariate Product Distributions
+
+- `[dpr]mvss`: multivariate subgaussian stable distributions
+- `[pr]mvlogis`: multivariate logistic distributions
+
+The goal of `mvpd` is to use product distribution theory to allow the
+numerical calculations of specific scale mixtures of the multivariate
+normal distribution. The multivariate subgaussian stable distribution is
+the product of the square root of a univariate positive stable
+distribution and the multivariate normal distribution (see Nolan
+(2013)).
+
+## Example
+
+Generate 1000 draws from a random bivariate subgaussian stable
+distribution with alpha=1.71 and plot.
+
+``` r
+library(mvpd)
+set.seed(2)
+## basic example code
+biv <- rmvss(n=1e3, alpha=1.71, Q=matrix(c(10,7.5,7.5,10),2))
+head(biv)
+#>             [,1]      [,2]
+#> [1,]  3.17465324  4.122869
+#> [2,] -3.26707008 -1.366920
+#> [3,] -5.82800100  1.831774
+#> [4,] -2.02463359 -3.749701
+#> [5,]  0.01294963  3.042960
+#> [6,]  1.73029594  3.812420
+plot(biv); abline(h=0,v=0)
+```
+
+![](reference/figures/README-example-1.png)
+
+# Package index
+
+## All functions
+
+- [`adaptIntegrate_inf_limPD()`](https://swihart.github.io/mvpd/reference/adaptIntegrate_inf_limPD.md)
+  : Adaptive multivariate integration over hypercubes (admitting
+  infinite limits)
+- [`dkolm()`](https://swihart.github.io/mvpd/reference/dkolm.md) :
+  Density for the Kolmogorov Distribution
+- [`dmvss()`](https://swihart.github.io/mvpd/reference/dmvss.md) :
+  Multivariate Subgaussian Stable Density
+- [`dmvss_mat()`](https://swihart.github.io/mvpd/reference/dmvss_mat.md)
+  : Multivariate Subgaussian Stable Density for matrix inputs
+- [`dmvt_mat()`](https://swihart.github.io/mvpd/reference/dmvt_mat.md) :
+  Multivariate t-Distribution Density for matrix inputs
+- [`fit_mvss()`](https://swihart.github.io/mvpd/reference/fit_mvss.md) :
+  Fit a Multivariate Subgaussian Distribution
+- [`mvpd`](https://swihart.github.io/mvpd/reference/mvpd.md)
+  [`mvpd-package`](https://swihart.github.io/mvpd/reference/mvpd.md) :
+  Multivariate Product Distributions
+- [`pmvlogis()`](https://swihart.github.io/mvpd/reference/pmvlogis.md) :
+  Multivariate Elliptically Contoured Logistic Distribution
+- [`pmvss()`](https://swihart.github.io/mvpd/reference/pmvss.md) :
+  Multivariate Subgaussian Stable Distribution
+- [`pmvss_mc()`](https://swihart.github.io/mvpd/reference/pmvss_mc.md) :
+  Monte Carlo Multivariate Subgaussian Stable Distribution
+- [`rkolm()`](https://swihart.github.io/mvpd/reference/rkolm.md) :
+  Random Variates for the Kolmogorov Distribution
+- [`rmvlogis()`](https://swihart.github.io/mvpd/reference/rmvlogis.md) :
+  Multivariate Logistic Random Variables
+- [`rmvss()`](https://swihart.github.io/mvpd/reference/rmvss.md) :
+  Multivariate Subgaussian Stable Random Variates
+
+# Articles
+
+### All vignettes
+
+- [Deeper Dive: Kolmogorov Distribution, Density, Random
+  Variates](https://swihart.github.io/mvpd/articles/deep_dive_kolm.md):
+- [Introduction and
+  Primer](https://swihart.github.io/mvpd/articles/intro.md):
+- [Introduction and Primer
+  II](https://swihart.github.io/mvpd/articles/intro1.md):
+- [Why do both the mvt and mvss have a mvcauchy special
+  instance?](https://swihart.github.io/mvpd/articles/mvt_mvss_mvcauchy.md):
+- [(XY)^Z Part
+  I](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_i.md):
+- [(XY)^Z Part
+  II](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_ii.md):
+- [(XY)^Z Part
+  III](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_iii.md):

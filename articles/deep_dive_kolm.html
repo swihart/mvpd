@@ -67,7 +67,7 @@
 Swihart</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/swihart/mvpd/blob/v0.0.5/vignettes/articles/deep_dive_kolm.Rmd" class="external-link"><code>vignettes/articles/deep_dive_kolm.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/swihart/mvpd/blob/main/vignettes/articles/deep_dive_kolm.Rmd" class="external-link"><code>vignettes/articles/deep_dive_kolm.Rmd</code></a></small>
       <div class="d-none name"><code>deep_dive_kolm.Rmd</code></div>
     </div>
 
@@ -260,7 +260,7 @@ as well as a default of 100,000 terms.</p>
 <span><span class="fu"><a href="../reference/dkolm.html">dkolm</a></span><span class="op">(</span><span class="fl">12</span>,rep<span class="op">=</span><span class="st">"K3"</span>,nterms<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 8.043785e-124</span></span>
 <span><span class="co">#&gt; [1] -0.005592438 from rep="K2"</span></span></code></pre></div>
-<p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-5-1.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-5-2.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-5-3.png" width="33%"></p>
+<p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-5-2.png" class="r-plt" alt="" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-5-3.png" class="r-plt" alt="" width="33%"></p>
 <p>Since
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>K</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">K1</annotation></semantics></math>
 is an alternating sum, if the number of terms is odd, we’ll see that
@@ -290,7 +290,7 @@ but is still negative.</p>
 <span><span class="fu"><a href="../reference/dkolm.html">dkolm</a></span><span class="op">(</span><span class="fl">12</span>,rep<span class="op">=</span><span class="st">"K3"</span>,nterms<span class="op">=</span><span class="fl">11</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 8.043785e-124</span></span>
 <span><span class="co">#&gt; [1] -0.002983048 from rep="K2"</span></span></code></pre></div>
-<p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-1.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-2.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-3.png" width="33%"></p>
+<p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-2.png" class="r-plt" alt="" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-6-3.png" class="r-plt" alt="" width="33%"></p>
 </div>
 </div>
 <div class="section level3">
@@ -340,7 +340,7 @@ the denominators, and then take the square root of that sum.</p>
 <span><span class="co"># x&lt;-seq(range_rv[1],range_rv[2],0.01)</span></span>
 <span><span class="co"># hist(rv,freq=FALSE,breaks=100)</span></span>
 <span><span class="co"># lines(x,0.5*dnorm(0.5*x), col="red",lty=2, lwd=4)</span></span></code></pre></div>
-<p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-7-1.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-7-2.png" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-7-3.png" width="33%"></p>
+<p><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-7-2.png" class="r-plt" alt="" width="33%"><img src="deep_dive_kolm_files/figure-html/unnamed-chunk-7-3.png" class="r-plt" alt="" width="33%"></p>
 <p>Check expected value – should be
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mfrac><mi>π</mi><mn>2</mn></mfrac></msqrt><mo>ln</mo><mn>2</mn><mo>=</mo></mrow><annotation encoding="application/x-tex">\sqrt{\frac{\pi}{2}}\ln2 =</annotation></semantics></math>
 0.8687312…. One could do this with their own code, or they can use
@@ -352,7 +352,7 @@ the denominators, and then take the square root of that sum.</p>
 <span><span class="va">rkdraw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rkolm.html">rkolm</a></span><span class="op">(</span><span class="fl">5e4</span>, nterms<span class="op">=</span><span class="fl">5e2</span><span class="op">)</span></span>
 <span><span class="va">end</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">end</span><span class="op">-</span><span class="va">beg</span></span>
-<span><span class="co">#&gt; Time difference of 0.8816485 secs</span></span>
+<span><span class="co">#&gt; Time difference of 0.8197749 secs</span></span>
 <span></span>
 <span><span class="co">## Expected value</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -396,7 +396,7 @@ the denominators, and then take the square root of that sum.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
