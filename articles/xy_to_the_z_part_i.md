@@ -549,7 +549,7 @@ every plot!
 –\>
 
 All of these simulations and results are for a common $\alpha$. We
-consider the case unequal $\alpha$ case in [part II of this
+consider the unequal $\alpha$ case in [part II of this
 topic](https://swihart.github.io/mvpd/articles/xy_to_the_z_part_ii.html).
 
 #### Miscellany / Notes to self / Stubs for future ideas
