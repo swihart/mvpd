@@ -1,3 +1,21 @@
 url: https://swihart.github.io/mvpd/
 template:
   bootstrap: 5
+  
+articles:
+
+- title: Intros
+  contents:
+  - articles/intro
+  - articles/intro1
+- title: Special univariate distributions
+  contents:
+  - articles/deep_dive_kolm
+- title: Connections between multivariate distributions
+  contents:
+  - articles/mvt_mvss_mvcauchy
+- title: Bonus: (XY)^Z challenge
+  contents:
+  - articles/xy_to_the_z_part_i
+  - articles/xy_to_the_z_part_ii
+  - articles/xy_to_the_z_part_iii
