@@ -238,7 +238,7 @@ beg <- Sys.time()
 rkdraw <- rkolm(5e4, nterms=5e2)
 end <- Sys.time()
 end-beg
-#> Time difference of 0.8214619 secs
+#> Time difference of 0.8619139 secs
 
 ## Expected value
 print(matrix(c(
