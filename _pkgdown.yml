@@ -5,24 +5,16 @@ template:
 articles:
 
 - title: Intros
-  navbar: x
-  desc: x
   contents:
   - articles/intro
   - articles/intro1
 - title: Special univariate distributions
-  navbar: x
-  desc: x
   contents:
   - articles/deep_dive_kolm
 - title: Connections between multivariate distributions
-  navbar: x
-  desc: x
   contents:
   - articles/mvt_mvss_mvcauchy
 - title: Bonus! (XY)^Z challenge
-  navbar: x
-  desc: x
   contents:
   - articles/xy_to_the_z_part_i
   - articles/xy_to_the_z_part_ii
