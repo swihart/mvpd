@@ -2,3 +2,28 @@ url: https://swihart.github.io/mvpd/
 template:
   bootstrap: 5
 
+articles:
+
+- title: Intros
+  navbar: 
+  desc: Understand the product distributions
+  contents:
+  - articles/intro
+  - articles/intro1
+- title: Special univariate distributions
+  navbar: 
+  desc: 
+  contents:
+  - articles/deep_dive_kolm
+- title: Connections between multivariate distributions
+  navbar: 
+  desc: 
+  contents:
+  - articles/mvt_mvss_mvcauchy
+- title: Bonus: (XY)^Z challenge
+  navbar: 
+  desc: 
+  contents:
+  - articles/xy_to_the_z_part_i
+  - articles/xy_to_the_z_part_ii
+  - articles/xy_to_the_z_part_iii
