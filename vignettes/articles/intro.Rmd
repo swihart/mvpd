@@ -3,6 +3,12 @@ title: "Introduction and Primer"
 subtitle: Start with a unit circle.  End with a Bivariate Normal.
 ---
 
+  * Start with a unit circle U. 
+  * Apply A and make an ellipse UA.  
+  * Scatter that ellipse by applying R to UA.  
+  * RUA is a Bivariate Normal.
+
+
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
