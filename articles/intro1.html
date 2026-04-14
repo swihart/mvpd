@@ -63,26 +63,34 @@ End with a Bivariate Normal.</h3>
     
     
 <p><img src="intro1_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="768"></p>
+<p><!-- * U is a nx2 matrix containing n random draws from the uniform circle. -->
+<!-- * B = sqrt(A), where A is a nx1 matrix containing n *i.i.d* draws from its univariate distribution. -->
+<!-- * BU can be thought of as the distribution of radii -->
+<!-- * BUR is the result of the matrix multiplication between nx2 BU and 2x2 R, the Cholesky decomposition of a 2x2 matrix Q. -->
+<!--   * R makes a circular (BU) into an elliptical (BUR) -->
+<!--   * R can be thought of as a "square root" of a matrix. R'R = Q. -->
+<!-- * When A $\sim \chi^2$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q). Equivalently, -->
+<!-- * When B $\sim \chi$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q) --></p>
 <ul>
-<li>U is a nx2 matrix containing n random draws from the uniform
-circle.</li>
-<li>B = sqrt(A), where A is a nx1 matrix containing n <em>i.i.d</em>
-draws from its univariate distribution.</li>
-<li>BU can be thought of as the distribution of radii</li>
-<li>BUR is the result of the matrix multiplication between nx2 BU and
-2x2 R, the Cholesky decomposition of a 2x2 matrix Q.
+<li>U is a <code>n x 2</code> matrix containing n random draws from the
+uniform circle.</li>
+<li>UA is the result of the matrix multiplication between
+<code>n x 2</code> U and <code>2 x 2</code> A, the Cholesky
+decomposition of a <code>2x2</code> matrix Q.
 <ul>
-<li>R makes a circular (BU) into an elliptical (BUR)</li>
-<li>R can be thought of as a “square root” of a matrix. R’R = Q.</li>
+<li>A makes a circle (U) into an ellipse (UA)</li>
+<li>A can be thought of as a “square root” of a matrix. A’A = Q.</li>
 </ul>
 </li>
-<li>When A
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><msup><mi>χ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\sim \chi^2</annotation></semantics></math>(df=2)
-distribution, BUR is the bivariate normal distribution G(0,Q).
-Equivalently,</li>
-<li>When B
+<li>When R
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mi>χ</mi></mrow><annotation encoding="application/x-tex">\sim \chi</annotation></semantics></math>(df=2)
-distribution, BUR is the bivariate normal distribution G(0,Q)</li>
+distribution, RUA is the bivariate normal distribution G(0,Q),
+Equivalently
+<ul>
+<li>
+<code>mvpd</code> uses G for Gaussian</li>
+</ul>
+</li>
 </ul>
 <!-- Graveyard / density of code? --><p><!-- you used this to  trouble shoot the RNG problem -->
 <!-- ultimately found in libstable4u --></p>
