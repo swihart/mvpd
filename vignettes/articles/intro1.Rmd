@@ -21,7 +21,7 @@ set.seed(6789)
 ## creator view
 nsim <- 1e3
 d <- 2
-#chisq_draw <- rchisq(nsim, df=d)
+chisq_draw <- rchisq(nsim, df=d)
 #chisq_draw <- rexp(nsim, rate=1)
 # chisq_draw <- 4
 # chisq_draw <- sample(c(4,1,0), nsim, TRUE)
@@ -38,7 +38,7 @@ d <- 2
 # chisq_draw <- runif(nsim, 0.6, 10)
 # chisq_draw <- sample(c(0.6,10), nsim, TRUE)
 
-alpha <- 1.50
+#alpha <- 1.50
 # chisq_draw <- libstable4u::stable_rnd(nsim,
 #                                        pars=c(
 #                                          alpha = alpha/2,
@@ -60,12 +60,12 @@ alpha <- 1.50
 # 
 # 
 
-chisq_draw <- stabledist::rstable(nsim,
-                                         alpha = alpha/2,
-                                         beta = 1,
-                                         gamma = 2*cos(pi*alpha/4)^(2/alpha),
-                                         delta = 0,
-                                       pm = 1L)
+# chisq_draw <- stabledist::rstable(nsim,
+#                                          alpha = alpha/2,
+#                                          beta = 1,
+#                                          gamma = 2*cos(pi*alpha/4)^(2/alpha),
+#                                          delta = 0,
+#                                        pm = 1L)
 # chisq_draw <- stabledist::rstable(nsim,
 # 
 #                                          alpha = alpha/2,
@@ -98,7 +98,7 @@ chol(SIGMA)
 ## Out of all the stuff generated, find the max so we can standardize the axes.
 
 simmed_mvnorm <- mvtnorm::rmvnorm(nsim, sigma=SIGMA)
-simmed_mvnorm <- mvpd::rmvss(nsim, Q=SIGMA, alpha=alpha)
+##simmed_mvnorm <- mvpd::rmvss(nsim, Q=SIGMA, alpha=alpha)
 maxrange <- max(abs(c(sqrt(abs(chisq_draw)) * unif_draw %*% chol(SIGMA),
                                           unif_draw %*% chol(SIGMA),
                   c(simmed_mvnorm)
@@ -128,7 +128,7 @@ plot( sign(chisq_draw)*sqrt(abs(chisq_draw)) *unif_draw,
       xlab="",
       ylab="",
       ##main=expression(paste(U[d], Sigma^{~~1/2})))
-      main=expression(paste(B, U)))
+      main=expression(paste(R, U)))
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 par(pty='s')
@@ -139,7 +139,7 @@ plot( sign(chisq_draw)*sqrt(abs(chisq_draw)) *unif_draw %*% chol(SIGMA),
       ylab="",
       ##main=expression(paste(A^{1/2}, U[d], Sigma^{~~1/2})))
      ##main=expression(paste(B[1], U[d], R[d])))
-     main=expression(paste(B, U, R)))
+     main=expression(paste(R, U, A)))
       # main="BUR")
 abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
@@ -175,11 +175,12 @@ abline(h=c(-1,1), v=c(-1,1), lty=2, col="lightgrey")
 
 
   * `r expression(U)` is a `n x 2` matrix containing n random draws from the uniform circle.
-  * `r expression(UA)` is the result of the matrix multiplication between `n x 2` `r expression(U)` and `2 x 2` `r expression(A)`, the Cholesky decomposition of a `2x2` matrix `r expression(Q)`.
+  * When R $\sim \chi$(df=2) distribution, RU is a roughly spherical scatterplot
+  * `r expression(RUA)` is the result of the matrix multiplication between `n x 2` `r expression(RU)` and `2 x 2` `r expression(A)`, the Cholesky decomposition of a `2x2` matrix `r expression(Q)`.
     * A makes a circle (`r expression(U)`) into an ellipse (`r expression(UA)`)
     * A can be thought of as a "square root" of a matrix. `r expression(A)`'`r expression(A)` = `r expression(Q)`.
-  * When R $\sim \chi$(df=2) distribution, RUA is the bivariate normal distribution G(0,Q), Equivalently
-    * `mvpd` uses G for Gaussian
+  * RUA is the bivariate normal distribution G(0,Q), Equivalently
+  * `mvpd` uses G for Gaussian
 
 
 <!-- Graveyard / density of code? -->
