@@ -74,23 +74,20 @@ End with a Bivariate Normal.</h3>
 <ul>
 <li>U is a <code>n x 2</code> matrix containing n random draws from the
 uniform circle.</li>
-<li>UA is the result of the matrix multiplication between
-<code>n x 2</code> U and <code>2 x 2</code> A, the Cholesky
+<li>When R
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mi>χ</mi></mrow><annotation encoding="application/x-tex">\sim \chi</annotation></semantics></math>(df=2)
+distribution, RU is a roughly spherical scatterplot</li>
+<li>RUA is the result of the matrix multiplication between
+<code>n x 2</code> RU and <code>2 x 2</code> A, the Cholesky
 decomposition of a <code>2x2</code> matrix Q.
 <ul>
 <li>A makes a circle (U) into an ellipse (UA)</li>
 <li>A can be thought of as a “square root” of a matrix. A’A = Q.</li>
 </ul>
 </li>
-<li>When R
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mi>χ</mi></mrow><annotation encoding="application/x-tex">\sim \chi</annotation></semantics></math>(df=2)
-distribution, RUA is the bivariate normal distribution G(0,Q),
-Equivalently
-<ul>
+<li>RUA is the bivariate normal distribution G(0,Q), Equivalently</li>
 <li>
 <code>mvpd</code> uses G for Gaussian</li>
-</ul>
-</li>
 </ul>
 <!-- Graveyard / density of code? --><p><!-- you used this to  trouble shoot the RNG problem -->
 <!-- ultimately found in libstable4u --></p>
