@@ -1,5 +1,10 @@
 # Introduction and Primer II
 
+- Start with a unit circle U.
+- Scatter that ellipse by applying R to U.  
+- Apply A and make an elliptical scatterplot RUA.
+- RUA is a Bivariate Normal.
+
 ![](intro1_files/figure-html/unnamed-chunk-4-1.png)
 
 - U is a `n x 2` matrix containing n random draws from the uniform
