@@ -71,6 +71,7 @@ End with a Bivariate Normal.</h3>
 <li>RUA is a Bivariate Normal.</li>
 </ul>
 <p><img src="intro_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="768"></p>
+<p>Notes:</p>
 <ul>
 <li>U is a <code>n x 2</code> matrix containing n random draws from the
 uniform circle.</li>
@@ -78,20 +79,23 @@ uniform circle.</li>
 <code>n x 2</code> U and <code>2 x 2</code> A, the Cholesky
 decomposition of a <code>2x2</code> matrix Q.
 <ul>
-<li>A makes a circle (U) into an ellipse (UA)</li>
-<li>A can be thought of as a “square root” of a matrix. A’A = Q.</li>
+<li>Matrix A makes a circle (U) into an ellipse (UA)</li>
+<li>Matrix A can be thought of as a “square root” of a matrix. A’A =
+Q.</li>
 </ul>
 </li>
-<li>When R
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mi>χ</mi></mrow><annotation encoding="application/x-tex">\sim \chi</annotation></semantics></math>(df=2)
-distribution, RUA is the bivariate normal distribution G(0,Q),
-Equivalently
-<ul>
-<li>
-<code>mvpd</code> uses G for Gaussian</li>
+<li>When R is a <code>n x n</code> matrix with a random sample of size
+<code>n</code> from a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>χ</mi><annotation encoding="application/x-tex">\chi</annotation></semantics></math>(df=2)
+distribution on the diagonal (and 0 off-diagonal), RUA is the bivariate
+normal distribution G(0,Q) (<code>mvpd</code> uses the letter G to
+denote Gaussian).</li>
+<li>Changing the distribution in R changes the multivariate distribution
+of RUA . That’s what this package is all about!</li>
 </ul>
-</li>
-</ul></main>
+<p>You can change the order of application of A and R – check out <a href="https://swihart.github.io/mvpd/articles/intro1.html">the other
+intro</a>.</p>
+  </main>
 </div>
 
 

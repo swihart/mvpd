@@ -64,7 +64,7 @@ End with a Bivariate Normal.</h3>
     
 <ul>
 <li>Start with a unit circle U.</li>
-<li>Scatter that ellipse by applying R to U.<br>
+<li>Scatter that circle by applying R to U.<br>
 </li>
 <li>Apply A and make an elliptical scatterplot RUA.</li>
 <li>RUA is a Bivariate Normal.</li>
@@ -78,12 +78,17 @@ End with a Bivariate Normal.</h3>
 <!--   * R can be thought of as a "square root" of a matrix. R'R = Q. -->
 <!-- * When A $\sim \chi^2$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q). Equivalently, -->
 <!-- * When B $\sim \chi$(df=2) distribution, BUR is the bivariate normal distribution G(0,Q) --></p>
+<p>Notes:</p>
 <ul>
 <li>U is a <code>n x 2</code> matrix containing n random draws from the
 uniform circle.</li>
-<li>When R
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∼</mo><mi>χ</mi></mrow><annotation encoding="application/x-tex">\sim \chi</annotation></semantics></math>(df=2)
-distribution, RU is a roughly spherical scatterplot</li>
+<li>When R is a <code>n x n</code> matrix with a random sample of size
+<code>n</code> from a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>χ</mi><annotation encoding="application/x-tex">\chi</annotation></semantics></math>(df=2)
+distribution on the diagonal (and 0 off-diagonal), RU is the bivariate
+normal distribution G(0,I) and appears as a roughly spherical
+scatterplot (<code>mvpd</code> uses the letter G to denote
+Gaussian).</li>
 <li>RUA is the result of the matrix multiplication between
 <code>n x 2</code> RU and <code>2 x 2</code> A, the Cholesky
 decomposition of a <code>2x2</code> matrix Q.
@@ -92,11 +97,15 @@ decomposition of a <code>2x2</code> matrix Q.
 <li>A can be thought of as a “square root” of a matrix. A’A = Q.</li>
 </ul>
 </li>
-<li>RUA is the bivariate normal distribution G(0,Q), Equivalently</li>
-<li>
-<code>mvpd</code> uses G for Gaussian</li>
+<li>RUA is the bivariate normal distribution G(0,Q) (<code>mvpd</code>
+uses the letter G to denote Gaussian).</li>
+<li>Changing the distribution in R changes the multivariate distribution
+of RUA . That’s what this package is all about!</li>
 </ul>
-<!-- Graveyard / density of code? --><p><!-- you used this to  trouble shoot the RNG problem -->
+<p>You can change the order of application of A and R – check out <a href="https://swihart.github.io/mvpd/articles/intro.html">the other
+intro</a>.</p>
+<!-- Graveyard / density of code? -->
+<p><!-- you used this to  trouble shoot the RNG problem -->
 <!-- ultimately found in libstable4u --></p>
   </main>
 </div>
